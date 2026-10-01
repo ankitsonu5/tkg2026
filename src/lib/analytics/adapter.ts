@@ -58,6 +58,35 @@ export function writeConsent(state: Exclude<ConsentState, 'unset'>): void {
 
 const seenOnce = new Set<string>()
 
+export function resetAnalyticsState(): void {
+  seenOnce.clear()
+}
+
+/**
+ * Maps a URL pathname to its canonical baseline page ID.
+ */
+export function resolvePageId(pathname: string): string {
+  const clean = pathname.split('?')[0].split('#')[0].replace(/\/+$/, '') || '/'
+  if (clean === '/') return 'HOME'
+  if (clean === '/about') return 'ABOUT'
+  if (clean === '/enterprise-investments') return 'ENTERPRISE'
+  if (clean.startsWith('/enterprise-investments/')) return 'ENTITY'
+  if (clean === '/ideas') return 'IDEAS'
+  if (clean.startsWith('/ideas/')) return 'ARTICLE'
+  if (clean === '/film-culture') return 'CULTURE'
+  if (clean.startsWith('/film-culture/')) return 'PROJECT'
+  if (clean === '/impact') return 'IMPACT'
+  if (clean.startsWith('/impact/')) return 'INITIATIVE'
+  if (clean === '/media-speaking') return 'MEDIA'
+  if (clean === '/connect') return 'CONNECT'
+  if (clean === '/privacy') return 'PRIVACY'
+  if (clean === '/terms') return 'TERMS'
+  if (clean === '/accessibility') return 'ACCESSIBILITY'
+  if (clean === '/search') return 'SEARCH'
+  if (clean === '/newsletter/confirm') return 'NEWSLETTER_CONFIRM'
+  return 'PAGE'
+}
+
 /**
  * @param opts.once Guards events that must fire exactly once per attempt (form_start,
  *                  download) and prevents duplicate page_view on client-side navigation.
@@ -90,5 +119,10 @@ export function track(
   if (!measurementId) return
 
   window.dataLayer = window.dataLayer || []
-  window.gtag?.('event', event, payload)
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', event, payload)
+  } else {
+    // If gtag script is still loading or defined via dataLayer queuing
+    window.dataLayer.push(['event', event, payload])
+  }
 }

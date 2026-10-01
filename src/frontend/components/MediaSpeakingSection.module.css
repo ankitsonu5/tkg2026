@@ -1,0 +1,456 @@
+/* MediaSpeakingSection.module.css - Grand Executive & Keynote Stage Showcase */
+
+.stageSection {
+  position: relative;
+  min-height: 100vh;
+  background: #fbf8f2;
+  color: #182129;
+  border-top: 1px solid rgba(214, 182, 122, 0.28);
+  border-bottom: 1px solid rgba(214, 182, 122, 0.28);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(1.25rem, 2.2vh, 2.25rem);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.stageInner {
+  width: var(--home-width, min(calc(100% - 9rem), 1320px));
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(0.75rem, 1.5vh, 1.25rem);
+  box-sizing: border-box;
+}
+
+/* 2-Column Balanced Stage Grid (Fits within 100vh viewport) */
+.stageRow {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+}
+
+/* ─── Left Column: Executive Narrative & Topic Suite ─── */
+.stageCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.eyebrowTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.45rem;
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #c08428;
+  box-shadow: 0 0 8px rgba(192, 132, 40, 0.6);
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #b87e28;
+  text-transform: uppercase;
+}
+
+.stageHeading {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 2.9rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: #141c24;
+  margin: 0;
+}
+
+.goldWord {
+  color: #b87e28;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.stageLead {
+  margin: 0.55rem 0 0;
+  color: #554e44;
+  font-size: clamp(0.88rem, 0.94vw, 0.95rem);
+  line-height: 1.5;
+  max-width: 34rem;
+}
+
+/* Speaking Themes Selector Pills */
+.themePills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.themePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid #dfd8cc;
+  color: #4a443c;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 200ms ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.themePill:hover {
+  border-color: #baa890;
+  color: #141c24;
+  transform: translateY(-1px);
+}
+
+.themePillActive {
+  background: #141c24;
+  color: #ffffff;
+  border-color: #141c24;
+  box-shadow: 0 4px 12px rgba(20, 28, 36, 0.18);
+}
+
+.themePillActive:hover {
+  color: #ffffff;
+  border-color: #141c24;
+}
+
+/* Active Keynote Theme Dossier Card */
+.activeThemeCard {
+  margin: 0.75rem 0 1rem;
+  padding: 0.85rem 1.25rem;
+  background: #ffffff;
+  border: 1px solid rgba(214, 182, 122, 0.35);
+  border-left: 3.5px solid #c08428;
+  border-radius: 0 10px 10px 0;
+  max-width: 35rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+}
+
+.themeCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.themeCardTag {
+  font-size: 0.7rem;
+  font-weight: 750;
+  color: #b87e28;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.themeCardCategory {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #725219;
+  background: rgba(192, 132, 40, 0.09);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.themeCardTitle {
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: #141c24;
+  margin: 0 0 0.25rem;
+  line-height: 1.25;
+}
+
+.themeCardDesc {
+  font-size: 0.84rem;
+  color: #554e44;
+  margin: 0 0 0.45rem;
+  line-height: 1.45;
+}
+
+.themeKeywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(214, 182, 122, 0.16);
+}
+
+.keywordChip {
+  font-size: 0.64rem;
+  font-weight: 600;
+  color: #725219;
+  background: rgba(192, 132, 40, 0.07);
+  padding: 0.12rem 0.45rem;
+  border-radius: 4px;
+}
+
+/* Action Gateways */
+.actionGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.5rem;
+  background: linear-gradient(135deg, #d3a246 0%, #b88628 100%);
+  color: #0c1218;
+  font-size: 0.8rem;
+  font-weight: 750;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(184, 134, 40, 0.25);
+  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryCta:hover {
+  background: #dbae55;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(184, 134, 40, 0.35);
+  color: #080d12;
+}
+
+.primaryCta span {
+  transition: transform 240ms ease;
+  display: inline-block;
+}
+
+.primaryCta:hover span {
+  transform: translateX(4px);
+}
+
+.secondaryLink {
+  color: #8c6018;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 200ms ease;
+}
+
+.secondaryLink:hover {
+  color: #141c24;
+  transform: translateX(3px);
+}
+
+/* ─── Right Column: Monumental Cinematic Stage Media ─── */
+.stageMediaCol {
+  position: relative;
+  width: 100%;
+}
+
+.mediaFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 12;
+  max-height: 440px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 16px 45px rgba(24, 33, 41, 0.12), 0 2px 10px rgba(24, 33, 41, 0.06);
+  border: 1px solid rgba(214, 182, 122, 0.35);
+  background: #101c28;
+}
+
+.stageImage {
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mediaFrame:hover .stageImage {
+  transform: scale(1.03);
+}
+
+.mediaShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 65%, rgba(10, 16, 24, 0.45) 100%);
+  pointer-events: none;
+}
+
+/* Floating Speaker Reel Play Badge */
+.floatingReelBadge {
+  position: absolute;
+  bottom: 1.15rem;
+  left: 1.15rem;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(214, 182, 122, 0.45);
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 2;
+  text-decoration: none;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.floatingReelBadge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.playIconCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d3a246 0%, #b88628 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0c1218;
+  font-size: 0.75rem;
+  padding-left: 2px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(184, 134, 40, 0.35);
+}
+
+.reelText {
+  display: flex;
+  flex-direction: column;
+}
+
+.reelTitle {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: #141c24;
+  line-height: 1.2;
+}
+
+.reelDuration {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #725219;
+  letter-spacing: 0.03em;
+}
+
+/* Top Right Route Pill Badge */
+.stageCredBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(16, 28, 44, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 185, 130, 0.35);
+  color: #dfb260;
+  font-size: 0.68rem;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+  padding: 0.32rem 0.75rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* ─── Bottom Ticker Strip ─── */
+.stageFooterBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.8rem, 2vw, 2rem);
+  padding-top: clamp(0.55rem, 1vh, 0.95rem);
+  border-top: 1px solid rgba(192, 132, 40, 0.2);
+}
+
+.footerStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #4a443c;
+  font-size: clamp(0.66rem, 0.74vw, 0.76rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footerStat strong {
+  color: #b87e28;
+  font-weight: 800;
+}
+
+.footerSep {
+  color: rgba(192, 132, 40, 0.35);
+  font-size: 0.75rem;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .stageSection {
+    min-height: auto;
+    padding-block: 4rem;
+  }
+
+  .stageRow {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .mediaFrame {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .stageCopy {
+    max-width: 580px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .activeThemeCard {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .stageInner {
+    width: min(calc(100% - 2.5rem), 1320px);
+  }
+
+  .stageHeading {
+    font-size: 2.1rem;
+  }
+
+  .floatingReelBadge {
+    bottom: 0.75rem;
+    left: 0.75rem;
+    padding: 0.5rem 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Below ~480px the frame narrows enough that the reel badge (bottom-left) and the
+     credibility badge (originally top-right, overlapping the subject's face at this
+     frame height) can no longer both fit — stack the credibility badge above the reel
+     badge instead of beside it. */
+  .stageCredBadge {
+    top: auto;
+    bottom: 4.75rem;
+    right: 0.75rem;
+  }
+}

@@ -1,0 +1,481 @@
+/* ==========================================================================
+   Tel K. Ganesan Platform — Ultra-Premium Executive Suite Admin Theme
+   Theme: Obsidian & Royal Gold / Executive Authority
+   ========================================================================== */
+
+:root {
+  --admin-gold: #c8a45b;
+  --admin-gold-hover: #dfc07e;
+  --admin-gold-subtle: rgba(200, 164, 91, 0.12);
+  --admin-gold-border: rgba(200, 164, 91, 0.22);
+  --admin-gold-glow: rgba(200, 164, 91, 0.35);
+
+  --admin-bg-base: #070d14;
+  --admin-bg-surface: #0b1420;
+  --admin-bg-card: #0e1a29;
+  --admin-bg-card-hover: #122134;
+
+  --admin-text-main: #f5f1e8;
+  --admin-text-muted: #9aa8b8;
+  --admin-text-dim: #627282;
+
+  --admin-border-subtle: rgba(255, 255, 255, 0.07);
+  --admin-border-card: rgba(200, 164, 91, 0.16);
+
+  --status-published-bg: rgba(16, 185, 129, 0.12);
+  --status-published-text: #34d399;
+  --status-published-border: rgba(16, 185, 129, 0.35);
+
+  --status-draft-bg: rgba(200, 164, 91, 0.12);
+  --status-draft-text: #dfc07e;
+  --status-draft-border: rgba(200, 164, 91, 0.35);
+}
+
+/* ── Global Background & Body ── */
+body,
+html[data-theme='dark'] body,
+[data-theme='dark'] {
+  background-color: var(--admin-bg-base) !important;
+  color: var(--admin-text-main) !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif !important;
+}
+
+
+
+/* ── Top Header Bar ── */
+.app-header,
+[data-theme='dark'] .app-header {
+  background: rgba(8, 15, 24, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--admin-gold-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+  height: 64px !important;
+}
+
+.app-header__bg {
+  display: none !important;
+}
+
+/* Brand indicator in header */
+.app-header__step-nav {
+  font-family: Georgia, 'Source Serif 4', serif !important;
+  font-size: 0.95rem !important;
+  letter-spacing: 0.03em !important;
+}
+
+.app-header__step-nav a {
+  color: var(--admin-text-muted) !important;
+  transition: color 0.2s ease !important;
+}
+
+.app-header__step-nav a:hover {
+  color: var(--admin-gold) !important;
+}
+
+/* ── Sidebar Navigation ── */
+.nav,
+[data-theme='dark'] .nav {
+  background: #060b11 !important;
+  border-right: 1px solid var(--admin-gold-border) !important;
+  box-shadow: 2px 0 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+.nav__scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200, 164, 91, 0.25) transparent;
+}
+
+.nav__scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.nav__scroll::-webkit-scrollbar-thumb {
+  background: rgba(200, 164, 91, 0.25);
+  border-radius: 4px;
+}
+
+/* Sidebar Branding Header */
+.nav__header {
+  padding: 1.4rem 1.2rem !important;
+  border-bottom: 1px solid var(--admin-border-subtle) !important;
+}
+
+/* Group Headers (CONTENT, EVIDENCE, INQUIRIES, etc.) */
+.nav-group__label {
+  font-size: 0.78rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.15em !important;
+  font-weight: 800 !important;
+  color: var(--admin-gold) !important;
+  margin-top: 1.4rem !important;
+  margin-bottom: 0.4rem !important;
+  padding-left: 0.6rem !important;
+}
+
+.nav__link {
+  border-radius: 8px !important;
+  margin: 3px 0.5rem !important;
+  padding: 0.6rem 0.85rem !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  color: var(--admin-text-muted) !important;
+  font-size: 0.96rem !important;
+  font-weight: 500 !important;
+  border: 1px solid transparent !important;
+  position: relative;
+}
+
+.nav__link:hover {
+  background: rgba(200, 164, 91, 0.08) !important;
+  color: #ffffff !important;
+  border-color: rgba(200, 164, 91, 0.2) !important;
+  transform: translateX(2px);
+}
+
+.nav__link--active,
+.nav__link[aria-current='page'],
+[data-theme='dark'] .nav__link--active,
+[data-theme='dark'] .nav__link[aria-current='page'] {
+  background: linear-gradient(90deg, rgba(200, 164, 91, 0.18) 0%, rgba(200, 164, 91, 0.04) 100%) !important;
+  color: #ffffff !important;
+  border-left: 3px solid var(--admin-gold) !important;
+  border-color: rgba(200, 164, 91, 0.25) !important;
+  font-weight: 650 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ── Dashboard Welcome & Groups ── */
+.dashboard {
+  padding-block: 2.2rem 4rem !important;
+}
+
+.dashboard__group-header h2,
+.dashboard__group > h2 {
+  font-family: Georgia, 'Source Serif 4', serif;
+  font-size: 1.4rem !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.01em;
+  color: #ffffff !important;
+  margin-bottom: 1.25rem !important;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.dashboard__group-header h2::after,
+.dashboard__group > h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 2.5rem;
+  height: 2px;
+  background: linear-gradient(90deg, var(--admin-gold) 0%, transparent 100%);
+  border-radius: 2px;
+}
+
+/* Dashboard Cards */
+.dashboard .card {
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 1.3rem 1.5rem !important;
+  border: 1px solid var(--admin-border-card) !important;
+  border-radius: 12px !important;
+  background: var(--admin-bg-card) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden;
+}
+
+.dashboard .card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--admin-gold) 0%, rgba(200, 164, 91, 0.1) 100%);
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+.dashboard .card:hover {
+  transform: translateY(-3px) !important;
+  background: var(--admin-bg-card-hover) !important;
+  border-color: var(--admin-gold) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(200, 164, 91, 0.12) !important;
+}
+
+.dashboard .card:hover::before {
+  opacity: 1;
+}
+
+.dashboard .card__title {
+  font-size: 1.05rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  transition: color 0.2s ease;
+}
+
+.dashboard .card:hover .card__title {
+  color: var(--admin-gold-hover) !important;
+}
+
+/* ── Collection List & Table Enhancements ── */
+.collection-list__wrap,
+.list-header {
+  margin-bottom: 1.5rem !important;
+}
+
+.list-header {
+  margin-top: 1rem !important;
+}
+
+.list-header__title {
+  font-family: Georgia, 'Source Serif 4', serif !important;
+  font-size: 2.2rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  color: #ffffff !important;
+}
+
+/* "Create New" Button in List Header */
+.list-create-new-doc__create-new-button,
+.list-header .btn--style-primary {
+  background: linear-gradient(135deg, #c8a45b 0%, #ab8438 100%) !important;
+  color: #050a0f !important;
+  font-weight: 750 !important;
+  font-size: 0.86rem !important;
+  padding: 0.6rem 1.4rem !important;
+  border-radius: 8px !important;
+  border: none !important;
+  box-shadow: 0 4px 14px rgba(200, 164, 91, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+.list-create-new-doc__create-new-button:hover,
+.list-header .btn--style-primary:hover {
+  background: linear-gradient(135deg, #dfc07e 0%, #c8a45b 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(200, 164, 91, 0.45) !important;
+}
+
+/* Controls (Search bar & column filters) */
+.list-controls {
+  margin-top: 1.2rem !important;
+  margin-bottom: 2rem !important;
+  background: rgba(11, 20, 32, 0.7) !important;
+  border: 1px solid var(--admin-border-card) !important;
+  border-radius: 10px !important;
+  padding: 0.75rem 1.2rem !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* Filter / Column Pills */
+.pill,
+.pill--style-light {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(200, 164, 91, 0.2) !important;
+  color: var(--admin-text-muted) !important;
+  border-radius: 6px !important;
+  font-size: 0.78rem !important;
+  transition: all 0.2s ease !important;
+}
+
+.pill:hover {
+  background: rgba(200, 164, 91, 0.12) !important;
+  border-color: var(--admin-gold) !important;
+  color: #ffffff !important;
+}
+
+/* ── Floating Luxury Table ── */
+.table-wrap {
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  border: 1px solid var(--admin-border-card) !important;
+  background: #09111b !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45) !important;
+}
+
+.table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+  width: 100% !important;
+}
+
+/* Table Header */
+.table thead tr th {
+  background: #0d1825 !important;
+  color: var(--admin-gold) !important;
+  font-size: 0.84rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  font-weight: 750 !important;
+  padding: 0.95rem 1.1rem !important;
+  border-bottom: 1px solid var(--admin-gold-border) !important;
+}
+
+/* Table Rows */
+.table tbody tr {
+  background: #0a131e !important;
+  transition: all 0.22s ease !important;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #0d1723 !important;
+}
+
+.table tbody tr:hover {
+  background: #132235 !important;
+  box-shadow: inset 3px 0 0 var(--admin-gold) !important;
+}
+
+.table tbody tr td {
+  padding: 1.05rem 1.1rem !important;
+  border-bottom: 1px solid var(--admin-border-subtle) !important;
+  color: #e2e8f0 !important;
+  font-size: 0.98rem !important;
+  vertical-align: middle !important;
+}
+
+.table tbody tr td a {
+  color: #ffffff !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  transition: color 0.18s ease;
+}
+
+.table tbody tr td a:hover {
+  color: var(--admin-gold) !important;
+}
+
+/* ── Elite Status Badges (Published & Draft) ── */
+.cell-_status {
+  white-space: nowrap !important;
+}
+
+/* Automatic badge styling for Draft & Published */
+.cell-_status:has(span),
+.cell-_status {
+  font-weight: 650 !important;
+  font-size: 0.86rem !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* Target Published cells */
+.cell-_status span:is([data-status='published'], .published) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 3px 12px !important;
+  border-radius: 20px !important;
+  background: var(--status-published-bg) !important;
+  color: var(--status-published-text) !important;
+  border: 1px solid var(--status-published-border) !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Global status pill fallback */
+td.cell-_status {
+  position: relative;
+}
+
+/* ── Bulk Actions Bar (1 selected — Edit | Publish | Unpublish | Delete) ── */
+.collection-list__bulk-actions,
+.table-actions {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.6rem !important;
+  padding: 0.4rem 0.8rem !important;
+  border-radius: 8px !important;
+  background: rgba(14, 26, 41, 0.85) !important;
+  border: 1px solid var(--admin-gold-border) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.table-actions button,
+.collection-list__bulk-actions button {
+  font-size: 0.8rem !important;
+  font-weight: 650 !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+/* ── Document Edit Controls (Save Draft, Publish Buttons) ── */
+.doc-controls {
+  background: rgba(8, 15, 24, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--admin-gold-border) !important;
+}
+
+.btn--style-primary {
+  background: linear-gradient(135deg, #c8a45b 0%, #ab8438 100%) !important;
+  color: #050a0f !important;
+  font-weight: 750 !important;
+  border: none !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 14px rgba(200, 164, 91, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn--style-primary:hover {
+  background: linear-gradient(135deg, #dfc07e 0%, #c8a45b 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(200, 164, 91, 0.4) !important;
+}
+
+.btn--style-secondary {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(200, 164, 91, 0.3) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn--style-secondary:hover {
+  background: rgba(200, 164, 91, 0.12) !important;
+  border-color: var(--admin-gold) !important;
+  color: var(--admin-gold-hover) !important;
+}
+
+/* ── Form Inputs & Lexical Rich Text ── */
+input[type='text'],
+input[type='email'],
+input[type='password'],
+textarea,
+select {
+  background: #070d14 !important;
+  border: 1px solid rgba(200, 164, 91, 0.2) !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--admin-gold) !important;
+  box-shadow: 0 0 0 3px rgba(200, 164, 91, 0.22) !important;
+  background: #09121c !important;
+  outline: none !important;
+}
+
+/* Field Group Borders */
+.field-type.group {
+  border-radius: 12px !important;
+  border: 1px solid var(--admin-border-card) !important;
+  background: rgba(11, 20, 32, 0.5) !important;
+  padding: 1.5rem !important;
+  margin-block: 1.2rem !important;
+}
+
+/* ── Checkboxes ── */
+input[type='checkbox'] {
+  accent-color: var(--admin-gold) !important;
+  cursor: pointer;
+}

@@ -12,6 +12,8 @@ export interface BaselinePage {
   /** Stable PAGE ID from the baseline. Never renamed without a change request. */
   pageId: string
   title: string
+  seoTitle?: string
+  seoDescription?: string
   /** Proposed route. Dynamic templates use [slug]. */
   path: string
   kind: PageKind
@@ -33,6 +35,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'HOME',
     title: 'Home',
+    seoTitle: 'Tel K. Ganesan | Executive Chairman and Enterprise Builder',
+    seoDescription: 'Tel K. Ganesan builds enterprises, leaders, and platforms across technology, ideas, culture, and community impact. Explore his journey and work.',
     path: '/',
     kind: 'page',
     purpose: 'Establish identity, flagship proof and routes.',
@@ -55,6 +59,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'ABOUT',
     title: 'About',
+    seoTitle: 'About Tel K. Ganesan | Entrepreneur and Enterprise Builder',
+    seoDescription: 'Explore Tel K. Ganesan’s journey from India to Detroit, the decisions behind Kyyba, and the leadership principles guiding his current work.',
     path: '/about',
     kind: 'page',
     purpose: 'Build confidence through journey and operating principles.',
@@ -74,6 +80,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'ENTERPRISE',
     title: 'Enterprise & Investments',
+    seoTitle: 'Enterprise & Investments | Tel K. Ganesan',
+    seoDescription: 'Explore Tel K. Ganesan’s enterprise-building approach, Kyyba’s flagship role, selected ventures, governance philosophy, and strategic partnership opportunities.',
     path: '/enterprise-investments',
     kind: 'page',
     purpose: 'Show Kyyba-led enterprise value and selected relationships.',
@@ -93,6 +101,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'IDEAS',
     title: 'Ideas',
+    seoTitle: 'Ideas from Tel K. Ganesan | Leadership, AI and Mind Trap',
+    seoDescription: 'Practical ideas on founder focus, leadership systems, AI and work, cross-cultural entrepreneurship, mental freedom, storytelling, and legacy.',
     path: '/ideas',
     kind: 'page',
     purpose: 'Organize thought leadership, frameworks and Mind Trap.',
@@ -111,6 +121,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'CULTURE',
     title: 'Film & Culture',
+    seoTitle: 'Film & Culture | Tel K. Ganesan, Enterprise Builder',
+    seoDescription: 'Explore selected film, music, and cultural work connected to Tel K. Ganesan, with verified credits, official destinations, and collaboration routes.',
     path: '/film-culture',
     kind: 'page',
     purpose: 'Present verified creative work and official destinations.',
@@ -129,6 +141,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'IMPACT',
     title: 'Impact',
+    seoTitle: 'Community Impact | Tel K. Ganesan, Enterprise Builder',
+    seoDescription: 'Explore Tel K. Ganesan’s community, mentoring, youth, and civic initiatives through documented outcomes and partner-led stories.',
     path: '/impact',
     kind: 'page',
     purpose: 'Explain contribution, programs, evidence and partnership criteria.',
@@ -149,6 +163,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'MEDIA',
     title: 'Media & Speaking',
+    seoTitle: 'Tel K. Ganesan | Speaker, Media and Interviews',
+    seoDescription: 'Book Tel K. Ganesan for keynotes, executive conversations, podcasts, and media on enterprise building, leadership, AI, mental freedom, and legacy.',
     path: '/media-speaking',
     kind: 'page',
     purpose: 'Support journalists, producers and event organizers.',
@@ -171,6 +187,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'CONNECT',
     title: 'Connect',
+    seoTitle: 'Connect with Tel K. Ganesan | Partnerships & Inquiries',
+    seoDescription: 'Choose the right route for strategic partnerships, investment or M&A, speaking, media, creative work, or community collaboration.',
     path: '/connect',
     kind: 'page',
     purpose: 'Route qualified inquiries without exposing Tel as routine intake.',
@@ -250,6 +268,8 @@ export const BASELINE_PAGES: BaselinePage[] = [
   {
     pageId: 'PRIVACY',
     title: 'Privacy Policy',
+    seoTitle: 'Privacy Policy | Tel K. Ganesan',
+    seoDescription: 'Read how the Tel K. Ganesan website collects, uses, protects and manages personal information and visitor choices.',
     path: '/privacy',
     kind: 'utility',
     purpose: 'Explain collection, use, retention and visitor choices.',
@@ -260,8 +280,24 @@ export const BASELINE_PAGES: BaselinePage[] = [
     inPrimaryNav: false,
   },
   {
+    pageId: 'TERMS',
+    title: 'Terms of Use',
+    seoTitle: 'Terms of Use | Tel K. Ganesan',
+    seoDescription: 'Review the terms governing use of the Tel K. Ganesan website, its content, downloads, external links and intellectual property.',
+    path: '/terms',
+    kind: 'utility',
+    purpose: 'Set the terms governing website use, content and intellectual property.',
+    primaryCta: null,
+    primaryCtaId: null,
+    modules: ['MOD-TERMS-POLICY'],
+    indexable: true,
+    inPrimaryNav: false,
+  },
+  {
     pageId: 'ACCESSIBILITY',
     title: 'Accessibility Statement',
+    seoTitle: 'Accessibility Statement | Tel K. Ganesan',
+    seoDescription: 'Read the website accessibility commitment, supported standards, known limitations and the process for requesting assistance.',
     path: '/accessibility',
     kind: 'utility',
     purpose: 'Publish commitment, known limits and assistance route.',

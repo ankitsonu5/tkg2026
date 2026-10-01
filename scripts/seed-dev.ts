@@ -203,8 +203,10 @@ async function main() {
         slaHours: route.slaHours,
         slaClock: 'elapsed',
         slaTimezone: 'America/Detroit',
-        // LOCAL TEST IDENTITIES ONLY. Real owner mailboxes are an open dependency (R-03).
-        primaryRecipient: `route-owner+${route.routeId}@localhost.test`,
+        // Interim real inbox for all routes, provided directly (not invented, satisfies R-03's
+        // "no fabricated mailbox" rule). Still 'unassigned' below until a named owner per
+        // route is confirmed and accepts in writing — a shared inbox is not a route owner.
+        primaryRecipient: 'telganesanofficial@gmail.com',
         backupRecipient: `route-backup+${route.routeId}@localhost.test`,
         acceptanceStatus: 'unassigned',
         escalationCriterion: route.escalationCriterion,

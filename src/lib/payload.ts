@@ -16,5 +16,14 @@ export async function getPayloadClient() {
   return getPayload({ config })
 }
 
+export async function getPayloadClientSafe() {
+  try {
+    return await getPayloadClient()
+  } catch (error) {
+    console.error('Payload client initialization skipped/failed:', error)
+    return null
+  }
+}
+
 /** Constraint for public-facing reads: published only, never drafts. */
 export const publishedOnly = { _status: { equals: 'published' } } as const

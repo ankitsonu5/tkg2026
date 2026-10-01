@@ -8,7 +8,7 @@ export default defineConfig({
     // Postgres database, not DOM tests.
     environment: 'node',
     setupFiles: ['./vitest.setup.ts'],
-    include: ['tests/int/**/*.int.spec.ts'],
+    include: ['tests/int/**/*.int.spec.{ts,tsx}'],
     // Payload boots a connection pool per suite; running files in sequence keeps the
     // database state deterministic.
     fileParallelism: false,

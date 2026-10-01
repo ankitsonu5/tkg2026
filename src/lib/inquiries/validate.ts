@@ -54,8 +54,10 @@ function validateField(field: QualificationField, raw: unknown): { error?: Field
   }
 
   if (field.type === 'date') {
-    const parsed = Date.parse(value)
-    if (Number.isNaN(parsed)) {
+    // Date.parse normalizes impossible dates (for example 2027-02-31) instead of rejecting
+    // them, so require the browser's YYYY-MM-DD wire format and round-trip it exactly.
+    const parsed = /^\d{4}-\d{2}-\d{2}$/.test(value) ? new Date(`${value}T00:00:00.000Z`) : null
+    if (!parsed || Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) {
       return { error: { field: field.name, errorClass: 'format', message: `${field.label} must be a valid date.` } }
     }
   }

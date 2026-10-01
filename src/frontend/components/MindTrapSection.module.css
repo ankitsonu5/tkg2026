@@ -1,0 +1,372 @@
+/* MindTrapSection.module.css */
+
+.mindtrapSection {
+  position: relative;
+  height: 100vh;
+  min-height: 580px;
+  max-height: 100vh;
+  background:
+    radial-gradient(ellipse at 80% 25%, rgba(192, 41, 43, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 15% 75%, rgba(216, 170, 99, 0.1) 0%, transparent 50%),
+    #081018;
+  color: #f7f7f3;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid rgba(216, 170, 99, 0.22);
+  border-bottom: 1px solid rgba(216, 170, 99, 0.22);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.mindtrapInner {
+  width: var(--home-width, min(calc(100% - 9rem), 1320px));
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 2vh, 1.8rem);
+  height: 100%;
+  padding-block: clamp(4.5rem, 8vh, 6rem) clamp(1.2rem, 2.5vh, 2rem);
+  box-sizing: border-box;
+}
+
+/* Main 2-col Row */
+.mindtrapRow {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(3rem, 6vw, 7rem);
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ─── Left Column ─── */
+.mindtrapCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.eyebrowTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.eyebrowDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c79842;
+  box-shadow: 0 0 8px rgba(199, 152, 66, 0.7);
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.2em;
+  color: #c79842;
+  text-transform: uppercase;
+}
+
+.mindtrapHeading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+  font-weight: 400;
+  letter-spacing: -0.028em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+.goldWord {
+  color: #dfb260;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.mindtrapLead {
+  margin: 0 0 1.2rem;
+  color: #c2cbd4;
+  font-size: clamp(0.88rem, 0.95vw, 1rem);
+  line-height: 1.65;
+  max-width: 32rem;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Belief Traps Pills */
+.trapsLabel {
+  margin-bottom: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: rgba(223, 178, 96, 0.85);
+  text-transform: uppercase;
+}
+
+.trapsPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.trapPill {
+  padding: 0.3rem 0.8rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(223, 178, 96, 0.28);
+  color: #e4eaf0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 240ms ease;
+}
+
+.trapPill:hover {
+  background: rgba(223, 178, 96, 0.18);
+  border-color: #dfb260;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.trapPillActive {
+  background: #c79842;
+  border-color: #c79842;
+  color: #081018;
+  font-weight: 750;
+  box-shadow: 0 4px 14px rgba(199, 152, 66, 0.35);
+}
+
+/* Active Trap Insight */
+.activeTrapInsight {
+  margin: 1.35rem 0 1.6rem;
+  padding: 1.1rem 1.45rem;
+  background: linear-gradient(90deg, rgba(192, 41, 43, 0.16) 0%, rgba(192, 41, 43, 0.05) 100%);
+  border: 1px solid rgba(212, 67, 70, 0.25);
+  border-left: 3.5px solid #e0484a;
+  border-radius: 0 8px 8px 0;
+  max-width: 35rem;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.activeTrapTitle {
+  font-size: 0.82rem;
+  font-weight: 750;
+  color: #f87171;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 0.5rem;
+}
+
+.activeTrapQuote {
+  font-size: clamp(0.98rem, 1.1vw, 1.1rem);
+  color: #f3f4f6;
+  margin: 0;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+/* Action Buttons */
+.actionGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.6rem;
+  background: linear-gradient(135deg, #d3a246 0%, #b88628 100%);
+  color: #0c1218;
+  font-size: 0.82rem;
+  font-weight: 750;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(184, 134, 40, 0.3);
+  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryCta:hover {
+  background: #dbae55;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(184, 134, 40, 0.45);
+  color: #080d12;
+}
+
+.primaryCta span {
+  transition: transform 240ms ease;
+  display: inline-block;
+}
+
+.primaryCta:hover span {
+  transform: translateX(4px);
+}
+
+.secondaryLink {
+  color: #dfb260;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 200ms ease;
+}
+
+.secondaryLink:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+/* ─── Right Column — Interactive Brain Belief Traps Orbit ─── */
+.orbitVisualColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.orbitCard {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.5rem 0;
+}
+
+.orbitStage {
+  position: relative;
+  width: 100%;
+  height: clamp(400px, 50vh, 520px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auraGlow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(80, 220, 255, 0.12) 0%, rgba(80, 220, 255, 0.03) 50%, transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.mindtrapLogoImage {
+  object-fit: contain;
+  padding: 0.5rem;
+  z-index: 1;
+  filter: contrast(1.08) saturate(1.06) drop-shadow(0 20px 45px rgba(0, 0, 0, 0.45));
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ─── Footer Stats Bar ─── */
+.mindtrapFooterBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.8rem, 2vw, 2rem);
+  padding-top: clamp(0.6rem, 1.2vh, 1rem);
+  border-top: 1px solid rgba(223, 178, 96, 0.18);
+  flex-shrink: 0;
+}
+
+.footerStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(247, 247, 243, 0.85);
+  font-size: clamp(0.66rem, 0.74vw, 0.76rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footerStat strong {
+  color: #dfb260;
+  font-weight: 800;
+}
+
+.footerSep {
+  color: #c79842;
+  font-weight: 300;
+  opacity: 0.5;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1100px) {
+  .mindtrapRow {
+    gap: 2.5rem;
+  }
+  .logoImage {
+    width: clamp(200px, 30vw, 300px);
+  }
+}
+
+@media (max-width: 760px) {
+  .mindtrapSection {
+    height: auto;
+    min-height: auto;
+    max-height: none;
+    padding-block: 3rem;
+  }
+  .mindtrapInner {
+    padding-block: 0;
+    gap: 1.5rem;
+  }
+  .mindtrapRow {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .mindtrapCopy {
+    align-items: center;
+    text-align: center;
+  }
+  .orbitStage {
+    height: 380px;
+  }
+  .orbitCard {
+    max-width: 420px;
+  }
+  .mindtrapHeading {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+  .trapsPills {
+    justify-content: center;
+  }
+  .activeTrapInsight {
+    margin-inline: auto;
+    text-align: left;
+  }
+  .actionGroup {
+    justify-content: center;
+  }
+  .logoCard {
+    order: -1;
+  }
+  .logoImage {
+    width: clamp(180px, 50vw, 260px);
+  }
+  .mindtrapFooterBar {
+    gap: 0.6rem;
+  }
+}

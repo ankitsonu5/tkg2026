@@ -22,7 +22,7 @@ enforced by the application at write time, not by editorial convention.
 
 ## Stack
 
-Next.js 16.3.0 · React 19.2.6 · Payload CMS 3.88.0 · PostgreSQL 16 · TypeScript 5.7
+Next.js 16.3.0 · React 19.2.6 · Payload CMS 3.88.0 · MongoDB · TypeScript 5.7
 
 Versions were resolved from the registry at build time and pinned; the combination matches
 the official Payload 3.88.0 template rather than independently combining "latest" packages.
@@ -31,13 +31,13 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 ## Requirements
 
 - Node.js `^18.20.2 || >=20.9.0` (developed on 26.0.0)
-- PostgreSQL 14+ reachable locally
+- MongoDB reachable locally
 - No Docker required
 
 ## Setup
 
 ```bash
-createdb tel_ganesan_dev
+# A local `mongod` creates the database automatically on first write — nothing to pre-create.
 
 cp .env.example .env
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"   # -> PAYLOAD_SECRET
@@ -75,21 +75,20 @@ npm run worker:delivery   # durable delivery, SLA sweep, evidence re-check
 | `npm run dev` / `build` / `start` | Next.js lifecycle |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run lint` | ESLint |
-| `npm run test:int` | 43 integration tests against Postgres |
+| `npm run test:int` | 53 integration/UI tests against isolated MongoDB + jsdom |
 | `npm run db:migrate` / `:create` / `:status` | Migrations |
 | `npm run seed:dev` | Development seed (dev only) |
 | `npm run bootstrap:admin` | First administrator (non-production only) |
 | `npm run worker:delivery` | Delivery + SLA worker (`-- --once` for a single pass) |
 | `npm run mail:dev` | Local SMTP capture |
+| `npm run test:forms:e2e` | Traceable seven-route + newsletter delivery proof (requires `mail:dev`) |
 | `node scripts/check-contrast.mjs` | WCAG contrast check; non-zero exit on regression |
 | `npx tsx scripts/smoke-inquiry.ts` | Traceable end-to-end test across all seven routes |
 
 ## Tests
 
 ```bash
-createdb tel_ganesan_test
-DATABASE_URI=postgres://localhost:5432/tel_ganesan_test npm run db:migrate
-npm run test:int
+DATABASE_URI=mongodb://127.0.0.1:27017/tel_ganesan_test npm run test:int
 ```
 
 Integration tests run against a dedicated database and never touch development data.

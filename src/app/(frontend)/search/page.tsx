@@ -3,6 +3,9 @@ import Link from 'next/link'
 
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { buildMetadata } from '@/lib/seo/metadata'
+import { buildPageSchema } from '@/lib/seo/schema'
+import { JsonLd } from '@/frontend/components/JsonLd'
+import { SearchTracker } from '@/frontend/components/SearchTracker'
 import { getPayloadClient, publishedOnly } from '@/lib/payload'
 
 const PAGE_ID = 'SEARCH'
@@ -15,8 +18,8 @@ const PAGE_ID = 'SEARCH'
 export async function generateMetadata(): Promise<Metadata> {
   return buildMetadata({
     pageId: PAGE_ID,
-    title: 'Search',
-    description: 'Search published content.',
+    title: 'Search | Tel K. Ganesan',
+    description: 'Search published pages, articles, enterprise entities, film and culture projects, and impact initiatives on the Tel K. Ganesan website.',
     path: '/search',
     noindex: true,
   })
@@ -62,6 +65,8 @@ export default async function SearchRoute({ searchParams }: { searchParams: Prom
 
   return (
     <div className="container">
+      {query ? <SearchTracker query={query} resultCount={results.length} /> : null}
+      <JsonLd schema={buildPageSchema(PAGE_ID, '/search')} />
       <Breadcrumbs pageId={PAGE_ID} />
       <header className="page-header">
         <h1>Search</h1>

@@ -26,23 +26,32 @@ describe('Inquiry routes, qualification and delivery', () => {
         pagination: false,
         overrideAccess: true,
       })
-      if (existing.docs.length > 0) continue
-      await payload.create({
-        collection: 'inquiry-routes',
-        data: {
+      const data = {
           routeId: route.routeId as never,
           label: route.label,
           ownerRole: route.ownerRole,
           minimumQualification: route.minimumQualification,
           slaHours: route.slaHours,
-          slaClock: 'elapsed',
+          slaClock: 'elapsed' as const,
           primaryRecipient: `owner+${route.routeId}@localhost.test`,
           backupRecipient: `backup+${route.routeId}@localhost.test`,
-          acceptanceStatus: 'unassigned',
+          acceptanceStatus: 'unassigned' as const,
           escalationCriterion: route.escalationCriterion,
           escalatesToTel: route.escalatesToTel,
           enabled: true,
-        },
+      }
+      if (existing.docs.length > 0) {
+        await payload.update({
+          collection: 'inquiry-routes',
+          id: existing.docs[0].id,
+          data,
+          overrideAccess: true,
+        })
+        continue
+      }
+      await payload.create({
+        collection: 'inquiry-routes',
+        data,
         overrideAccess: true,
       })
     }
@@ -278,6 +287,124 @@ describe('Inquiry routes, qualification and delivery', () => {
     expect(after.deliveryState).toBe('pending')
   })
 
+  it('QA-ROUTE-03A: invalid email, impossible date, unknown option and overlong text are rejected server-side', async () => {
+    const values = validValuesFor('speaking')
+    values.email = 'not-an-email'
+    values.eventDate = '2027-02-31'
+    values.format = 'invented-format'
+    values.event = 'x'.repeat(301)
+
+    const outcome = await submitInquiry(payload, {
+      routeId: 'speaking',
+      values,
+      privacyAccepted: true,
+      idempotencyKey: uid('idem-invalid-formats'),
+    })
+
+    expect(outcome.status).toBe('invalid')
+    if (outcome.status !== 'invalid') return
+    expect(outcome.errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ field: 'email', errorClass: 'format' }),
+        expect.objectContaining({ field: 'eventDate', errorClass: 'format' }),
+        expect.objectContaining({ field: 'format', errorClass: 'unknown-option' }),
+        expect.objectContaining({ field: 'event', errorClass: 'length' }),
+      ]),
+    )
+  })
+
+  it('QA-ROUTE-06A: production rejects placeholder recipients even if a route is marked accepted', async () => {
+    const previousNodeEnv = process.env.NODE_ENV
+    ;(process.env as Record<string, string>).NODE_ENV = 'production'
+    try {
+      const outcome = await submitInquiry(payload, {
+        routeId: 'general',
+        values: validValuesFor('general'),
+        privacyAccepted: true,
+        idempotencyKey: uid('idem-production-placeholder'),
+      })
+      expect(outcome.status).toBe('route-unavailable')
+    } finally {
+      ;(process.env as Record<string, string>).NODE_ENV = previousNodeEnv ?? 'test'
+    }
+  })
+
+  it('QA-ROUTE-06B: routing configuration cannot mark placeholder mailboxes as production accepted', async () => {
+    const routes = await payload.find({
+      collection: 'inquiry-routes',
+      where: { routeId: { equals: 'general' } },
+      limit: 1,
+      pagination: false,
+      overrideAccess: true,
+    })
+
+    await expect(
+      payload.update({
+        collection: 'inquiry-routes',
+        id: routes.docs[0].id,
+        data: {
+          acceptanceStatus: 'accepted',
+          acceptedBy: 'Local QA',
+          acceptedAt: new Date().toISOString(),
+        },
+        overrideAccess: true,
+      }),
+    ).rejects.toThrow(/cannot be accepted for production/i)
+  })
+
+  it('QA-ROUTE-08A: all seven routes reach the configured primary, backup and sender destinations with provider receipts', async () => {
+    const submissions: Array<{ routeId: string; reference: string }> = []
+    for (const route of BASELINE_INQUIRY_ROUTES) {
+      const outcome = await submitInquiry(payload, {
+        routeId: route.routeId,
+        values: validValuesFor(route.routeId),
+        privacyAccepted: true,
+        idempotencyKey: uid('idem-routing'),
+      })
+      if (outcome.status !== 'pending') throw new Error(`expected pending for ${route.routeId}`)
+      submissions.push({ routeId: route.routeId, reference: outcome.reference })
+    }
+
+    let messageNumber = 0
+    const original = payload.sendEmail
+    payload.sendEmail = (async (message) => ({
+      accepted: [String(message.to)],
+      rejected: [],
+      messageId: `<route-${++messageNumber}@provider.test>`,
+    })) as typeof payload.sendEmail
+
+    try {
+      await runDeliveryPass(payload, { batchSize: 500 })
+    } finally {
+      payload.sendEmail = original
+    }
+
+    for (const submission of submissions) {
+      const leads = await payload.find({
+        collection: 'inquiries',
+        where: { reference: { equals: submission.reference } },
+        limit: 1,
+        pagination: false,
+        overrideAccess: true,
+      })
+      const lead = leads.docs[0]
+      expect(lead.deliveryState, submission.routeId).toBe('delivered')
+
+      const attempts = await payload.find({
+        collection: 'delivery-attempts',
+        where: { inquiry: { equals: lead.id } },
+        pagination: false,
+        overrideAccess: true,
+      })
+      const destinations = Object.fromEntries(attempts.docs.map((attempt) => [attempt.recipientKind, attempt]))
+      expect(destinations.primary.recipient).toBe(`owner+${submission.routeId}@localhost.test`)
+      expect(destinations.backup.recipient).toBe(`backup+${submission.routeId}@localhost.test`)
+      expect(destinations['sender-ack'].recipient).toBe('sender@localhost.test')
+      expect(attempts.docs.every((attempt) => attempt.state === 'sent')).toBe(true)
+      expect(attempts.docs.every((attempt) => Boolean(attempt.providerMessageId))).toBe(true)
+    }
+  })
+
   it('QA-ROUTE-09: consent denial records unattributed context rather than inventing a source', async () => {
     const outcome = await submitInquiry(payload, {
       routeId: 'general',
@@ -346,6 +473,42 @@ describe('Inquiry routes, qualification and delivery', () => {
       overrideAccess: true,
     })
     expect(subscriptions.docs).toHaveLength(0)
+  })
+
+  it('QA-ROUTE-11A: explicit inquiry newsletter opt-in sends a separate confirmation email', async () => {
+    const values = validValuesFor('general')
+    const email = `${uid('inquiry-opt-in')}@localhost.test`
+    values.email = email
+
+    const original = payload.sendEmail
+    payload.sendEmail = (async () => ({ accepted: [email], rejected: [], messageId: '<inquiry-opt-in>' })) as typeof payload.sendEmail
+
+    let outcome
+    try {
+      outcome = await submitInquiry(payload, {
+        routeId: 'general',
+        values,
+        privacyAccepted: true,
+        marketingOptIn: true,
+        idempotencyKey: uid('idem-opt-in'),
+      })
+    } finally {
+      payload.sendEmail = original
+    }
+
+    expect(outcome.status).toBe('pending')
+    if (outcome.status !== 'pending') return
+    expect(outcome.newsletter).toBe('confirmation-sent')
+
+    const subscriptions = await payload.find({
+      collection: 'newsletter-subscriptions',
+      where: { email: { equals: email } },
+      limit: 1,
+      pagination: false,
+      overrideAccess: true,
+    })
+    expect(subscriptions.docs[0].state).toBe('pending-confirmation')
+    expect(subscriptions.docs[0].confirmationMessageId).toBe('<inquiry-opt-in>')
   })
 
   it('QA-ROUTE-12: the General route never escalates to Tel', async () => {

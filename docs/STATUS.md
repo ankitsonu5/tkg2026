@@ -4,6 +4,13 @@
 **Phase:** 0 (Foundation) — complete
 **Next:** Phase 1 (Content and UX foundation)
 
+> **Addendum, 09 September 2026:** the database adapter was switched from Postgres to
+> MongoDB (`docs/ARCHITECTURE.md` Decision 9) after this snapshot was written. The
+> Postgres-specific facts below (74 tables via committed migration, the 43-test run) describe
+> that prior state and have **not** been re-verified against MongoDB yet — this file is left
+> as the dated record it is rather than silently edited to claim re-verification that hasn't
+> happened.
+
 ## What actually works right now
 
 A running Next.js 16 + Payload 3.88 application on local PostgreSQL, with real persistence:
@@ -52,8 +59,7 @@ Full detail, including the five defects found and fixed, is in `docs/QA_AND_RELE
 ## How to run it
 
 ```bash
-# One-time
-createdb tel_ganesan_dev
+# One-time (a local mongod creates the database on first write, nothing to pre-create)
 cp .env.example .env         # then set PAYLOAD_SECRET
 npm install
 npm run db:migrate

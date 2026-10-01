@@ -1,0 +1,398 @@
+/* ImpactSection.module.css - Executive Dark Community Impact Showcase */
+
+.impactSection {
+  position: relative;
+  min-height: 90vh;
+  background: #081018;
+  color: #f5f4ef;
+  border-top: 1px solid rgba(220, 185, 130, 0.2);
+  border-bottom: 1px solid rgba(220, 185, 130, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(3.5rem, 6.5vh, 5.5rem);
+  box-sizing: border-box;
+}
+
+.impactInner {
+  width: var(--home-width, min(calc(100% - 9rem), 1320px));
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2rem, 3.5vh, 3rem);
+  box-sizing: border-box;
+}
+
+/* 2-Column Balanced Grid */
+.impactRow {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(2.5rem, 5vw, 5.5rem);
+  align-items: center;
+}
+
+/* ─── Left Media Column ─── */
+.impactMediaCol {
+  position: relative;
+  width: 100%;
+}
+
+.mediaFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3.4;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 2px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(220, 185, 130, 0.25);
+  background: #0d1824;
+}
+
+.impactImage {
+  object-fit: cover;
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mediaFrame:hover .impactImage {
+  transform: scale(1.03);
+}
+
+.mediaShade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 16, 24, 0.15) 0%, rgba(8, 16, 24, 0.55) 100%);
+  pointer-events: none;
+}
+
+/* Floating Glassmorphic Impact Badge */
+.floatingBadge {
+  position: absolute;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  background: rgba(10, 20, 32, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(220, 185, 130, 0.35);
+  padding: 0.75rem 1.15rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 2;
+}
+
+.badgeIcon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(223, 178, 96, 0.2) 0%, rgba(223, 178, 96, 0.05) 100%);
+  border: 1px solid rgba(223, 178, 96, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dfb260;
+  flex-shrink: 0;
+}
+
+.badgeText {
+  display: flex;
+  flex-direction: column;
+}
+
+.badgeMetric {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.badgeLabel {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #dfb260;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ─── Right Editorial Column ─── */
+.impactCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.eyebrowTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.85rem;
+}
+
+.eyebrowDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #dfb260;
+  box-shadow: 0 0 10px rgba(223, 178, 96, 0.7);
+  flex-shrink: 0;
+}
+
+.eyebrowText {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: #dfb260;
+  text-transform: uppercase;
+}
+
+.impactHeading {
+  font-family: var(--font-serif);
+  font-size: clamp(2.3rem, 3.7vw, 3.5rem);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: #f7f6f2;
+  margin: 0;
+}
+
+.goldWord {
+  color: #dfb260;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.impactLead {
+  margin: 1.1rem 0 0;
+  color: rgba(245, 244, 239, 0.76);
+  font-size: clamp(0.92rem, 1vw, 1.02rem);
+  line-height: 1.65;
+  max-width: 34rem;
+}
+
+/* Pillar Selector Buttons */
+.pillarPills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1.4rem;
+}
+
+.pillarPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1.05rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(220, 185, 130, 0.22);
+  color: #dcd6c8;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 220ms ease;
+}
+
+.pillarPill:hover {
+  border-color: #dfb260;
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.pillarPillActive {
+  background: linear-gradient(135deg, #d3a246 0%, #b88628 100%);
+  color: #0c1218;
+  border-color: #dfb260;
+  box-shadow: 0 4px 14px rgba(184, 134, 40, 0.3);
+}
+
+.pillarPillActive:hover {
+  color: #080d12;
+  border-color: #dfb260;
+}
+
+/* Active Pillar Card */
+.activePillarCard {
+  margin: 1.25rem 0 1.65rem;
+  padding: 1.15rem 1.4rem;
+  background: rgba(14, 24, 38, 0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 185, 130, 0.25);
+  border-left: 3.5px solid #dfb260;
+  border-radius: 0 10px 10px 0;
+  max-width: 35rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.pillarCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+}
+
+.pillarCardTag {
+  font-size: 0.74rem;
+  font-weight: 750;
+  color: #dfb260;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pillarCardMetric {
+  font-size: 0.76rem;
+  font-weight: 750;
+  color: #dfb260;
+  background: rgba(223, 178, 96, 0.12);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+}
+
+.pillarCardTitle {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.4rem;
+  line-height: 1.3;
+}
+
+.pillarCardDesc {
+  font-size: 0.88rem;
+  color: rgba(245, 244, 239, 0.74);
+  margin: 0;
+  line-height: 1.55;
+}
+
+/* Action CTA Group */
+.actionGroup {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.65rem;
+  background: linear-gradient(135deg, #d3a246 0%, #b88628 100%);
+  color: #0c1218;
+  font-size: 0.82rem;
+  font-weight: 750;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(184, 134, 40, 0.25);
+  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryCta:hover {
+  background: #dbae55;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(184, 134, 40, 0.4);
+  color: #080d12;
+}
+
+.primaryCta span {
+  transition: transform 240ms ease;
+  display: inline-block;
+}
+
+.primaryCta:hover span {
+  transform: translateX(4px);
+}
+
+.secondaryLink {
+  color: #dfb260;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 200ms ease;
+}
+
+.secondaryLink:hover {
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+/* ─── Bottom Ticker / Principles Bar ─── */
+.impactFooterBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.8rem, 2vw, 2rem);
+  padding-top: clamp(0.75rem, 1.5vh, 1.25rem);
+  border-top: 1px solid rgba(220, 185, 130, 0.18);
+}
+
+.footerStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(245, 244, 239, 0.76);
+  font-size: clamp(0.68rem, 0.76vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.footerStat strong {
+  color: #dfb260;
+  font-weight: 800;
+}
+
+.footerSep {
+  color: rgba(223, 178, 96, 0.35);
+  font-size: 0.75rem;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .impactRow {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .mediaFrame {
+    aspect-ratio: 16 / 10;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .impactCopy {
+    max-width: 580px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .activePillarCard {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .impactInner {
+    width: min(calc(100% - 2.5rem), 1320px);
+  }
+
+  .floatingBadge {
+    bottom: 0.85rem;
+    right: 0.85rem;
+    padding: 0.55rem 0.85rem;
+  }
+
+  .pillarPills {
+    gap: 0.4rem;
+  }
+
+  .pillarPill {
+    font-size: 0.72rem;
+    padding: 0.4rem 0.85rem;
+  }
+}

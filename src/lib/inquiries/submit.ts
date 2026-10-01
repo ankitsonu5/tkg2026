@@ -3,8 +3,10 @@ import { randomBytes, randomUUID } from 'node:crypto'
 import type { Payload } from 'payload'
 
 import { getBaselineRoute } from '@/baseline/inquiry-routes'
+import { subscribeToNewsletter } from '@/lib/newsletter/subscribe'
 import { normalizeAttribution } from './attribution'
 import { consumeRateLimit } from './rate-limit'
+import { routeReadinessProblems } from './routing-readiness'
 import { computeSlaDueAt, type SlaClock } from './sla'
 import { validateSubmission, type FieldError } from './validate'
 
@@ -23,12 +25,14 @@ import { validateSubmission, type FieldError } from './validate'
  */
 
 export type SubmitOutcome =
-  | { status: 'success'; reference: string; deliveryState: 'delivered'; slaHours: number; slaDueAt: string }
-  | { status: 'pending'; reference: string; deliveryState: 'pending'; slaHours: number; slaDueAt: string }
+  | { status: 'success'; reference: string; deliveryState: 'delivered'; slaHours: number; slaDueAt: string; newsletter?: NewsletterOptInStatus }
+  | { status: 'pending'; reference: string; deliveryState: 'pending'; slaHours: number; slaDueAt: string; newsletter?: NewsletterOptInStatus }
   | { status: 'failed'; reference: string; message: string }
   | { status: 'invalid'; errors: FieldError[] }
   | { status: 'rate-limited'; retryAfterSeconds: number }
   | { status: 'route-unavailable'; message: string }
+
+export type NewsletterOptInStatus = 'confirmation-sent' | 'already-subscribed' | 'failed'
 
 export interface SubmitInput {
   routeId: string
@@ -97,6 +101,12 @@ export async function submitInquiry(payload: Payload, input: SubmitInput): Promi
   const route = routeConfig.docs[0]
   if (!route || route.enabled === false) {
     return { status: 'route-unavailable', message: 'This inquiry route is not currently accepting submissions.' }
+  }
+  if (process.env.NODE_ENV === 'production' && routeReadinessProblems(route).length > 0) {
+    return {
+      status: 'route-unavailable',
+      message: 'This inquiry route is not ready for production delivery. Please try again later.',
+    }
   }
 
   // 4. Idempotency: a retry returns the original lead rather than creating a duplicate.
@@ -218,6 +228,22 @@ export async function submitInquiry(payload: Payload, input: SubmitInput): Promi
     overrideAccess: true,
   })
 
+  let newsletter: NewsletterOptInStatus | undefined
+  if (input.marketingOptIn) {
+    const newsletterOutcome = await subscribeToNewsletter(payload, {
+      email: String(email ?? ''),
+      sourcePage: input.sourcePage,
+      privacyAccepted: true,
+      clientIdentifier: input.clientIdentifier,
+    })
+    newsletter =
+      newsletterOutcome.status === 'success'
+        ? 'confirmation-sent'
+        : newsletterOutcome.status === 'already-subscribed'
+          ? 'already-subscribed'
+          : 'failed'
+  }
+
   if (deliveryState === 'failed') {
     return {
       status: 'failed',
@@ -227,7 +253,8 @@ export async function submitInquiry(payload: Payload, input: SubmitInput): Promi
     }
   }
 
-  return describeOutcome(reference, deliveryState, Number(route.slaHours), slaDueAt.toISOString())
+  const outcome = describeOutcome(reference, deliveryState, Number(route.slaHours), slaDueAt.toISOString())
+  return outcome.status === 'pending' || outcome.status === 'success' ? { ...outcome, newsletter } : outcome
 }
 
 function describeOutcome(

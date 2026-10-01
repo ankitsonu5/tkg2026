@@ -114,18 +114,18 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   fallbackLocale: null;
   globals: {
+    'site-settings': SiteSetting;
     navigation: Navigation;
     footer: Footer;
-    'site-settings': SiteSetting;
   };
   globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
   widgets: {
@@ -160,7 +160,7 @@ export interface UserAuthOperations {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: number;
+  id: string;
   title: string;
   /**
    * Stable PAGE ID from the approved information architecture. Changing this requires a change request.
@@ -180,6 +180,7 @@ export interface Page {
     | 'INITIATIVE'
     | 'SEARCH'
     | 'PRIVACY'
+    | 'TERMS'
     | 'ACCESSIBILITY';
   /**
    * Proposed public path. Frozen into the SEO register before launch; changes require a redirect record.
@@ -227,16 +228,16 @@ export interface Page {
     /**
      * Rights-cleared 1200x630 social image. Subject to the same asset gate.
      */
-    ogImage?: (number | null) | Asset;
+    ogImage?: (string | null) | Asset;
   };
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   /**
    * Accountable role for this record. Roles, not named individuals — names are a G0 dependency.
    */
@@ -329,17 +330,18 @@ export interface HeroBlock {
     | 'MOD-SEARCH-EMPTY'
     | 'MOD-PRIVACY-POLICY'
     | 'MOD-PRIVACY-CONTACT'
+    | 'MOD-TERMS-POLICY'
     | 'MOD-ACCESSIBILITY-COMMITMENT'
     | 'MOD-ACCESSIBILITY-LIMITS'
     | 'MOD-ACCESSIBILITY-ASSISTANCE';
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   /**
    * Positioning line, e.g. Executive Chairman | Enterprise Builder | Investor | Producer.
    */
@@ -349,7 +351,7 @@ export interface HeroBlock {
    * Master statement or page promise. Material claims must be linked above.
    */
   statement?: string | null;
-  image?: (number | null) | Asset;
+  image?: (string | null) | Asset;
   id?: string | null;
   blockName?: string | null;
   blockType: 'hero';
@@ -361,7 +363,7 @@ export interface HeroBlock {
  * via the `definition` "claims".
  */
 export interface Claim {
-  id: number;
+  id: string;
   /**
    * Stable claim ID, e.g. CLAIM-003.
    */
@@ -386,7 +388,7 @@ export interface Claim {
   /**
    * Step 3 — source records and evidence strength. A claim with no source can never reach Ready.
    */
-  sources?: (number | EvidenceSource)[] | null;
+  sources?: (string | EvidenceSource)[] | null;
   status: 'blocked' | 'in-verification' | 'ready' | 'withdrawn';
   /**
    * Step 4 — the exact wording approved for public use. Published copy must match this verbatim.
@@ -409,7 +411,7 @@ export interface Claim {
  * via the `definition` "evidence-sources".
  */
 export interface EvidenceSource {
-  id: number;
+  id: string;
   title: string;
   sourceType:
     | 'corporate-record'
@@ -443,7 +445,7 @@ export interface EvidenceSource {
  * via the `definition` "assets".
  */
 export interface Asset {
-  id: number;
+  id: string;
   /**
    * Stable asset ID, e.g. AST-015.
    */
@@ -611,17 +613,18 @@ export interface RichTextBlock {
     | 'MOD-SEARCH-EMPTY'
     | 'MOD-PRIVACY-POLICY'
     | 'MOD-PRIVACY-CONTACT'
+    | 'MOD-TERMS-POLICY'
     | 'MOD-ACCESSIBILITY-COMMITMENT'
     | 'MOD-ACCESSIBILITY-LIMITS'
     | 'MOD-ACCESSIBILITY-ASSISTANCE';
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   heading?: string | null;
   body?: {
     root: {
@@ -722,17 +725,18 @@ export interface ProofBlock {
     | 'MOD-SEARCH-EMPTY'
     | 'MOD-PRIVACY-POLICY'
     | 'MOD-PRIVACY-CONTACT'
+    | 'MOD-TERMS-POLICY'
     | 'MOD-ACCESSIBILITY-COMMITMENT'
     | 'MOD-ACCESSIBILITY-LIMITS'
     | 'MOD-ACCESSIBILITY-ASSISTANCE';
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   heading: string;
   body?: string | null;
   points?:
@@ -742,7 +746,7 @@ export interface ProofBlock {
         /**
          * Link the claim that supports this point. Unlinked metrics are not publishable.
          */
-        claim?: (number | null) | Claim;
+        claim?: (string | null) | Claim;
         id?: string | null;
       }[]
     | null;
@@ -830,17 +834,18 @@ export interface TimelineBlock {
     | 'MOD-SEARCH-EMPTY'
     | 'MOD-PRIVACY-POLICY'
     | 'MOD-PRIVACY-CONTACT'
+    | 'MOD-TERMS-POLICY'
     | 'MOD-ACCESSIBILITY-COMMITMENT'
     | 'MOD-ACCESSIBILITY-LIMITS'
     | 'MOD-ACCESSIBILITY-ASSISTANCE';
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   heading: string;
   entries?:
     | {
@@ -848,7 +853,7 @@ export interface TimelineBlock {
         title: string;
         detail?: string | null;
         roleStatus: 'current' | 'former' | 'unresolved';
-        claim?: (number | null) | Claim;
+        claim?: (string | null) | Claim;
         id?: string | null;
       }[]
     | null;
@@ -936,17 +941,18 @@ export interface CardGridBlock {
     | 'MOD-SEARCH-EMPTY'
     | 'MOD-PRIVACY-POLICY'
     | 'MOD-PRIVACY-CONTACT'
+    | 'MOD-TERMS-POLICY'
     | 'MOD-ACCESSIBILITY-COMMITMENT'
     | 'MOD-ACCESSIBILITY-LIMITS'
     | 'MOD-ACCESSIBILITY-ASSISTANCE';
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   heading: string;
   intro?: string | null;
   source?: ('entities' | 'projects' | 'initiatives' | 'articles') | null;
@@ -1035,17 +1041,18 @@ export interface CtaBlock {
     | 'MOD-SEARCH-EMPTY'
     | 'MOD-PRIVACY-POLICY'
     | 'MOD-PRIVACY-CONTACT'
+    | 'MOD-TERMS-POLICY'
     | 'MOD-ACCESSIBILITY-COMMITMENT'
     | 'MOD-ACCESSIBILITY-LIMITS'
     | 'MOD-ACCESSIBILITY-ASSISTANCE';
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   ctaId: string;
   heading: string;
   body?: string | null;
@@ -1137,17 +1144,18 @@ export interface NewsletterBlock {
     | 'MOD-SEARCH-EMPTY'
     | 'MOD-PRIVACY-POLICY'
     | 'MOD-PRIVACY-CONTACT'
+    | 'MOD-TERMS-POLICY'
     | 'MOD-ACCESSIBILITY-COMMITMENT'
     | 'MOD-ACCESSIBILITY-LIMITS'
     | 'MOD-ACCESSIBILITY-ASSISTANCE';
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   heading: string;
   body?: string | null;
   id?: string | null;
@@ -1159,7 +1167,7 @@ export interface NewsletterBlock {
  * via the `definition` "articles".
  */
 export interface Article {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   excerpt?: string | null;
@@ -1185,8 +1193,8 @@ export interface Article {
     };
     [k: string]: unknown;
   } | null;
-  heroImage?: (number | null) | Asset;
-  related?: (number | Article)[] | null;
+  heroImage?: (string | null) | Asset;
+  related?: (string | Article)[] | null;
   seo?: {
     /**
      * SEO record ID, e.g. SEO-HOME.
@@ -1207,16 +1215,16 @@ export interface Article {
     /**
      * Rights-cleared 1200x630 social image. Subject to the same asset gate.
      */
-    ogImage?: (number | null) | Asset;
+    ogImage?: (string | null) | Asset;
   };
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   /**
    * Accountable role for this record. Roles, not named individuals — names are a G0 dependency.
    */
@@ -1234,7 +1242,7 @@ export interface Article {
  * via the `definition` "entities".
  */
 export interface Entity {
-  id: number;
+  id: string;
   name: string;
   slug: string;
   /**
@@ -1266,7 +1274,7 @@ export interface Entity {
    * Official destination. Validated as http(s) before it is rendered as an outbound link.
    */
   officialUrl?: string | null;
-  logo?: (number | null) | Asset;
+  logo?: (string | null) | Asset;
   displayOrder?: number | null;
   seo?: {
     /**
@@ -1288,16 +1296,16 @@ export interface Entity {
     /**
      * Rights-cleared 1200x630 social image. Subject to the same asset gate.
      */
-    ogImage?: (number | null) | Asset;
+    ogImage?: (string | null) | Asset;
   };
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   /**
    * Accountable role for this record. Roles, not named individuals — names are a G0 dependency.
    */
@@ -1315,7 +1323,7 @@ export interface Entity {
  * via the `definition` "projects".
  */
 export interface Project {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   creditStatus: 'verified' | 'unresolved';
@@ -1345,7 +1353,7 @@ export interface Project {
    * Official viewing destination.
    */
   officialUrl?: string | null;
-  keyArt?: (number | null) | Asset;
+  keyArt?: (string | null) | Asset;
   displayOrder?: number | null;
   seo?: {
     /**
@@ -1367,16 +1375,16 @@ export interface Project {
     /**
      * Rights-cleared 1200x630 social image. Subject to the same asset gate.
      */
-    ogImage?: (number | null) | Asset;
+    ogImage?: (string | null) | Asset;
   };
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   /**
    * Accountable role for this record. Roles, not named individuals — names are a G0 dependency.
    */
@@ -1394,7 +1402,7 @@ export interface Project {
  * via the `definition` "initiatives".
  */
 export interface Initiative {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   legalStatus: 'registered' | 'program' | 'unresolved';
@@ -1423,7 +1431,7 @@ export interface Initiative {
     | {
         measure: string;
         methodologyNote: string;
-        claim: number | Claim;
+        claim: string | Claim;
         id?: string | null;
       }[]
     | null;
@@ -1459,16 +1467,16 @@ export interface Initiative {
     /**
      * Rights-cleared 1200x630 social image. Subject to the same asset gate.
      */
-    ogImage?: (number | null) | Asset;
+    ogImage?: (string | null) | Asset;
   };
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   /**
    * Accountable role for this record. Roles, not named individuals — names are a G0 dependency.
    */
@@ -1486,7 +1494,7 @@ export interface Initiative {
  * via the `definition` "downloads".
  */
 export interface Download {
-  id: number;
+  id: string;
   title: string;
   /**
    * Stable asset ID used in the download analytics event.
@@ -1497,7 +1505,7 @@ export interface Download {
   /**
    * The downloadable file. Subject to the asset rights gate.
    */
-  file?: (number | null) | Asset;
+  file?: (string | null) | Asset;
   /**
    * Accessible text equivalent of the download contents.
    */
@@ -1505,11 +1513,11 @@ export interface Download {
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
    */
-  claims?: (number | Claim)[] | null;
+  claims?: (string | Claim)[] | null;
   /**
    * Every published asset on this record. Publication is blocked until rights, credit, release and accessibility metadata are complete.
    */
-  assets?: (number | Asset)[] | null;
+  assets?: (string | Asset)[] | null;
   /**
    * Accountable role for this record. Roles, not named individuals — names are a G0 dependency.
    */
@@ -1529,7 +1537,7 @@ export interface Download {
  * via the `definition` "inquiry-routes".
  */
 export interface InquiryRoute {
-  id: number;
+  id: string;
   routeId: 'strategic-partnership' | 'investment-ma' | 'speaking' | 'media' | 'creative' | 'impact' | 'general';
   label: string;
   /**
@@ -1580,7 +1588,7 @@ export interface InquiryRoute {
  * via the `definition` "inquiries".
  */
 export interface Inquiry {
-  id: number;
+  id: string;
   /**
    * Operational reference shown to the sender. Distinct from any analytics identifier.
    */
@@ -1658,8 +1666,8 @@ export interface Inquiry {
  * via the `definition` "delivery-attempts".
  */
 export interface DeliveryAttempt {
-  id: number;
-  inquiry: number | Inquiry;
+  id: string;
+  inquiry: string | Inquiry;
   route: string;
   recipientKind: 'primary' | 'backup' | 'sender-ack';
   recipient: string;
@@ -1688,13 +1696,19 @@ export interface DeliveryAttempt {
  * via the `definition` "newsletter-subscriptions".
  */
 export interface NewsletterSubscription {
-  id: number;
+  id: string;
   email: string;
   state: 'pending-confirmation' | 'subscribed' | 'unsubscribed';
   /**
-   * Unguessable token for confirm and unsubscribe links.
+   * Single-use token for the confirmation link.
    */
   confirmationToken?: string | null;
+  confirmationExpiresAt?: string | null;
+  confirmationSentAt?: string | null;
+  /**
+   * Provider receipt proving transport acceptance.
+   */
+  confirmationMessageId?: string | null;
   consentedAt: string;
   policyVersion: string;
   confirmedAt?: string | null;
@@ -1708,7 +1722,7 @@ export interface NewsletterSubscription {
  * via the `definition` "redirects".
  */
 export interface Redirect {
-  id: number;
+  id: string;
   /**
    * Inventoried legacy path, verified to have existed. Do not invent old routes.
    */
@@ -1727,7 +1741,7 @@ export interface Redirect {
  * via the `definition` "rate-limit-buckets".
  */
 export interface RateLimitBucket {
-  id: number;
+  id: string;
   key: string;
   count: number;
   windowStart: string;
@@ -1740,7 +1754,7 @@ export interface RateLimitBucket {
  * via the `definition` "audit-events".
  */
 export interface AuditEvent {
-  id: number;
+  id: string;
   event: string;
   subjectCollection?: string | null;
   subjectId?: string | null;
@@ -1758,7 +1772,7 @@ export interface AuditEvent {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   name: string;
   /**
    * A user may hold several explicit roles. Least privilege applies.
@@ -1794,7 +1808,7 @@ export interface User {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number;
+  id: string;
   key: string;
   data:
     | {
@@ -1811,80 +1825,80 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'pages';
-        value: number | Page;
+        value: string | Page;
       } | null)
     | ({
         relationTo: 'articles';
-        value: number | Article;
+        value: string | Article;
       } | null)
     | ({
         relationTo: 'entities';
-        value: number | Entity;
+        value: string | Entity;
       } | null)
     | ({
         relationTo: 'projects';
-        value: number | Project;
+        value: string | Project;
       } | null)
     | ({
         relationTo: 'initiatives';
-        value: number | Initiative;
+        value: string | Initiative;
       } | null)
     | ({
         relationTo: 'downloads';
-        value: number | Download;
+        value: string | Download;
       } | null)
     | ({
         relationTo: 'claims';
-        value: number | Claim;
+        value: string | Claim;
       } | null)
     | ({
         relationTo: 'evidence-sources';
-        value: number | EvidenceSource;
+        value: string | EvidenceSource;
       } | null)
     | ({
         relationTo: 'assets';
-        value: number | Asset;
+        value: string | Asset;
       } | null)
     | ({
         relationTo: 'inquiry-routes';
-        value: number | InquiryRoute;
+        value: string | InquiryRoute;
       } | null)
     | ({
         relationTo: 'inquiries';
-        value: number | Inquiry;
+        value: string | Inquiry;
       } | null)
     | ({
         relationTo: 'delivery-attempts';
-        value: number | DeliveryAttempt;
+        value: string | DeliveryAttempt;
       } | null)
     | ({
         relationTo: 'newsletter-subscriptions';
-        value: number | NewsletterSubscription;
+        value: string | NewsletterSubscription;
       } | null)
     | ({
         relationTo: 'redirects';
-        value: number | Redirect;
+        value: string | Redirect;
       } | null)
     | ({
         relationTo: 'rate-limit-buckets';
-        value: number | RateLimitBucket;
+        value: string | RateLimitBucket;
       } | null)
     | ({
         relationTo: 'audit-events';
-        value: number | AuditEvent;
+        value: string | AuditEvent;
       } | null)
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -1894,10 +1908,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -1917,7 +1931,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -2451,6 +2465,9 @@ export interface NewsletterSubscriptionsSelect<T extends boolean = true> {
   email?: T;
   state?: T;
   confirmationToken?: T;
+  confirmationExpiresAt?: T;
+  confirmationSentAt?: T;
+  confirmationMessageId?: T;
   consentedAt?: T;
   policyVersion?: T;
   confirmedAt?: T;
@@ -2564,10 +2581,44 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: string;
+  siteName: string;
+  /**
+   * Approved positioning. Changing this is a Class A strategic decision requiring Tel approval.
+   */
+  positioningLine: string;
+  masterStatement: string;
+  /**
+   * Verified production origin used for absolute canonicals. UNSET until the domain decision is made (Appendix C). Canonicals are suppressed while unset rather than guessed.
+   */
+  productionOrigin?: string | null;
+  /**
+   * Master indexation switch. Defaults OFF so staging is private and noindex. Turned on only at launch authorization.
+   */
+  allowIndexing?: boolean | null;
+  /**
+   * Version stamped onto every consent record. Stays "draft-unapproved" until the privacy reviewer signs off.
+   */
+  privacyPolicyVersion: string;
+  analytics?: {
+    /**
+     * Optional. Analytics stays inert until this is configured AND consent is granted.
+     */
+    ga4MeasurementId?: string | null;
+    enabled?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "navigation".
  */
 export interface Navigation {
-  id: number;
+  id: string;
   /**
    * Approved primary navigation: About | Enterprise & Investments | Ideas | Film & Culture | Impact | Media & Speaking | Connect.
    */
@@ -2585,7 +2636,7 @@ export interface Navigation {
  * via the `definition` "footer".
  */
 export interface Footer {
-  id: number;
+  id: string;
   /**
    * Grouped footer navigation.
    */
@@ -2622,37 +2673,24 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-settings".
+ * via the `definition` "site-settings_select".
  */
-export interface SiteSetting {
-  id: number;
-  siteName: string;
-  /**
-   * Approved positioning. Changing this is a Class A strategic decision requiring Tel approval.
-   */
-  positioningLine: string;
-  masterStatement: string;
-  /**
-   * Verified production origin used for absolute canonicals. UNSET until the domain decision is made (Appendix C). Canonicals are suppressed while unset rather than guessed.
-   */
-  productionOrigin?: string | null;
-  /**
-   * Master indexation switch. Defaults OFF so staging is private and noindex. Turned on only at launch authorization.
-   */
-  allowIndexing?: boolean | null;
-  /**
-   * Version stamped onto every consent record. Stays "draft-unapproved" until the privacy reviewer signs off.
-   */
-  privacyPolicyVersion: string;
-  analytics?: {
-    /**
-     * Optional. Analytics stays inert until this is configured AND consent is granted.
-     */
-    ga4MeasurementId?: string | null;
-    enabled?: boolean | null;
-  };
-  updatedAt?: string | null;
-  createdAt?: string | null;
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteName?: T;
+  positioningLine?: T;
+  masterStatement?: T;
+  productionOrigin?: T;
+  allowIndexing?: T;
+  privacyPolicyVersion?: T;
+  analytics?:
+    | T
+    | {
+        ga4MeasurementId?: T;
+        enabled?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2698,27 +2736,6 @@ export interface FooterSelect<T extends boolean = true> {
         id?: T;
       };
   legalLine?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "site-settings_select".
- */
-export interface SiteSettingsSelect<T extends boolean = true> {
-  siteName?: T;
-  positioningLine?: T;
-  masterStatement?: T;
-  productionOrigin?: T;
-  allowIndexing?: T;
-  privacyPolicyVersion?: T;
-  analytics?:
-    | T
-    | {
-        ga4MeasurementId?: T;
-        enabled?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

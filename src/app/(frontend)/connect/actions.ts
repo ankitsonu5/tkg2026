@@ -3,6 +3,7 @@
 import { headers } from 'next/headers'
 
 import { getPayloadClient } from '@/lib/payload'
+import { runDeliveryPass } from '@/jobs/deliver-inquiries'
 import { submitInquiry, type SubmitOutcome } from '@/lib/inquiries/submit'
 
 /**
@@ -27,7 +28,7 @@ export async function submitInquiryAction(formData: FormData): Promise<SubmitOut
   const forwarded = headerList.get('x-forwarded-for') ?? ''
   const clientIdentifier = forwarded.split(',')[0].trim() || headerList.get('x-real-ip') || 'unknown'
 
-  return submitInquiry(payload, {
+  const outcome = await submitInquiry(payload, {
     routeId,
     values,
     sourcePage: String(formData.get('sourcePage') ?? ''),
@@ -43,4 +44,28 @@ export async function submitInquiryAction(formData: FormData): Promise<SubmitOut
     idempotencyKey: String(formData.get('idempotencyKey') ?? ''),
     clientIdentifier,
   })
+
+  if (outcome.status !== 'pending') return outcome
+
+  // Attempt delivery right away so email works without a separate long-running worker
+  // (localhost, and serverless hosting where no worker can run). Anything that fails here
+  // stays queued and is retried by `npm run worker:delivery` or the /api/cron/deliver route.
+  try {
+    await runDeliveryPass(payload, { batchSize: 10 })
+    const stored = await payload.find({
+      collection: 'inquiries',
+      where: { reference: { equals: outcome.reference } },
+      limit: 1,
+      pagination: false,
+      depth: 0,
+      overrideAccess: true,
+    })
+    if (stored.docs[0]?.deliveryState === 'delivered') {
+      return { ...outcome, status: 'success', deliveryState: 'delivered' }
+    }
+  } catch (error) {
+    console.error('immediate inquiry delivery failed; left queued for retry:', error)
+  }
+
+  return outcome
 }

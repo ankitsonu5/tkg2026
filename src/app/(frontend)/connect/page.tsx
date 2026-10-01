@@ -3,9 +3,12 @@ import type { Metadata } from 'next'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { IntentSelector } from '@/components/IntentSelector'
 import { buildMetadata } from '@/lib/seo/metadata'
+import { buildPageSchema } from '@/lib/seo/schema'
+import { JsonLd } from '@/frontend/components/JsonLd'
 import { getBaselinePage } from '@/baseline/pages'
 import { getPayloadClient } from '@/lib/payload'
 import { BASELINE_INQUIRY_ROUTES } from '@/baseline/inquiry-routes'
+import { routeReadinessProblems } from '@/lib/inquiries/routing-readiness'
 
 const PAGE_ID = 'CONNECT'
 
@@ -30,37 +33,63 @@ export default async function ConnectRoute({
     overrideAccess: true,
   })
 
-  // Only enabled, configured routes are offered. Route availability comes from the CMS, but
-  // the field schema and qualification wording come from the baseline constants.
-  const enabled = new Set(configured.docs.filter((r) => r.enabled !== false).map((r) => String(r.routeId)))
-  const routes = BASELINE_INQUIRY_ROUTES.filter((r) => enabled.has(r.routeId))
-
-  const acceptance = Object.fromEntries(
-    configured.docs.map((r) => [String(r.routeId), String(r.acceptanceStatus ?? 'unassigned')]),
+  const productionReady = Object.fromEntries(
+    configured.docs.map((r) => [String(r.routeId), routeReadinessProblems(r).length === 0]),
   )
 
+  // Only enabled, configured routes are offered. Production additionally hides routes that
+  // cannot reach two real, accepted owner mailboxes; the server action enforces the same gate.
+  const enabled = new Set(
+    configured.docs
+      .filter(
+        (r) =>
+          r.enabled !== false &&
+          (process.env.NODE_ENV !== 'production' || productionReady[String(r.routeId)]),
+      )
+      .map((r) => String(r.routeId)),
+  )
+  const routes = BASELINE_INQUIRY_ROUTES.filter((r) => enabled.has(r.routeId))
+
   return (
-    <div className="container">
-      <Breadcrumbs pageId={PAGE_ID} />
-      <header className="page-header">
-        <p className="page-header__eyebrow">Connect</p>
-        <h1>Submit a qualified inquiry</h1>
-        <p className="section__lede">
-          Choose the route that matches your request. Each route asks only for the context its owner needs to respond
-          accountably, and states the response window before you submit.
-        </p>
+    <>
+      <JsonLd schema={buildPageSchema(PAGE_ID, '/connect')} />
+      {/* ── Premium hero section ── */}
+      <header className="inner-hero inner-hero--compact">
+        <div className="container">
+          <Breadcrumbs pageId={PAGE_ID} />
+          <div className="inner-hero__grid">
+            <div>
+              <p className="eyebrow eyebrow--gold">Connect</p>
+              <h1>Start a qualified{'\n'}conversation.</h1>
+            </div>
+            <div className="inner-hero__aside">
+              <p>
+                Choose the route that matches your request. Each route asks only for the context
+                its owner needs to respond accountably, and states the response window before you submit.
+              </p>
+              <a href="#inquiry-selector" className="cta cta--secondary">
+                Submit a Qualified Inquiry <span aria-hidden="true">&darr;</span>
+              </a>
+            </div>
+          </div>
+        </div>
       </header>
 
-      {routes.length === 0 ? (
-        <div className="empty-state">
-          <p>
-            <strong>No inquiry routes are currently accepting submissions.</strong>
-          </p>
-          <p>Route records must be seeded and enabled before the intent selector appears.</p>
+      {/* ── Inquiry selector below hero ── */}
+      <section className="section connect-selector-section" id="inquiry-selector">
+        <div className="container">
+          {routes.length === 0 ? (
+            <div className="empty-state">
+              <p>
+                <strong>No inquiry routes are currently accepting submissions.</strong>
+              </p>
+              <p>Route records must be seeded and enabled before the intent selector appears.</p>
+            </div>
+          ) : (
+            <IntentSelector routes={routes} initialRouteId={route} productionReady={productionReady} />
+          )}
         </div>
-      ) : (
-        <IntentSelector routes={routes} initialRouteId={route} acceptance={acceptance} />
-      )}
-    </div>
+      </section>
+    </>
   )
 }

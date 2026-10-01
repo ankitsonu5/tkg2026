@@ -26,6 +26,39 @@
       "@/*": [
         "./src/*"
       ],
+      "@/components/*": [
+        "./src/frontend/components/*"
+      ],
+      "@/frontend/*": [
+        "./src/frontend/*"
+      ],
+      "@/backend/*": [
+        "./src/backend/*"
+      ],
+      "@/collections/*": [
+        "./src/backend/collections/*"
+      ],
+      "@/access": [
+        "./src/backend/access"
+      ],
+      "@/access/*": [
+        "./src/backend/access/*"
+      ],
+      "@/globals/*": [
+        "./src/backend/globals/*"
+      ],
+      "@/jobs": [
+        "./src/backend/jobs"
+      ],
+      "@/jobs/*": [
+        "./src/backend/jobs/*"
+      ],
+      "@/blocks": [
+        "./src/backend/blocks"
+      ],
+      "@/blocks/*": [
+        "./src/backend/blocks/*"
+      ],
       "@payload-config": [
         "./src/payload.config.ts"
       ]
@@ -37,9 +70,11 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    ".next/dev/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/backend/payload-types.ts"
   ]
 }

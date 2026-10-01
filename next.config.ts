@@ -7,10 +7,17 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
+  compress: true,
+  poweredByHeader: false,
   images: {
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 80, 85, 90, 92],
     localPatterns: [
       {
         pathname: '/api/assets/file/**',
+      },
+      {
+        pathname: '/images/**',
       },
     ],
   },
