@@ -487,6 +487,8 @@ export interface Asset {
    * Clearly identified development placeholder. Placeholders must never enter public release.
    */
   developmentPlaceholder?: boolean | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1169,15 +1171,25 @@ export interface NewsletterBlock {
 export interface Article {
   id: string;
   title: string;
+  /**
+   * Web address of the post. Leave empty and it is created from the title.
+   */
   slug: string;
   excerpt?: string | null;
   topic: 'enterprise' | 'leadership' | 'investing' | 'mind-trap' | 'culture' | 'impact';
+  /**
+   * Type a tag and press Enter. Tags appear in the article sidebar and link to related posts.
+   */
+  tags?: string[] | null;
   isFramework?: boolean | null;
   /**
    * Authorship must be settled before publication (Section 6, Ideas).
    */
   authorshipStatus: 'authored' | 'co-authored' | 'unresolved';
   publishedDate?: string | null;
+  /**
+   * Write like in WordPress. Select text for bold, italic, link or heading. Type "/" on an empty line to insert a Pull Quote, Callout, Key Takeaways, FAQ, Video, Image, Table or Button.
+   */
   body?: {
     root: {
       type: string;
@@ -1216,6 +1228,16 @@ export interface Article {
      * Rights-cleared 1200x630 social image. Subject to the same asset gate.
      */
     ogImage?: (string | null) | Asset;
+  };
+  seoAnalysis?: {
+    /**
+     * The main phrase this article should rank for, e.g. "performance stack system".
+     */
+    focusKeyword?: string | null;
+    /**
+     * Calculated when you save.
+     */
+    score?: number | null;
   };
   /**
    * Every material public claim on this record. Publication is blocked until each linked claim is Ready with approved wording and unexpired review date.
@@ -1791,6 +1813,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -2108,6 +2131,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   slug?: T;
   excerpt?: T;
   topic?: T;
+  tags?: T;
   isFramework?: T;
   authorshipStatus?: T;
   publishedDate?: T;
@@ -2122,6 +2146,12 @@ export interface ArticlesSelect<T extends boolean = true> {
         description?: T;
         noindex?: T;
         ogImage?: T;
+      };
+  seoAnalysis?:
+    | T
+    | {
+        focusKeyword?: T;
+        score?: T;
       };
   claims?: T;
   assets?: T;
@@ -2315,6 +2345,8 @@ export interface AssetsSelect<T extends boolean = true> {
   captionsOrTranscript?: T;
   version?: T;
   developmentPlaceholder?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2529,6 +2561,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:

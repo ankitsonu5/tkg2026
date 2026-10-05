@@ -12,6 +12,9 @@ import { routeReadinessProblems } from '@/lib/inquiries/routing-readiness'
 
 const PAGE_ID = 'CONNECT'
 
+/** The inquiry server action runs under this route: allow time for the post-response email send. */
+export const maxDuration = 30
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = getBaselinePage(PAGE_ID)!
   return buildMetadata({ pageId: PAGE_ID, title: page.title, description: page.purpose, path: page.path })

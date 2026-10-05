@@ -8,6 +8,7 @@ import { submitInquiryAction } from '@/app/(frontend)/connect/actions'
 import { track } from '@/lib/analytics/adapter'
 import { readConsent } from '@/lib/analytics/adapter'
 import { ATTRIBUTION_STORAGE_KEY } from '@/lib/inquiries/attribution'
+import { ThankYouModal, type ThankYouDetails } from './ThankYouModal'
 
 /**
  * Route-specific qualification form (FR-FORM-01).
@@ -19,14 +20,22 @@ import { ATTRIBUTION_STORAGE_KEY } from '@/lib/inquiries/attribution'
 export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
   const [outcome, setOutcome] = useState<SubmitOutcome | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [thanks, setThanks] = useState<ThankYouDetails | null>(null)
+  const formRef = useRef<HTMLFormElement>(null)
   const idempotencyKey = useRef<string>('')
   const startedRef = useRef(false)
   const statusRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  const newAttemptKey = () => {
     // One key per form attempt, so a retry of the same attempt cannot create a second lead.
     idempotencyKey.current =
-      typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : String(Date.now())
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : String(Date.now())
+  }
+
+  useEffect(() => {
+    newAttemptKey()
   }, [route.routeId])
 
   const onFirstInteraction = () => {
@@ -44,7 +53,8 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
     setSubmitting(true)
     setOutcome(null)
 
-    const formData = new FormData(event.currentTarget)
+    const form = event.currentTarget
+    const formData = new FormData(form)
     formData.set('routeId', route.routeId)
     formData.set('idempotencyKey', idempotencyKey.current)
     formData.set('sourcePage', window.location.pathname)
@@ -66,7 +76,23 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
 
     try {
       const result = await submitInquiryAction(formData)
-      setOutcome(result)
+
+      if (result.status === 'success' || result.status === 'pending') {
+        // Show the thank-you popup and leave a clean form behind, ready for another inquiry.
+        setOutcome(null)
+        setThanks({
+          status: result.status,
+          reference: result.reference,
+          ownerRole: route.ownerRole,
+          slaHours: result.slaHours,
+          newsletter: result.newsletter,
+        })
+        form.reset()
+        startedRef.current = false
+        newAttemptKey()
+      } else {
+        setOutcome(result)
+      }
 
       if (result.status === 'success' || result.status === 'pending') {
         track('form_submit', {
@@ -81,20 +107,35 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
           error_class: result.errors.map((e) => e.errorClass).join('|'),
         })
       } else {
-        track('form_error', { form_id: route.formId, route_id: route.routeId, error_class: result.status })
+        track('form_error', {
+          form_id: route.formId,
+          route_id: route.routeId,
+          error_class: result.status,
+        })
       }
     } catch {
-      setOutcome({ status: 'failed', reference: '-', message: 'The submission could not be completed. Please try again.' })
-      track('form_error', { form_id: route.formId, route_id: route.routeId, error_class: 'exception' })
+      setOutcome({
+        status: 'failed',
+        reference: '-',
+        message: 'The submission could not be completed. Please try again.',
+      })
+      track('form_error', {
+        form_id: route.formId,
+        route_id: route.routeId,
+        error_class: 'exception',
+      })
     } finally {
       setSubmitting(false)
-      // Move focus to the result so screen reader users hear the outcome.
+      // Move focus to the result so screen reader users hear the outcome (the thank-you popup
+      // manages its own focus).
       requestAnimationFrame(() => statusRef.current?.focus())
     }
   }
 
   const fieldErrors =
-    outcome?.status === 'invalid' ? Object.fromEntries(outcome.errors.map((e) => [e.field, e.message])) : {}
+    outcome?.status === 'invalid'
+      ? Object.fromEntries(outcome.errors.map((e) => [e.field, e.message]))
+      : {}
 
   return (
     <>
@@ -102,8 +143,16 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
         {outcome && <Outcome outcome={outcome} route={route} />}
       </div>
 
-      {outcome?.status !== 'success' && outcome?.status !== 'pending' && (
-        <form className="form" onSubmit={onSubmit} onFocusCapture={onFirstInteraction} noValidate>
+      {thanks && <ThankYouModal details={thanks} onClose={() => setThanks(null)} />}
+
+      {
+        <form
+          ref={formRef}
+          className="form"
+          onSubmit={onSubmit}
+          onFocusCapture={onFirstInteraction}
+          noValidate
+        >
           <h2>{route.label}</h2>
           <p className="section__lede">{route.minimumQualification}.</p>
 
@@ -148,7 +197,9 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
                 ) : (
                   <input
                     id={id}
-                    type={field.type === 'email' ? 'email' : field.type === 'date' ? 'date' : 'text'}
+                    type={
+                      field.type === 'email' ? 'email' : field.type === 'date' ? 'date' : 'text'
+                    }
                     name={`field.${field.name}`}
                     required={field.required}
                     maxLength={field.maxLength}
@@ -178,7 +229,8 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
             <label htmlFor="privacyAccepted">
               I have read the privacy notice.
               <span className="field__purpose">
-                Your details are used to route and answer this inquiry. See the <a href="/privacy">Privacy Policy</a>.
+                Your details are used to route and answer this inquiry. See the{' '}
+                <a href="/privacy">Privacy Policy</a>.
               </span>
             </label>
           </div>
@@ -203,7 +255,7 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
             {submitting ? 'Submitting…' : 'Submit qualified inquiry'}
           </button>
         </form>
-      )}
+      }
     </>
   )
 }
@@ -227,8 +279,9 @@ function Outcome({ outcome, route }: { outcome: SubmitOutcome; route: BaselineIn
         <div className="notice">
           <p className="notice__title">Received — delivery in progress</p>
           <p>
-            Your reference is <strong>{outcome.reference}</strong>. Your message is stored and queued for the{' '}
-            {route.ownerRole}; we are confirming delivery now. The response window is {outcome.slaHours} hours.
+            Your reference is <strong>{outcome.reference}</strong>. Your message is stored and
+            queued for the {route.ownerRole}; we are confirming delivery now. The response window is{' '}
+            {outcome.slaHours} hours.
           </p>
           <NewsletterOptInNotice status={outcome.newsletter} />
         </div>
@@ -249,7 +302,9 @@ function Outcome({ outcome, route }: { outcome: SubmitOutcome; route: BaselineIn
       return (
         <div className="notice notice--error">
           <p className="notice__title">Too many submissions</p>
-          <p>Please wait about {Math.ceil(outcome.retryAfterSeconds / 60)} minute(s) and try again.</p>
+          <p>
+            Please wait about {Math.ceil(outcome.retryAfterSeconds / 60)} minute(s) and try again.
+          </p>
         </div>
       )
 
@@ -275,9 +330,19 @@ function Outcome({ outcome, route }: { outcome: SubmitOutcome; route: BaselineIn
   }
 }
 
-function NewsletterOptInNotice({ status }: { status?: 'confirmation-sent' | 'already-subscribed' | 'failed' }) {
+function NewsletterOptInNotice({
+  status,
+}: {
+  status?: 'confirmation-sent' | 'already-subscribed' | 'failed'
+}) {
   if (!status) return null
   if (status === 'confirmation-sent') return <p>We also sent your newsletter confirmation email.</p>
-  if (status === 'already-subscribed') return <p>This email is already subscribed to Tel&rsquo;s Ideas.</p>
-  return <p>Your inquiry was received, but the newsletter confirmation email could not be sent. Please use the newsletter form to retry.</p>
+  if (status === 'already-subscribed')
+    return <p>This email is already subscribed to Tel&rsquo;s Ideas.</p>
+  return (
+    <p>
+      Your inquiry was received, but the newsletter confirmation email could not be sent. Please use
+      the newsletter form to retry.
+    </p>
+  )
 }

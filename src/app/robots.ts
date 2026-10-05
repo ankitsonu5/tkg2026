@@ -9,6 +9,8 @@ import { getPayloadClient } from '@/lib/payload'
  * origin is configured AND indexing is explicitly enabled in site settings (or environment),
  * so a staging or preview deployment stays private without anyone remembering to change a file.
  */
+export const dynamic = 'force-dynamic'
+
 export default async function robots(): Promise<MetadataRoute.Robots> {
   const payload = await getPayloadClient()
   const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: true }).catch(() => null)

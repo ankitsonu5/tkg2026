@@ -21,6 +21,7 @@ import { isPlaceholderRecipient } from '@/lib/inquiries/routing-readiness'
  */
 
 const BASE_BACKOFF_SECONDS = 30
+const STALE_IN_FLIGHT_MS = 10 * 60 * 1000
 
 export interface DeliveryRunResult {
   claimed: number
@@ -176,9 +177,21 @@ export async function runDeliveryPass(payload: Payload, opts: { batchSize?: numb
   const due = await payload.find({
     collection: 'delivery-attempts',
     where: {
-      and: [
-        { state: { in: ['queued', 'failed'] } },
-        { nextAttemptAt: { less_than_equal: now.toISOString() } },
+      or: [
+        {
+          and: [
+            { state: { in: ['queued', 'failed'] } },
+            { nextAttemptAt: { less_than_equal: now.toISOString() } },
+          ],
+        },
+        // Reclaim rows orphaned by a crash or serverless timeout mid-send. Without this an
+        // `in-flight` row is never selected again and the lead is silently stuck.
+        {
+          and: [
+            { state: { equals: 'in-flight' } },
+            { updatedAt: { less_than: new Date(now.getTime() - STALE_IN_FLIGHT_MS).toISOString() } },
+          ],
+        },
       ],
     },
     limit: batchSize,

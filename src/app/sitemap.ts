@@ -11,6 +11,8 @@ import { BASELINE_PAGES } from '@/baseline/pages'
  * is configured AND indexing is enabled, ensuring staging or preview deployments
  * are never crawled or indexed with guessed absolute URLs.
  */
+export const dynamic = 'force-dynamic'
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const payload = await getPayloadClient()
   const settings = await payload.findGlobal({ slug: 'site-settings', overrideAccess: true }).catch(() => null)

@@ -14,7 +14,19 @@ import { JsonLd } from './JsonLd'
  * `preview` is honoured only for an authenticated request; an anonymous visitor always gets
  * the published-only query, so a draft cannot be read by adding ?preview=1 to the URL.
  */
-export async function PageTemplate({ pageId, preview = false }: { pageId: string; preview?: boolean }) {
+export async function PageTemplate({
+  pageId,
+  preview = false,
+  articlesPage,
+  articlesTag,
+}: {
+  pageId: string
+  preview?: boolean
+  /** Current page of the blog listing (IDEAS only). */
+  articlesPage?: number
+  /** Active tag filter on the blog listing (IDEAS only). */
+  articlesTag?: string
+}) {
   const baseline = getBaselinePage(pageId)
   if (!baseline) notFound()
 
@@ -36,7 +48,7 @@ export async function PageTemplate({ pageId, preview = false }: { pageId: string
     <>
       <JsonLd schema={pageSchema} />
       {!page ? (
-        <BaselinePage pageId={pageId} />
+        <BaselinePage pageId={pageId} articlesPage={articlesPage} articlesTag={articlesTag} />
       ) : (
         <>
           {preview && page._status !== 'published' && (

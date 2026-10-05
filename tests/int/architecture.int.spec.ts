@@ -18,10 +18,10 @@ describe('Baseline architecture invariants', () => {
     payload = await testPayload()
   })
 
-  it('QA-IA-01: exactly 15 page/template types are defined with unique Page IDs and paths', () => {
-    expect(BASELINE_PAGES).toHaveLength(15)
-    expect(new Set(BASELINE_PAGES.map((p) => p.pageId)).size).toBe(15)
-    expect(new Set(BASELINE_PAGES.map((p) => p.path)).size).toBe(15)
+  it('QA-IA-01: exactly 16 page/template types are defined with unique Page IDs and paths', () => {
+    expect(BASELINE_PAGES).toHaveLength(16)
+    expect(new Set(BASELINE_PAGES.map((p) => p.pageId)).size).toBe(16)
+    expect(new Set(BASELINE_PAGES.map((p) => p.path)).size).toBe(16)
   })
 
   it('QA-IA-02: primary navigation matches the approved seven-route architecture', () => {
@@ -37,9 +37,15 @@ describe('Baseline architecture invariants', () => {
   })
 
   it('QA-IA-03: every page declares a primary CTA and its modules', () => {
+    // The Terms of Use page is a legal document and deliberately carries no call to action.
+    const WITHOUT_CTA = new Set(['TERMS'])
     for (const page of BASELINE_PAGES) {
-      expect(page.primaryCta, page.pageId).toBeTruthy()
-      expect(page.primaryCtaId, page.pageId).toMatch(/^CTA-/)
+      if (WITHOUT_CTA.has(page.pageId)) {
+        expect(page.primaryCta, page.pageId).toBeNull()
+      } else {
+        expect(page.primaryCta, page.pageId).toBeTruthy()
+        expect(page.primaryCtaId, page.pageId).toMatch(/^CTA-/)
+      }
       expect(page.modules.length, page.pageId).toBeGreaterThan(0)
       for (const moduleId of page.modules) {
         expect(moduleId, page.pageId).toMatch(/^MOD-/)

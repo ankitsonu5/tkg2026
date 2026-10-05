@@ -56,6 +56,17 @@ export function writeConsent(state: Exclude<ConsentState, 'unset'>): void {
   window.dispatchEvent(new Event(CONSENT_CHANGE_EVENT))
 }
 
+let activeMeasurementId: string | undefined
+
+/**
+ * The GA4 ID can come from the CMS (Site Settings) as well as the environment. The provider
+ * registers whichever one it resolved so `track()` never silently drops events when only the
+ * CMS value is set.
+ */
+export function setMeasurementId(id: string | null | undefined): void {
+  activeMeasurementId = id?.trim() || undefined
+}
+
 const seenOnce = new Set<string>()
 
 export function resetAnalyticsState(): void {
@@ -115,14 +126,17 @@ export function track(
     }
   }
 
-  const measurementId = process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID
+  const measurementId = activeMeasurementId || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID
   if (!measurementId) return
 
   window.dataLayer = window.dataLayer || []
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', event, payload)
-  } else {
-    // If gtag script is still loading or defined via dataLayer queuing
-    window.dataLayer.push(['event', event, payload])
+  if (typeof window.gtag !== 'function') {
+    // gtag.js has not loaded yet. Queue with the `arguments` object (not an array), which is
+    // the only shape gtag.js replays correctly once it loads.
+    window.gtag = function gtag() {
+      // eslint-disable-next-line prefer-rest-params
+      window.dataLayer!.push(arguments)
+    }
   }
+  window.gtag('event', event, payload)
 }

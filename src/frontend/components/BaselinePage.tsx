@@ -3,7 +3,6 @@ import Link from 'next/link'
 
 import { Breadcrumbs } from './Breadcrumbs'
 import { CtaLink } from './CtaLink'
-import { DownloadButton } from './DownloadButton'
 import { films } from '../data/films'
 import { PremiumHero } from './PremiumHero'
 import { IdeasArticlesSection } from './IdeasArticlesSection'
@@ -761,7 +760,7 @@ function EnterprisePage() {
   )
 }
 
-function IdeasPage() {
+function IdeasPage({ articlesPage = 1, articlesTag }: { articlesPage?: number; articlesTag?: string }) {
   return (
     <>
       <InnerHero
@@ -771,7 +770,7 @@ function IdeasPage() {
         pageId="IDEAS"
         cta={{ id: 'CTA-IDEAS-PRIMARY', label: "Subscribe to Tel's Ideas", destination: '#subscribe' }}
       />
-      <IdeasArticlesSection />
+      <IdeasArticlesSection page={articlesPage} tag={articlesTag} />
       {/* MOD-IDEAS-FEATURED / MOD-IDEAS-FRAMEWORKS / MOD-IDEAS-MIND-TRAP — Mind Trap is the one
           published framework, so it satisfies "featured" content honestly without inventing an
           article that doesn't exist yet. The 3-step mental model is a genuine sequence (notice, then
@@ -1076,34 +1075,30 @@ function MediaPage() {
                 Executive Biography &amp; Media Kit
               </h2>
               <p style={{ margin: 0, color: '#c4ccd4', fontSize: '0.98rem', lineHeight: 1.6 }}>
-                Download Tel K. Ganesan’s approved executive one-sheet, verified speaking topics, operating milestones, and media broadcast summaries in a single document.
+                The approved executive one-sheet, verified speaking topics and media summaries will be published here once they have been reviewed. For press assets now, please use the Media route below.
               </p>
             </div>
             <div>
-              <DownloadButton
-                href="/downloads/tel-k-ganesan-press-kit.pdf"
-                downloadName="tel-k-ganesan-press-kit.pdf"
-                assetId="tel-k-ganesan-press-kit-pdf"
-                version="2026.1"
-                pageId="MEDIA"
-                ctaId="CTA-MEDIA-PRESSKIT"
-                className="cta cta--gold"
+              {/* The press kit is withheld until its biography claims are approved (Claim Register,
+                  FR-EVD-05). Re-enable DownloadButton with the approved file when cleared. */}
+              <span
+                className="cta cta--secondary"
+                aria-disabled="true"
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.6rem',
                   padding: '0.95rem 2rem',
-                  background: 'linear-gradient(135deg, #d3a246 0%, #b88628 100%)',
-                  color: '#0c1218',
                   borderRadius: '8px',
-                  fontWeight: 750,
+                  border: '1px solid rgba(211, 162, 70, 0.45)',
+                  color: '#d3a246',
+                  fontWeight: 700,
                   fontSize: '0.92rem',
-                  textDecoration: 'none',
-                  boxShadow: '0 4px 16px rgba(184, 134, 40, 0.3)',
+                  cursor: 'not-allowed',
+                  opacity: 0.85,
                 }}
               >
-                Download Press Kit (PDF) <span aria-hidden="true">&darr;</span>
-              </DownloadButton>
+                Press kit &mdash; available after approval
+              </span>
             </div>
           </div>
         </div>
@@ -1191,12 +1186,20 @@ function TermsPage() {
   )
 }
 
-export function BaselinePage({ pageId }: { pageId: string }) {
+export function BaselinePage({
+  pageId,
+  articlesPage,
+  articlesTag,
+}: {
+  pageId: string
+  articlesPage?: number
+  articlesTag?: string
+}) {
   switch (pageId as PageId) {
     case 'HOME': return <HomePage />
     case 'ABOUT': return <AboutPage />
     case 'ENTERPRISE': return <EnterprisePage />
-    case 'IDEAS': return <IdeasPage />
+    case "IDEAS": return <IdeasPage articlesPage={articlesPage} articlesTag={articlesTag} />
     case 'CULTURE': return <CulturePage />
     case 'IMPACT': return <ImpactPage />
     case 'MEDIA': return <MediaPage />

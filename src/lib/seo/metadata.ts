@@ -23,6 +23,10 @@ export interface BuildMetadataArgs {
   /** Overrides the baseline indexable flag, e.g. for a draft preview. */
   noindex?: boolean
   ogImageUrl?: string
+  /** Use 'article' for blog posts so the social card carries publish dates. */
+  ogType?: 'website' | 'article'
+  publishedTime?: string
+  modifiedTime?: string
 }
 
 /**
@@ -60,7 +64,10 @@ export async function buildMetadata(args: BuildMetadataArgs): Promise<Metadata> 
       title: resolvedTitle,
       description: resolvedDescription,
       siteName,
-      type: 'website',
+      type: args.ogType ?? 'website',
+      ...(args.ogType === 'article'
+        ? { publishedTime: args.publishedTime, modifiedTime: args.modifiedTime, authors: ['Tel K. Ganesan'] }
+        : {}),
       ...(origin ? { url: new URL(args.path, origin).toString() } : {}),
       images: [{ url: ogImageUrl, width: 1200, height: 630, alt: resolvedTitle }],
     },

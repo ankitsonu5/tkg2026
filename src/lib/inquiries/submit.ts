@@ -184,8 +184,15 @@ export async function submitInquiry(payload: Payload, input: SubmitInput): Promi
   ]
 
   let queuedOwnerRecipients = 0
+  const queuedOwnerAddresses = new Set<string>()
   for (const recipient of recipients) {
     if (!recipient.address) continue
+    // One mailbox listed as both primary and backup receives a single message, not two.
+    if (recipient.kind !== 'sender-ack') {
+      const key = recipient.address.trim().toLowerCase()
+      if (queuedOwnerAddresses.has(key)) continue
+      queuedOwnerAddresses.add(key)
+    }
     if (recipient.kind !== 'sender-ack') queuedOwnerRecipients += 1
     await payload.create({
       collection: 'delivery-attempts',

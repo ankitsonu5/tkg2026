@@ -6,11 +6,32 @@ import { getBaselinePage } from '@/baseline/pages'
 
 const PAGE_ID = 'IDEAS'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = getBaselinePage(PAGE_ID)!
-  return buildMetadata({ pageId: PAGE_ID, title: page.title, description: page.purpose, path: page.path })
+type Props = { searchParams: Promise<{ page?: string; tag?: string }> }
+
+/** ?page=abc, 0 or negative all fall back to page 1. */
+function parsePage(raw: string | undefined): number {
+  const n = Number.parseInt(raw ?? '1', 10)
+  return Number.isFinite(n) && n >= 1 ? n : 1
 }
 
-export default async function Route() {
-  return <PageTemplate pageId={PAGE_ID} />
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const page = getBaselinePage(PAGE_ID)!
+  const params = await searchParams
+  const current = parsePage(params.page)
+  const tag = params.tag?.trim()
+  // Each listing page is its own canonical URL and gets a distinct title.
+  return buildMetadata({
+    pageId: PAGE_ID,
+    title: current > 1 ? `${page.title} - Page ${current}` : page.title,
+    description: page.purpose,
+    path: current > 1 ? `/ideas?page=${current}` : page.path,
+    // Tag-filtered lists are thin duplicates of the main listing; keep them out of the index.
+    noindex: Boolean(tag),
+  })
+}
+
+export default async function Route({ searchParams }: Props) {
+  const params = await searchParams
+  const current = parsePage(params.page)
+  return <PageTemplate pageId={PAGE_ID} articlesPage={current} articlesTag={params.tag?.trim() || undefined} />
 }

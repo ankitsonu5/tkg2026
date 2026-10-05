@@ -8,6 +8,7 @@ import {
   readConsent,
   CONSENT_CHANGE_EVENT,
   resolvePageId,
+  setMeasurementId,
   track,
   type ConsentState,
 } from '@/lib/analytics/adapter'
@@ -50,6 +51,10 @@ function NavigationTracker({ measurementId }: { measurementId?: string | null })
 export function AnalyticsProvider({ measurementId }: { measurementId?: string | null }) {
   const effectiveId = measurementId?.trim() || process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID?.trim()
   const consent = useSyncExternalStore(subscribe, readConsent, serverSnapshot)
+
+  useEffect(() => {
+    setMeasurementId(effectiveId)
+  }, [effectiveId])
 
   // Strictly inert unless both visitor consent is granted and a valid measurement ID exists
   const isEnabled = consent === 'granted' && Boolean(effectiveId)

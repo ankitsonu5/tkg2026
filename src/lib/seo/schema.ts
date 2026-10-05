@@ -1,3 +1,5 @@
+import { articleTags, resolveFeaturedImage } from '../articles'
+import { extractFaqPairs } from './faq'
 import { getBaselinePage } from '@/baseline/pages'
 
 /**
@@ -314,12 +316,21 @@ export function buildDetailSchema(
     const datePublished = rawDate ? new Date(String(rawDate)).toISOString() : undefined
     const dateModified = doc.updatedAt ? new Date(String(doc.updatedAt)).toISOString() : datePublished
 
+    const seo = (doc.seo ?? {}) as { title?: string; description?: string }
+    const focusKeyword = (doc.seoAnalysis as { focusKeyword?: string } | undefined)?.focusKeyword?.trim()
+    const featured = resolveFeaturedImage(doc)
+    const imageUrl = featured?.cleared ? `${origin}${featured.src}` : undefined
+
     schemas.push({
       '@context': 'https://schema.org',
       '@type': 'Article',
       '@id': `${detailUrl}#article`,
-      headline: title,
-      description: summary,
+      headline: seo.title?.trim() || title,
+      description: seo.description?.trim() || summary,
+      ...(imageUrl ? { image: [imageUrl] } : {}),
+      ...(focusKeyword || articleTags(doc).length > 0
+        ? { keywords: [focusKeyword, ...articleTags(doc).map((t) => t.label)].filter(Boolean).join(', ') }
+        : {}),
       mainEntityOfPage: detailUrl,
       datePublished,
       dateModified,
@@ -337,6 +348,21 @@ export function buildDetailSchema(
         url: `${origin}/`,
       },
     })
+
+    // FAQ blocks authored in the editor become FAQPage structured data automatically.
+    const faqPairs = extractFaqPairs(doc.body)
+    if (faqPairs.length > 0) {
+      schemas.push({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        '@id': `${detailUrl}#faq`,
+        mainEntity: faqPairs.map((pair) => ({
+          '@type': 'Question',
+          name: pair.question,
+          acceptedAnswer: { '@type': 'Answer', text: pair.answer },
+        })),
+      })
+    }
   } else if (collection === 'entities') {
     schemas.push({
       '@context': 'https://schema.org',

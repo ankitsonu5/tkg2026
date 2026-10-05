@@ -294,3 +294,138 @@
   color: #718096;
   font-style: normal;
 }
+
+/* Pull quote */
+.editorial-pullquote {
+  margin: 3rem -1rem;
+  padding: 0.5rem 0 0.5rem 2rem;
+  border-left: 4px solid #c8a45b;
+}
+.editorial-pullquote blockquote {
+  margin: 0;
+  font-family: var(--font-serif, "Playfair Display", Georgia, serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.4;
+  font-style: italic;
+  color: #0b1420;
+}
+.editorial-pullquote figcaption {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #6b4c12;
+}
+
+/* Key takeaways */
+.editorial-takeaways {
+  margin: 2.5rem 0;
+  padding: 1.75rem 2rem;
+  border-radius: 12px;
+  background: #f7f4ec;
+  border: 1px solid rgba(200, 164, 91, 0.4);
+}
+.editorial-takeaways__title {
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6b4c12;
+  margin-bottom: 0.75rem;
+}
+.editorial-takeaways ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.editorial-takeaways li {
+  margin: 0.5rem 0;
+  color: #1b2430;
+}
+
+/* FAQ accordion */
+.editorial-faq {
+  margin: 3rem 0;
+}
+.editorial-faq__heading {
+  margin-top: 0;
+}
+.editorial-faq__item {
+  border-bottom: 1px solid rgba(11, 20, 32, 0.12);
+}
+.editorial-faq__item summary {
+  cursor: pointer;
+  padding: 1.1rem 2rem 1.1rem 0;
+  font-weight: 650;
+  color: #0b1420;
+  list-style: none;
+  position: relative;
+}
+.editorial-faq__item summary::-webkit-details-marker {
+  display: none;
+}
+.editorial-faq__item summary::after {
+  content: '+';
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  color: #a47c2d;
+}
+.editorial-faq__item[open] summary::after {
+  content: '\2212';
+}
+.editorial-faq__item summary:focus-visible {
+  outline: 3px solid #4e7898;
+  outline-offset: 2px;
+}
+.editorial-faq__item p {
+  margin: 0 0 1.25rem;
+}
+
+/* Video embed */
+.editorial-video {
+  margin: 2.5rem 0;
+}
+.editorial-video__frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b1420;
+}
+.editorial-video__frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.editorial-video figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #4a5764;
+}
+
+/* Reading progress bar (article pages) */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 60;
+  pointer-events: none;
+}
+.reading-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, #c8a45b, #e3c47f);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* Headings jumped to from the "On this page" list sit below the sticky header. */
+.article-prose h2,
+.article-prose h3 {
+  scroll-margin-top: calc(var(--header-height, 76px) + 1.25rem);
+}

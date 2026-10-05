@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url'
 
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import {
   lexicalEditor,
   FixedToolbarFeature,
@@ -22,7 +23,14 @@ import {
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
-import { CtaButtonBlock, CalloutBoxBlock } from './blocks/editorBlocks'
+import {
+  CtaButtonBlock,
+  CalloutBoxBlock,
+  FaqBlock,
+  PullQuoteBlock,
+  KeyTakeawaysBlock,
+  VideoEmbedBlock,
+} from './blocks/editorBlocks'
 
 import { Articles } from './collections/Articles'
 import { Assets } from './collections/Assets'
@@ -63,6 +71,12 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     importMap: { baseDir: path.resolve(dirname) },
+    components: {
+      // Eye (show/hide) button on every password field in the admin.
+      providers: ['/adminComponents/PasswordEye#PasswordEyeProvider'],
+      // Status badge + Log Out inside the admin header (not floating over the page).
+      actions: ['/adminComponents/HeaderActions#HeaderActions'],
+    },
     meta: { titleSuffix: '— Tel K. Ganesan Platform' },
   },
   collections: [
@@ -118,7 +132,7 @@ export default buildConfig({
       UnorderedListFeature(),
       ChecklistFeature(),
       BlocksFeature({
-        blocks: [CtaButtonBlock, CalloutBoxBlock],
+        blocks: [PullQuoteBlock, CalloutBoxBlock, KeyTakeawaysBlock, FaqBlock, VideoEmbedBlock, CtaButtonBlock],
       }),
     ],
   }),
@@ -138,6 +152,9 @@ export default buildConfig({
       // support at all, so TLS must be skipped there. A real provider (Gmail, Postmark,
       // etc.) requires STARTTLS on 587 or implicit TLS on 465 — forcing ignoreTLS there
       // makes AUTH fail, since the provider refuses to negotiate credentials in the clear.
+      // Reuse SMTP connections instead of logging in again for every message.
+      pool: true,
+      maxConnections: 3,
       secure: Number(process.env.SMTP_PORT || 1025) === 465,
       ignoreTLS: (process.env.SMTP_HOST || '127.0.0.1') === '127.0.0.1',
       auth: process.env.SMTP_USER
@@ -161,5 +178,17 @@ export default buildConfig({
     'http://127.0.0.1:3000',
     'http://127.0.0.1:3001',
   ],
-  plugins: [],
+  plugins: [
+    // Durable media storage for serverless hosting, where the local disk is read-only/ephemeral.
+    // Active only when BLOB_READ_WRITE_TOKEN is set (Vercel sets it when a Blob store is linked);
+    // otherwise uploads stay on local disk for development. Files are still served through
+    // Payload's own route, so the asset rights-cleared gate keeps applying.
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      collections: { assets: true },
+      clientUploads: true,
+      alwaysInsertFields: true,
+    }),
+  ],
 })

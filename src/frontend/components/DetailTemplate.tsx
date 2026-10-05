@@ -7,6 +7,7 @@ import { Breadcrumbs } from './Breadcrumbs'
 import { CtaLink } from './CtaLink'
 import { RichTextRenderer } from './RichTextRenderer'
 import { JsonLd } from './JsonLd'
+import { ArticleDetail } from './ArticleDetail'
 
 type DetailCollection = 'articles' | 'entities' | 'projects' | 'initiatives'
 
@@ -56,6 +57,15 @@ export async function DetailTemplate({
   const body = (doc.body && typeof doc.body === 'object') ? (doc.body as Record<string, unknown>) : null
 
   const detailSchemas = buildDetailSchema(collection, slug, pageId, doc)
+
+  if (collection === 'articles') {
+    return (
+      <>
+        <JsonLd schema={detailSchemas} />
+        <ArticleDetail doc={doc} pageId={pageId} />
+      </>
+    )
+  }
 
   return (
     <>
@@ -127,51 +137,6 @@ export async function DetailTemplate({
               emphasis="primary"
             />
           </p>
-        )}
-
-        {/* Closing Editorial Box */}
-        {collection === 'articles' && (
-          <div
-            style={{
-              maxWidth: '820px',
-              margin: '3rem auto 5rem',
-              padding: '2.5rem',
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, #0b1420 0%, #101d2d 100%)',
-              border: '1px solid rgba(200, 164, 91, 0.3)',
-              boxShadow: '0 20px 40px rgba(11, 20, 32, 0.15)',
-              color: '#f7f4ec',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1rem',
-            }}
-          >
-            <span style={{ color: '#c8a45b', fontSize: '0.78rem', fontWeight: 750, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-              Tel K. Ganesan Perspectives
-            </span>
-            <h3 style={{ fontSize: '1.45rem', color: '#ffffff', margin: 0 }}>
-              Enjoyed this perspective?
-            </h3>
-            <p style={{ color: '#cbd5e1', fontSize: '0.98rem', margin: 0, lineHeight: 1.6 }}>
-              Explore more frameworks on founder leadership, cross-cultural enterprise, and mental freedom.
-            </p>
-            <div style={{ marginTop: '0.5rem', display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
-              <a
-                href="/ideas"
-                className="cta cta--primary"
-                style={{ fontSize: '0.84rem' }}
-              >
-                &larr; View All Ideas
-              </a>
-              <a
-                href="/connect"
-                className="cta cta--secondary"
-                style={{ fontSize: '0.84rem', borderColor: 'rgba(200, 164, 91, 0.4)', color: '#dfc07e' }}
-              >
-                Start an Inquiry
-              </a>
-            </div>
-          </div>
         )}
       </div>
     </>

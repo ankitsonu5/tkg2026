@@ -24,7 +24,11 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { SeoScorePanel as SeoScorePanel_e727e51655ec387fd34804c04a79eaa6 } from '../../../backend/adminComponents/SeoScorePanel'
+import { HeaderActions as HeaderActions_ed136b340107fa2d0f2664322509a2cb } from '../../../backend/adminComponents/HeaderActions'
+import { PasswordEyeProvider as PasswordEyeProvider_d5672a508ed6b686c97973c77b55d7a4 } from '../../../backend/adminComponents/PasswordEye'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
@@ -54,5 +58,9 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
+  "/adminComponents/SeoScorePanel#SeoScorePanel": SeoScorePanel_e727e51655ec387fd34804c04a79eaa6,
+  "/adminComponents/HeaderActions#HeaderActions": HeaderActions_ed136b340107fa2d0f2664322509a2cb,
+  "/adminComponents/PasswordEye#PasswordEyeProvider": PasswordEyeProvider_d5672a508ed6b686c97973c77b55d7a4,
+  "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
 }

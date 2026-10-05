@@ -98,10 +98,24 @@ describe('Public form browser states', () => {
     expect(submitted.get('routeId')).toBe('general')
     expect(submitted.get('privacyAccepted')).toBe('on')
     expect(submitted.get('marketingOptIn')).toBe('on')
-    expect(container.querySelector('form')).toBeNull()
-    expect(container.textContent).toContain('Received')
-    expect(container.textContent).toContain('GENE-2026-ABC12345')
-    expect(container.textContent).toContain('newsletter confirmation email')
+    // The thank-you popup is rendered in a portal on <body>; the form stays on the page, reset.
+    const popup = document.body.querySelector('[role="alertdialog"]')
+    expect(popup).not.toBeNull()
+    expect(popup!.textContent).toContain('Thank you')
+    expect(popup!.textContent).toContain('GENE-2026-ABC12345')
+    expect(popup!.textContent).toContain('newsletter confirmation email')
+    expect(container.querySelector('form')).not.toBeNull()
+    for (const input of container.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[name^="field."], textarea[name^="field."]')) {
+      expect(input.value, input.name).toBe('')
+    }
+    expect(container.querySelector<HTMLInputElement>('#privacyAccepted')!.checked).toBe(false)
+
+    // Closing the popup leaves the clean form behind.
+    await act(async () => {
+      popup!.querySelector<HTMLButtonElement>('button')!.click()
+    })
+    expect(document.body.querySelector('[role="alertdialog"]')).toBeNull()
+    expect(container.querySelector('form')).not.toBeNull()
   })
 })
 
