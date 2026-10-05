@@ -19,6 +19,7 @@ export async function PageTemplate({
   preview = false,
   articlesPage,
   articlesTag,
+  articlesTopic,
 }: {
   pageId: string
   preview?: boolean
@@ -26,6 +27,8 @@ export async function PageTemplate({
   articlesPage?: number
   /** Active tag filter on the blog listing (IDEAS only). */
   articlesTag?: string
+  /** Active topic filter on the blog listing (IDEAS only). */
+  articlesTopic?: string
 }) {
   const baseline = getBaselinePage(pageId)
   if (!baseline) notFound()
@@ -48,7 +51,7 @@ export async function PageTemplate({
     <>
       <JsonLd schema={pageSchema} />
       {!page ? (
-        <BaselinePage pageId={pageId} articlesPage={articlesPage} articlesTag={articlesTag} />
+        <BaselinePage pageId={pageId} articlesPage={articlesPage} articlesTag={articlesTag} articlesTopic={articlesTopic} />
       ) : (
         <>
           {preview && page._status !== 'published' && (

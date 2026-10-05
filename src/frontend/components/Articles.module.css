@@ -222,3 +222,37 @@ a.pageStep:focus-visible {
   margin: 0 0 1.5rem;
   color: var(--color-muted);
 }
+
+/* Topic filter pills */
+.topicBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 1.75rem;
+}
+.topicPill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-rule-strong);
+  background: var(--color-white);
+  color: var(--color-navy);
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.topicPill:hover {
+  border-color: var(--color-navy);
+}
+.topicPill[aria-current='true'] {
+  background: var(--color-navy);
+  border-color: var(--color-navy);
+  color: var(--color-gold);
+}
+.topicPill:focus-visible {
+  outline: 3px solid var(--color-blue);
+  outline-offset: 2px;
+}

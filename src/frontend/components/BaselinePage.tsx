@@ -6,6 +6,9 @@ import { CtaLink } from './CtaLink'
 import { films } from '../data/films'
 import { PremiumHero } from './PremiumHero'
 import { IdeasArticlesSection } from './IdeasArticlesSection'
+import { ImpactInitiativesSection } from './ImpactInitiativesSection'
+import { impactPillars } from '@/frontend/data/impact'
+import { NewsletterSignup } from './NewsletterSignup'
 
 type PageId = 'HOME' | 'ABOUT' | 'ENTERPRISE' | 'IDEAS' | 'CULTURE' | 'IMPACT' | 'MEDIA' | 'PRIVACY' | 'TERMS' | 'ACCESSIBILITY'
 
@@ -760,7 +763,15 @@ function EnterprisePage() {
   )
 }
 
-function IdeasPage({ articlesPage = 1, articlesTag }: { articlesPage?: number; articlesTag?: string }) {
+function IdeasPage({
+  articlesPage = 1,
+  articlesTag,
+  articlesTopic,
+}: {
+  articlesPage?: number
+  articlesTag?: string
+  articlesTopic?: string
+}) {
   return (
     <>
       <InnerHero
@@ -770,7 +781,7 @@ function IdeasPage({ articlesPage = 1, articlesTag }: { articlesPage?: number; a
         pageId="IDEAS"
         cta={{ id: 'CTA-IDEAS-PRIMARY', label: "Subscribe to Tel's Ideas", destination: '#subscribe' }}
       />
-      <IdeasArticlesSection page={articlesPage} tag={articlesTag} />
+      <IdeasArticlesSection page={articlesPage} tag={articlesTag} topic={articlesTopic} />
       {/* MOD-IDEAS-FEATURED / MOD-IDEAS-FRAMEWORKS / MOD-IDEAS-MIND-TRAP — Mind Trap is the one
           published framework, so it satisfies "featured" content honestly without inventing an
           article that doesn't exist yet. The 3-step mental model is a genuine sequence (notice, then
@@ -833,10 +844,17 @@ function IdeasPage({ articlesPage = 1, articlesTag }: { articlesPage?: number; a
           <SectionIntro eyebrow="Explore by theme" title="Ideas designed for action" />
           <div className="editorial-grid editorial-grid--three">
             {[
-              ['Enterprise', 'Building useful systems, resilient teams, and enduring value.'],
-              ['Leadership', 'Making clear decisions when the answer is not obvious.'],
-              ['Possibility', 'Recognizing the beliefs and structures that define what happens next.'],
-            ].map(([title, body], index) => <article className="editorial-card" key={title}><span className="editorial-card__index">0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>)}
+              ['Enterprise', 'Building useful systems, resilient teams, and enduring value.', '/ideas?topic=enterprise', 'Read enterprise ideas'],
+              ['Leadership', 'Making clear decisions when the answer is not obvious.', '/ideas?topic=leadership', 'Read leadership ideas'],
+              ['Possibility', 'Recognizing the beliefs and structures that define what happens next.', '/ideas#frameworks', 'Explore the framework'],
+            ].map(([title, body, href, linkLabel], index) => (
+              <article className="editorial-card" key={title}>
+                <span className="editorial-card__index">0{index + 1}</span>
+                <h3>{title}</h3>
+                <p>{body}</p>
+                <Link href={href} className="text-link">{linkLabel} <Arrow /></Link>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -848,13 +866,14 @@ function IdeasPage({ articlesPage = 1, articlesTag }: { articlesPage?: number; a
               alt="Open leather-bound journal with handwritten notes and fountain pen on a wooden desk — evoking contemplative ideas and editorial craftsmanship"
               width={560}
               height={360}
-              style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+              style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover' }}
             />
           </div>
           <div className="newsletter-panel__content">
             <p className="eyebrow eyebrow--gold">A considered note</p>
             <h2>Ideas worth returning to.</h2>
-            <p>The new editorial subscription will open with the publication platform. Until then, explore the framework and return as the library grows.</p>
+            <p>New essays, operating frameworks and Mind Trap, delivered when there is something worth reading. Confirm your email to start.</p>
+            <NewsletterSignup variant="inline" />
             <Link className="text-link text-link--inverse" href="/ideas#frameworks">Explore the framework <Arrow /></Link>
           </div>
         </div>
@@ -968,6 +987,23 @@ function ImpactPage() {
           </div>
         </div>
       </section>
+      {/* MOD-IMPACT-FOCUS-AREAS: the three focus areas already presented on the homepage. */}
+      <section className="section section--spacious" id="focus-areas" aria-label="Focus areas">
+        <div className="container">
+          <SectionIntro eyebrow="Focus areas" title="Where contribution is directed" body="Three areas guide where time, capital and mentorship are applied. Each initiative inside them is expected to state its purpose, owner and evidence." />
+          <div className="editorial-grid editorial-grid--three">
+            {impactPillars.map((pillar, index) => (
+              <article className="editorial-card" key={pillar.id}>
+                <span className="editorial-card__index">0{index + 1}</span>
+                <h3>{pillar.title}</h3>
+                <p>{pillar.description}</p>
+                <p className="field__purpose">{pillar.focusArea}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <ImpactInitiativesSection />
       <section className="section section--mist">
         <div className="container">
           <SectionIntro eyebrow="Participation standard" title="The questions that come first" />
@@ -978,6 +1014,13 @@ function ImpactPage() {
               ['03', 'How is it known?', 'Evidence that can support what is said about the outcome.'],
               ['04', 'Why this role?', 'A clear reason for involvement and a responsible commitment.'],
             ].map(([number, title, body]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{body}</p></article>)}
+          </div>
+          {/* MOD-IMPACT-PARTNERS / MOD-IMPACT-PARTICIPATION: how to take part. */}
+          <div className="section-footer-action">
+            <p style={{ margin: 0, maxWidth: '52ch' }}>
+              Partners and participants are considered against these four questions. If your organization is aligned, start with the Impact route.
+            </p>
+            <Link href="/connect?route=impact" className="text-link">Start an Impact inquiry <Arrow /></Link>
           </div>
         </div>
       </section>
@@ -1048,6 +1091,17 @@ function MediaPage() {
               ['Leadership under complexity', 'Clarity, ownership, and decision-making when the path is uncertain.'],
               ['Enterprise meets culture', 'What builders can learn from story, audience, and creative risk.'],
             ].map(([title, body], index) => <article className="editorial-card" key={title}><span className="editorial-card__index">0{index + 1}</span><h3>{title}</h3><p>{body}</p></article>)}
+          </div>
+        </div>
+      </section>
+      {/* MOD-MEDIA-BIOS: the approved short biography (same ABOUT-01 wording as the About page).
+          Longer biographies, headshots and other assets stay behind the Media route until the
+          Asset Register clears them. */}
+      <section className="section section--spacious" id="short-bio" aria-label="Short biography">
+        <div className="container container--narrow">
+          <SectionIntro eyebrow="Short biography" title="For introductions and programs" body="Tel K. Ganesan is an Executive Chairman, enterprise builder, investor, and producer. From Detroit, he has built and supported businesses, creative projects, and community initiatives across cultures and industries. Kyyba remains the flagship proof of his operating journey." />
+          <div className="section-footer-action">
+            <Link href="/connect?route=media" className="text-link">Request longer bios and assets <Arrow /></Link>
           </div>
         </div>
       </section>
@@ -1134,8 +1188,15 @@ function PolicyPage({ accessibility = false }: { accessibility?: boolean }) {
             <>
               <h2>Current commitment</h2>
               <p>The experience supports keyboard navigation, clear heading order, visible focus states, text resizing, reduced-motion preferences, and mobile reflow. Content and interaction testing remain part of every release.</p>
+              <h2>Known limitations</h2>
+              <p>This is a self-assessment. The site has been checked with automated and manual internal reviews against WCAG 2.2 AA; it has not yet had an independent third-party audit. Known areas that need attention:</p>
+              <ul>
+                <li>Embedded third-party content, such as the footer map and any embedded video or podcast players, is controlled by its provider. A text address and an external link are given alongside the map.</li>
+                <li>Downloadable documents, when published, must be checked for tagged structure and reading order before release.</li>
+                <li>Embedded audio or video will carry captions and a transcript before it is published.</li>
+              </ul>
               <h2>Need another format?</h2>
-              <p>If a page, document, or interaction is difficult to use, submit an accessibility request through the general inquiry route. Include the page address, the barrier you encountered, and the format or assistance that would help.</p>
+              <p>If a page, document, or interaction is difficult to use, submit an accessibility request through the <a href="/connect?route=general">general inquiry route</a>. Include the page address, the barrier you encountered, and the format or assistance that would help.</p>
             </>
           ) : (
             <>
@@ -1145,6 +1206,10 @@ function PolicyPage({ accessibility = false }: { accessibility?: boolean }) {
               <p>Analytics remain off until you explicitly accept them. You can decline at first visit or change the choice later from the footer.</p>
               <h2>Responsible routing</h2>
               <p>Submissions are routed by inquiry type. The website does not present a routine direct-to-executive channel, and a submission is not represented as delivered unless the system confirms delivery.</p>
+              <h2>Your choices</h2>
+              <p>Analytics are optional and off by default. You can turn analytics on or withdraw your consent at any time using the analytics control in the footer of every page. Subscribing to the newsletter is a separate, confirmed choice, and every inquiry is handled without subscribing you.</p>
+              <h2>Questions about privacy</h2>
+              <p>For a privacy question or a request about your information, use the <a href="/connect?route=general">general inquiry route</a> and mention that it concerns privacy. The retention periods for stored inquiries will be stated here once they are approved.</p>
             </>
           )}
         </div>
@@ -1190,16 +1255,18 @@ export function BaselinePage({
   pageId,
   articlesPage,
   articlesTag,
+  articlesTopic,
 }: {
   pageId: string
   articlesPage?: number
   articlesTag?: string
+  articlesTopic?: string
 }) {
   switch (pageId as PageId) {
     case 'HOME': return <HomePage />
     case 'ABOUT': return <AboutPage />
     case 'ENTERPRISE': return <EnterprisePage />
-    case "IDEAS": return <IdeasPage articlesPage={articlesPage} articlesTag={articlesTag} />
+    case "IDEAS": return <IdeasPage articlesPage={articlesPage} articlesTag={articlesTag} articlesTopic={articlesTopic} />
     case 'CULTURE': return <CulturePage />
     case 'IMPACT': return <ImpactPage />
     case 'MEDIA': return <MediaPage />

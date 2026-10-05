@@ -354,3 +354,10 @@
     position: static;
   }
 }
+
+/* Text links inside cards get a comfortable touch height. */
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

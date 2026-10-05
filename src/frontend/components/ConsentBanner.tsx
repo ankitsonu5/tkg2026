@@ -152,7 +152,7 @@ export function ConsentSettingsLink() {
       onClick={() => writeConsent('granted')}
       className="site-footer__consent-button"
     >
-      Analytics: currently off
+      Analytics off &middot; Turn on
     </button>
   )
 }

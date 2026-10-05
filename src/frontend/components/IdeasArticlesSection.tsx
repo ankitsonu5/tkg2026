@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { articleTags, tagSlug } from '@/lib/articles'
+import { articleTags, tagSlug, TOPIC_LABELS } from '@/lib/articles'
 import { getPayloadClient, publishedOnly } from '@/lib/payload'
 import { ArticleCard, type ArticleDoc } from './ArticleCard'
 import styles from './Articles.module.css'
@@ -36,21 +36,22 @@ export function totalArticlePages(count: number): number {
   return Math.max(1, Math.ceil(count / ARTICLES_PER_PAGE))
 }
 
-function hrefFor(page: number, tag?: string): string {
+function hrefFor(page: number, tag?: string, topic?: string): string {
   const params = new URLSearchParams()
   if (tag) params.set('tag', tag)
+  if (topic) params.set('topic', topic)
   if (page > 1) params.set('page', String(page))
   const query = params.toString()
   return query ? `/ideas?${query}` : '/ideas'
 }
 
-function Pagination({ current, total, tag }: { current: number; total: number; tag?: string }) {
+function Pagination({ current, total, tag, topic }: { current: number; total: number; tag?: string; topic?: string }) {
   if (total <= 1) return null
   const pages = Array.from({ length: total }, (_, i) => i + 1)
   return (
     <nav className={styles.pagination} aria-label="Blog pages">
       {current > 1 ? (
-        <Link href={hrefFor(current - 1, tag)} className={styles.pageStep} rel="prev">
+        <Link href={hrefFor(current - 1, tag, topic)} className={styles.pageStep} rel="prev">
           <span aria-hidden="true">&larr;</span> Previous
         </Link>
       ) : (
@@ -67,7 +68,7 @@ function Pagination({ current, total, tag }: { current: number; total: number; t
                 {n}
               </span>
             ) : (
-              <Link href={hrefFor(n, tag)} className={styles.pageNum} aria-label={`Page ${n}`}>
+              <Link href={hrefFor(n, tag, topic)} className={styles.pageNum} aria-label={`Page ${n}`}>
                 {n}
               </Link>
             )}
@@ -76,7 +77,7 @@ function Pagination({ current, total, tag }: { current: number; total: number; t
       </ul>
 
       {current < total ? (
-        <Link href={hrefFor(current + 1, tag)} className={styles.pageStep} rel="next">
+        <Link href={hrefFor(current + 1, tag, topic)} className={styles.pageStep} rel="next">
           Next <span aria-hidden="true">&rarr;</span>
         </Link>
       ) : (
@@ -88,12 +89,16 @@ function Pagination({ current, total, tag }: { current: number; total: number; t
   )
 }
 
-export async function IdeasArticlesSection({ page = 1, tag }: { page?: number; tag?: string }) {
+export async function IdeasArticlesSection({ page = 1, tag, topic }: { page?: number; tag?: string; topic?: string }) {
   const all = await loadArticles()
   if (all.length === 0) return null
 
   const activeTag = tag ? tagSlug(tag) : ''
-  const articles = activeTag ? all.filter((a) => articleTags(a).some((t) => t.slug === activeTag)) : all
+  const activeTopic = topic && topic in TOPIC_LABELS ? topic : ''
+  const byTag = activeTag ? all.filter((a) => articleTags(a).some((t) => t.slug === activeTag)) : all
+  const articles = activeTopic ? byTag.filter((a) => a.topic === activeTopic) : byTag
+  // Only offer topics that actually have posts, so a filter never leads to an empty page.
+  const topicsInUse = Object.keys(TOPIC_LABELS).filter((key) => all.some((a) => a.topic === key))
   const activeLabel = activeTag
     ? (all.flatMap((a) => articleTags(a)).find((t) => t.slug === activeTag)?.label ?? tag)
     : null
@@ -107,6 +112,23 @@ export async function IdeasArticlesSection({ page = 1, tag }: { page?: number; t
   return (
     <section className={styles.section} id="published-articles" aria-label="Latest articles">
       <div className="container">
+        {topicsInUse.length > 1 && (
+          <nav className={styles.topicBar} aria-label="Filter by topic">
+            <Link href="/ideas" className={styles.topicPill} aria-current={activeTopic ? undefined : 'true'}>
+              All
+            </Link>
+            {topicsInUse.map((key) => (
+              <Link
+                key={key}
+                href={`/ideas?topic=${key}`}
+                className={styles.topicPill}
+                aria-current={activeTopic === key ? 'true' : undefined}
+              >
+                {TOPIC_LABELS[key]}
+              </Link>
+            ))}
+          </nav>
+        )}
         {activeLabel && (
           <p className={styles.filterBar}>
             Showing posts tagged <strong>{activeLabel}</strong>
@@ -115,13 +137,13 @@ export async function IdeasArticlesSection({ page = 1, tag }: { page?: number; t
             </Link>
           </p>
         )}
-        {articles.length === 0 && <p className={styles.empty}>No articles use this tag yet.</p>}
+        {articles.length === 0 && <p className={styles.empty}>No articles match this filter yet.</p>}
         <div className={styles.grid}>
           {visible.map((doc, index) => (
             <ArticleCard key={String(doc.id)} doc={doc} priority={index < 3} />
           ))}
         </div>
-        <Pagination current={page} total={total} tag={activeTag || undefined} />
+        <Pagination current={page} total={total} tag={activeTag || undefined} topic={activeTopic || undefined} />
       </div>
     </section>
   )

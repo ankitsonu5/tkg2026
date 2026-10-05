@@ -151,7 +151,11 @@ function toPath(url: string): string {
  * an uncleared asset is returned (flagged) so editors can preview their layout.
  */
 export function resolveFeaturedImage(doc: Record<string, unknown>): FeaturedImage | null {
-  const hero = doc.heroImage
+  return resolveAssetImage(doc.heroImage)
+}
+
+/** Same rules for any populated asset field (hero image, logo, key art). */
+export function resolveAssetImage(hero: unknown): FeaturedImage | null {
   if (!hero || typeof hero !== 'object') return null
   const asset = hero as {
     url?: string

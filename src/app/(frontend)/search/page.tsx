@@ -6,6 +6,7 @@ import { buildMetadata } from '@/lib/seo/metadata'
 import { buildPageSchema } from '@/lib/seo/schema'
 import { JsonLd } from '@/frontend/components/JsonLd'
 import { SearchTracker } from '@/frontend/components/SearchTracker'
+import { BASELINE_PAGES } from '@/baseline/pages'
 import { getPayloadClient, publishedOnly } from '@/lib/payload'
 
 const PAGE_ID = 'SEARCH'
@@ -23,6 +24,39 @@ export async function generateMetadata(): Promise<Metadata> {
     path: '/search',
     noindex: true,
   })
+}
+
+/**
+ * The site's core pages are rendered from code, not stored as CMS records, so searching only the
+ * CMS would return nothing for the most obvious terms ("Kyyba", "film", "speaking"). These
+ * keywords make the fixed pages findable. They are plain navigation aids, not claims.
+ */
+const PAGE_KEYWORDS: Record<string, string[]> = {
+  ABOUT: ['biography', 'bio', 'journey', 'principles', 'detroit'],
+  ENTERPRISE: ['kyyba', 'investment', 'investing', 'venture', 'partnership', 'portfolio', 'enterprise'],
+  IDEAS: ['mind trap', 'mindtrap', 'performance stack', 'leadership', 'framework', 'podcast', 'blog', 'article', 'essay', 'newsletter'],
+  CULTURE: ['film', 'movie', 'trap city', '18', 'celebrity crush', 'kyyba films', 'producer', 'culture'],
+  IMPACT: ['community', 'mentorship', 'education', 'stem', 'philanthropy', 'nonprofit', 'initiative'],
+  MEDIA: ['speaker', 'speaking', 'keynote', 'press', 'media kit', 'interview', 'television'],
+  CONNECT: ['contact', 'inquiry', 'enquiry', 'partner', 'book', 'reach'],
+  PRIVACY: ['privacy', 'data', 'cookies', 'analytics', 'consent'],
+  TERMS: ['terms', 'legal', 'copyright', 'liability'],
+  ACCESSIBILITY: ['accessibility', 'wcag', 'screen reader', 'assistance'],
+}
+
+function searchFixedPages(query: string): { title: string; path: string; kind: string }[] {
+  const needle = query.toLowerCase()
+  return BASELINE_PAGES.filter(
+    (page) => page.kind !== 'template' && page.indexable && page.pageId !== 'SEARCH' && page.pageId !== 'NEWSLETTER_CONFIRM',
+  )
+    .filter((page) => {
+      const haystack = [page.title, page.purpose, page.seoTitle, page.seoDescription, ...(PAGE_KEYWORDS[page.pageId] ?? [])]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase()
+      return haystack.includes(needle)
+    })
+    .map((page) => ({ title: page.title, path: page.path, kind: 'page' }))
 }
 
 const SEARCHABLE = [
@@ -46,7 +80,16 @@ export default async function SearchRoute({ searchParams }: { searchParams: Prom
         const res = await payload.find({
           collection: target.collection,
           where: {
-            and: [publishedOnly, { [target.titleField]: { like: query } }],
+            and: [
+              publishedOnly,
+              {
+                or: [
+                  { [target.titleField]: { like: query } },
+                  ...(target.collection === 'articles' ? [{ excerpt: { like: query } }] : []),
+                  ...(['entities', 'projects', 'initiatives'].includes(target.collection) ? [{ summary: { like: query } }] : []),
+                ],
+              },
+            ],
           },
           limit: 10,
           depth: 0,
@@ -60,7 +103,12 @@ export default async function SearchRoute({ searchParams }: { searchParams: Prom
         }))
       }),
     )
-    results = found.flat()
+    const seen = new Set<string>()
+    results = [...searchFixedPages(query), ...found.flat()].filter((r) => {
+      if (seen.has(r.path)) return false
+      seen.add(r.path)
+      return true
+    })
   }
 
   return (

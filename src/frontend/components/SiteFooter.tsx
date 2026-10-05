@@ -173,6 +173,14 @@ export async function SiteFooter() {
                 title="Location Map"
               />
             </div>
+            <a
+              className={styles.mapAddress}
+              href="https://www.google.com/maps/search/?api=1&query=28230+Orchard+Lake+Rd+%23130+Farmington+Hills+MI+48334"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              28230 Orchard Lake Rd #130, Farmington Hills, MI 48334
+            </a>
           </div>
         </div>
 

@@ -477,9 +477,11 @@ main:focus, main:focus-visible { outline: none !important; }
 .media-route .route-card small { color: rgba(247, 244, 236, 0.6); }
 .media-route .route-card:hover { background: var(--color-ivory); color: var(--color-navy); }
 .media-route .route-card:hover small { color: var(--color-muted); }
-.policy-copy h2 { margin-top: var(--space-8); font-size: var(--text-2xl); }
+.policy-copy h2 { margin: var(--space-8) 0 var(--space-3); font-size: var(--text-2xl); line-height: 1.2; }
 .policy-copy h2:first-child { margin-top: 0; }
-.policy-copy p { color: var(--color-muted); font-size: var(--text-lg); }
+.policy-copy p { max-width: none; margin: 0 0 var(--space-4); color: var(--color-muted); font-size: 1.05rem; line-height: 1.75; }
+.policy-copy ul { margin: 0 0 var(--space-4); padding-left: 1.25rem; color: var(--color-muted); line-height: 1.75; }
+.policy-copy a { color: var(--color-link); text-decoration: underline; text-underline-offset: 3px; }
 
 .notice { max-width: var(--measure); margin-block: var(--space-5); padding: var(--space-5); border-left: 3px solid var(--color-notice); background: var(--color-notice-surface); color: var(--color-notice); }
 .notice--error { border-left-color: var(--color-error); background: var(--color-error-surface); color: var(--color-error); }
@@ -1207,4 +1209,40 @@ fieldset.field legend { padding-inline: var(--space-3); color: var(--color-navy)
 @media (prefers-reduced-motion: reduce) {
   .thanks, .thanks__card { animation: none; }
   .thanks__check-ring, .thanks__check-mark { animation: none; stroke-dashoffset: 0; }
+}
+
+/* Touch targets (WCAG 2.5.8): standalone links and buttons get a 44px hit area on phones and
+   tablets. Inline links inside paragraphs are left alone so text flow is not disturbed. */
+@media (max-width: 920px), (pointer: coarse) {
+  .breadcrumbs a { display: inline-flex; align-items: center; min-height: 44px; }
+  .breadcrumbs ol { column-gap: var(--space-3); }
+  .text-link,
+  [class*="secondaryLink"],
+  footer a { display: inline-flex; align-items: center; min-height: 44px; }
+  main button:not([class*="dot" i]):not([aria-label^="Slide"]) { min-height: 44px; }
+  input[type="checkbox"],
+  input[type="radio"] { flex: none; width: 1.4rem; height: 1.4rem; accent-color: var(--color-navy); }
+  .site-footer__consent-button { min-height: 44px; }
+
+  /* Carousel dots stay small visually but get a larger invisible hit area. */
+  button[class*="dot" i],
+  button[aria-label^="Slide"] { position: relative; }
+  button[class*="dot" i]::before,
+  button[aria-label^="Slide"]::before { content: ""; position: absolute; inset: -18px -4px; }
+}
+@media (max-width: 640px) {
+  .editorial-card { min-height: 0; }
+}
+
+@media (max-width: 920px), (pointer: coarse) {
+  .site-header__brand { display: inline-flex; align-items: center; min-height: 44px; }
+}
+
+/* Card headings need breathing room above their body copy. */
+.editorial-card h3 { margin: 0 0 var(--space-3); line-height: 1.25; }
+.editorial-card p { margin: 0 0 var(--space-3); }
+
+@media (max-width: 920px), (pointer: coarse) {
+  .site-footer input[type="checkbox"],
+  [class*="newsletterConsent"] input[type="checkbox"] { flex: none; width: 1.35rem !important; height: 1.35rem !important; }
 }

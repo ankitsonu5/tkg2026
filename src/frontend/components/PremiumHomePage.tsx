@@ -124,7 +124,7 @@ export function PremiumHomePage() {
           <div className={styles.flagshipCopy}>
             <h2 id="flagship-heading">Kyyba: A Global Platform for What’s Next</h2>
             <p>Kyyba is the cornerstone of Tel’s enterprise-building journey &mdash; uniting technology, talent and innovation to create real-world value.</p>
-            <Link href="/enterprise-investments">Explore Kyyba <Arrow /></Link>
+            <Link href="/enterprise-investments" className="text-link">Explore Kyyba <Arrow /></Link>
           </div>
           <div className={styles.flagshipWords}>
             <span>PEOPLE</span>

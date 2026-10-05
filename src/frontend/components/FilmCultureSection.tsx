@@ -123,7 +123,7 @@ export function FilmCultureSection() {
                   className={styles.cultureSecondaryCta}
                   aria-label={`View ${currentFilm.title} on IMDb`}
                 >
-                  IMDb Profile <span aria-hidden="true">&nearr;</span>
+                  IMDb Profile <span aria-hidden="true">{'↗'}</span>
                 </a>
               )}
             </div>
