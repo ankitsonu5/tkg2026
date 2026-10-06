@@ -8,20 +8,20 @@
     {
       "title": "Building possibility",
       "text": "How leaders move from a compelling idea to a structure that can carry it.",
-      "audience": null,
-      "takeaway": null
+      "audience": "Founders and leaders turning an idea into a working structure.",
+      "takeaway": "How to move from possibility to a system that can carry growth."
     },
     {
       "title": "Leadership under complexity",
       "text": "Clarity, ownership, and decision-making when the path is uncertain.",
-      "audience": null,
-      "takeaway": null
+      "audience": "Leaders and teams making decisions in uncertain conditions.",
+      "takeaway": "How clarity, ownership, and judgment help move work forward when the path is not obvious."
     },
     {
       "title": "Enterprise meets culture",
       "text": "What builders can learn from story, audience, and creative risk.",
-      "audience": null,
-      "takeaway": null
+      "audience": "Builders, executives, and creative leaders working across business, media, and culture.",
+      "takeaway": "What story, audience awareness, and creative risk can teach enterprise leaders."
     }
   ],
   "formats": {
@@ -42,20 +42,56 @@
   ],
   "platformsIntro": "Headquartered in Metro Detroit with enterprise operations and film productions spanning North America and India.",
   "platforms": [
-    { "title": "Kyyba", "text": "Uniting technology, talent and innovation to create real-world value." },
-    { "title": "Mind Trap", "text": "Explores the subconscious beliefs and operational friction that keep high-potential leaders from their next breakthrough. Hosted by Tel K. Ganesan." },
-    { "title": "Kyyba Films", "text": "Film, media and culture: stories that inspire, challenge perspectives and connect people across communities." },
-    { "title": "Community impact", "text": "Three focus areas: Youth and Education Empowerment; Urban Revitalization and Community Support; Enterprise and Founder Mentorship." }
+    {
+      "title": "Kyyba",
+      "text": "Uniting technology, talent and innovation to create real-world value."
+    },
+    {
+      "title": "Mind Trap",
+      "text": "Explores the subconscious beliefs and operational friction that keep high-potential leaders from their next breakthrough. Hosted by Tel K. Ganesan."
+    },
+    {
+      "title": "Kyyba Films",
+      "text": "Film, media and culture: stories that inspire, challenge perspectives and connect people across communities."
+    },
+    {
+      "title": "Community impact",
+      "text": "Three focus areas: Youth and Education Empowerment; Urban Revitalization and Community Support; Enterprise and Founder Mentorship."
+    }
   ],
   "destinations": [
-    { "label": "Website", "url": "https://telkganesan.com" },
-    { "label": "Mind Trap (framework and podcast)", "url": "https://mindtrappodcast.com/" },
-    { "label": "Kyyba Films", "url": "https://kyybafilms.com/" },
-    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/telkganesan/" },
-    { "label": "X", "url": "https://twitter.com/TelKGanesan" },
-    { "label": "Instagram", "url": "https://www.instagram.com/telkganesan/" },
-    { "label": "YouTube", "url": "https://www.youtube.com/@TelKGanesan" },
-    { "label": "IMDb", "url": "https://www.imdb.com/name/nm10609355/" }
+    {
+      "label": "Website",
+      "url": "https://telkganesan.com"
+    },
+    {
+      "label": "Mind Trap (framework and podcast)",
+      "url": "https://mindtrappodcast.com/"
+    },
+    {
+      "label": "Kyyba Films",
+      "url": "https://kyybafilms.com/"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/telkganesan/"
+    },
+    {
+      "label": "X",
+      "url": "https://twitter.com/TelKGanesan"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/telkganesan/"
+    },
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/@TelKGanesan"
+    },
+    {
+      "label": "IMDb",
+      "url": "https://www.imdb.com/name/nm10609355/"
+    }
   ],
   "routes": {
     "speaking": "https://telkganesan.com/connect?route=speaking",

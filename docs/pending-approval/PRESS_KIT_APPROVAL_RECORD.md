@@ -15,8 +15,8 @@ Status: **approved subject to edits.** Items marked HELD must not be published u
 | 4 | Add the approved ~50-word short bio for MCs, hosts and producers | Done |
 | 5 | "Speaking Themes"; "Practical ideas..." | Done |
 | 6 | Formats split into Speaking and Media lines | Done |
-| 7 | One audience line and one takeaway line under each speaking theme, from approved wording, **new lines sent to Tel for sign-off** | **HELD.** Drafts below. They are stored as empty fields in `src/frontend/data/press-kit.json` and render only after sign-off |
-| 8 | Response-time line under the inquiry routes ("Requests are reviewed within [number] business days"), number agreed with June and Friday and confirmed to Tel before go-live | **HELD.** `responseTime` is empty in `press-kit.json`; nothing renders until it is filled |
+| 7 | One audience line and one takeaway line under each speaking theme, **new lines sent to Tel for sign-off** | Done. Final lines (below) added to the page and the PDF. Confirm they are the signed-off wording |
+| 8 | Response-time line under the inquiry routes ("Requests are reviewed within [number] business days"), number agreed with June and Friday and confirmed to Tel before go-live | **PLACEHOLDER.** The review PDF shows "[X]". The website and the publishable PDF show no response-time line until the number is agreed (`responseTime` in `press-kit.json`) |
 
 ## Design edits
 
@@ -31,22 +31,28 @@ Status: **approved subject to edits.** Items marked HELD must not be published u
 
 Hero (headline, supporting line, "Book Tel to Speak" and "Media Request") > Speaking Themes > Formats > Short and full bio (with copy buttons) > Operating Principles > Platforms > Press kit PDF download > Official destinations > Inquiry routes. Implemented in `src/frontend/components/MediaPage.tsx`.
 
-## Draft lines for Tel's sign-off (edit 7)
+## Speaking theme lines (edit 7)
 
-Built only from words already approved on the site (the themes' own descriptions and the line
-"Practical ideas for leaders, founders, and teams navigating growth, reinvention, and the responsibility to turn vision into execution").
-
-| Theme | Audience (draft) | Takeaway (draft) |
+| Theme | Audience | Takeaway |
 |---|---|---|
-| Building possibility | Leaders and founders navigating growth and reinvention. | A way to move from a compelling idea to a structure that can carry it. |
-| Leadership under complexity | Leadership teams making decisions when the path is uncertain. | Clarity, ownership and decision-making for uncertain conditions. |
-| Enterprise meets culture | Builders and creative leaders who work with story and audience. | What story, audience and creative risk can teach people who build. |
+| Building possibility | Founders and leaders turning an idea into a working structure. | How to move from possibility to a system that can carry growth. |
+| Leadership under complexity | Leaders and teams making decisions in uncertain conditions. | How clarity, ownership, and judgment help move work forward when the path is not obvious. |
+| Enterprise meets culture | Builders, executives, and creative leaders working across business, media, and culture. | What story, audience awareness, and creative risk can teach enterprise leaders. |
 
-When Tel approves (or edits) them, fill `audience` and `takeaway` for each theme in `src/frontend/data/press-kit.json`, then run `python scripts/generate-press-kit.py` and republish.
+Stored in `src/frontend/data/press-kit.json`, so the web page and the PDF always match.
+
+## Two PDFs
+
+| File | Use |
+|---|---|
+| `docs/pending-approval/Tel-K-Ganesan-Press-Kit-for-review.pdf` | Sent to Tel for sign-off. Shows the response-time placeholder "[X]". Never published. |
+| `public/downloads/tel-k-ganesan-press-kit.pdf` | The file behind the website download button. No placeholder, no response-time line until the number is agreed. |
+
+Regenerate with `python scripts/generate-press-kit.py --review` and `python scripts/generate-press-kit.py`.
 
 ## Go-live checks (owner: Ankit)
 
-- [ ] Open and confirm every link, including IMDb and all social profiles
+- [ ] Open and confirm every link, including IMDb and all social profiles (checked 6 Oct: all 8 external links respond; the two inquiry-route links return 404 on the current public site and work only once the new site is live, so do not circulate the PDF before go-live)
 - [ ] One test submission through each route reaches the right owner
 - [ ] Review the page on mobile
 - [ ] Confirm with Legal whether a separate sign-off is needed; if it is, hold go-live until we have it

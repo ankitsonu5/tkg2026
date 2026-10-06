@@ -15,6 +15,7 @@ Regenerate the PDF with `python scripts/generate-press-kit.py` (add `--draft` fo
 | Full bio, paragraph 2 | About page, "Operating point of view" |
 | Operating principles (5) | About page principles (ABOUT-04) |
 | Speaking themes (3) and intro | Media & Speaking page topics; intro reworded per Tel ("Practical ideas") |
+| Audience and takeaway lines (3 pairs) | Supplied for the 6 Oct 2026 revision of the press kit |
 | Formats | Wording approved by Tel (Speaking and Media lines) |
 | Headquarters line | Website footer |
 | Platforms: Kyyba, Mind Trap, Kyyba Films, Community impact | Home, Ideas and Impact pages (Kyyba card shortened per Tel) |
@@ -23,6 +24,5 @@ Regenerate the PDF with `python scripts/generate-press-kit.py` (add `--draft` fo
 
 ## Held back until documented
 
-- Audience and takeaway lines under each theme (awaiting Tel's sign-off)
-- Response-time line (number to be agreed with June and Friday)
+- Response-time number (the review PDF shows "[X]"; the website and publishable PDF show no line until it is agreed with June and Friday)
 - Awards and honours (`docs/LEGACY_AWARDS_INVENTORY.csv`), company figures, film credits, headshots and a speaking clip

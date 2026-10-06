@@ -10,6 +10,7 @@ backgrounds only.
 Usage:
   python scripts/generate-press-kit.py            # clean version -> public/downloads/ (for publishing)
   python scripts/generate-press-kit.py --draft    # marked DRAFT    -> docs/pending-approval/
+  python scripts/generate-press-kit.py --review   # clean, shows the [X] response-time placeholder -> docs/pending-approval/
 """
 import json
 import sys
@@ -22,7 +23,11 @@ from reportlab.lib.units import inch
 from reportlab.platypus import BaseDocTemplate, Frame, KeepTogether, PageTemplate, Paragraph, Spacer, Table, TableStyle
 
 DRAFT = '--draft' in sys.argv
-OUT = 'docs/pending-approval/tel-k-ganesan-press-kit.DRAFT.pdf' if DRAFT else 'public/downloads/tel-k-ganesan-press-kit.pdf'
+# --review: clean PDF for sign-off that shows the response-time placeholder "[X]". It never goes on the website.
+REVIEW = '--review' in sys.argv
+OUT = ('docs/pending-approval/tel-k-ganesan-press-kit.DRAFT.pdf' if DRAFT
+       else 'docs/pending-approval/Tel-K-Ganesan-Press-Kit-for-review.pdf' if REVIEW
+       else 'public/downloads/tel-k-ganesan-press-kit.pdf')
 
 with open('src/frontend/data/press-kit.json', encoding='utf8') as f:
     P = json.load(f)
@@ -45,6 +50,7 @@ st = {
     'lede': ParagraphStyle('lede', fontName='Helvetica', fontSize=9, leading=12.6, textColor=MUTED, spaceAfter=5),
     'card_t': ParagraphStyle('card_t', fontName='Times-Bold', fontSize=10.5, leading=13, textColor=MIDNIGHT, spaceAfter=2),
     'card_b': ParagraphStyle('card_b', fontName='Helvetica', fontSize=8.6, leading=11.8, textColor=INK),
+    'card_meta': ParagraphStyle('card_meta', fontName='Helvetica', fontSize=8.6, leading=11.8, textColor=INK, spaceBefore=4),
     'label': ParagraphStyle('label', fontName='Helvetica-Bold', fontSize=7.4, leading=10, textColor=MIDNIGHT, spaceAfter=1),
     'link': ParagraphStyle('link', fontName='Helvetica', fontSize=8.6, leading=11.6, textColor=MIDNIGHT),
     'small': ParagraphStyle('small', fontName='Helvetica', fontSize=8, leading=11, textColor=MUTED),
@@ -144,7 +150,8 @@ def card_table(cells, cols, gap=8, boxed=True):
 
 
 def card(title, lines):
-    return [Paragraph(esc(title), st['card_t'])] + [Paragraph(l, st['card_b']) for l in lines]
+    meta = ('<b>Audience:', '<b>Takeaway:')
+    return [Paragraph(esc(title), st['card_t'])] + [Paragraph(l, st['card_meta'] if l.startswith(meta) else st['card_b']) for l in lines]
 
 
 story = []
@@ -207,8 +214,9 @@ route_lines = [
     Paragraph(f'<b>Speaking:</b>&nbsp;&nbsp;{link(P["routes"]["speaking"])}', st['link']),
     Paragraph(f'<b>Media:</b>&nbsp;&nbsp;{link(P["routes"]["media"])}', st['link']),
 ]
-if P.get('responseTime'):
-    route_lines.append(Paragraph(esc(P['responseTime']), st['small']))
+response_time = P.get('responseTime') or ('Requests are reviewed within [X] business days.' if REVIEW else None)
+if response_time:
+    route_lines.append(Paragraph(esc(response_time), st['small']))
 story.append(KeepTogether([Paragraph('Inquiry routes', st['h2'])] + route_lines))
 
 top_margin = HEADER_H + 0.1 * inch

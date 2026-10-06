@@ -1,22 +1,38 @@
-**Subject:** Re: Draft Press Kit for Media & Speaking Page - edits applied, 3 items for you
+**To:** tel@kyyba.com
+**Cc:** juneai06062026@gmail.com, friday@kyybamusic.com, ankits@kyyba.com
+**Subject:** Re: Draft Press Kit for Media & Speaking Page - Your Approval Requested
+**Attachment:** Tel-K-Ganesan-Press-Kit-for-review.pdf
+
+---
 
 Hi Sir,
 
-Thank you for the approval and the clear direction. All your copy and design edits are applied on the Media & Speaking page and in the PDF, which is now 2 pages. The updated PDF is attached. The staging link will follow as soon as the site is deployed to staging.
+Thank you for the approval. We worked through your sequence in order. The status of each point is below.
 
-Three items need your decision before go-live:
+**COPY EDITS**
+1. Headline: "From Trap to Triumph" is the headline at the top of the web page and on the PDF cover, with "Tel K. Ganesan builds enterprises, leaders, and platforms that turn possibility into lasting value." directly beneath it. Done.
+2. Bio now reads "Based in Metro Detroit, he has built..." Done.
+3. Bio now reads "Kyyba remains the cornerstone of his enterprise-building journey." The Kyyba card is shortened to "Uniting technology, talent and innovation to create real-world value." so the line no longer repeats. Done.
+4. The short bio (about 50 words) for MCs, hosts and producers is added exactly as you wrote it. Done.
+5. "Speaking Themes" and "Practical ideas..." are in place. Done.
+6. Formats are split into a Speaking line and a Media line. Done.
+7. Each speaking theme now has one Audience line and one Takeaway line, built from approved wording. They are in the attached PDF for your sign-off. Done.
+8. Response-time line: added under the inquiry routes as "Requests are reviewed within [X] business days." The number stays a placeholder until we agree it with June and Friday; we will confirm it to you before go-live.
 
-1. **Audience and takeaway lines (edit 7).** We drafted one pair for each theme from approved wording. Please approve or edit them:
-   - Building possibility: for leaders and founders navigating growth and reinvention; the takeaway is a way to move from a compelling idea to a structure that can carry it.
-   - Leadership under complexity: for leadership teams making decisions when the path is uncertain; the takeaway is clarity, ownership and decision-making for uncertain conditions.
-   - Enterprise meets culture: for builders and creative leaders who work with story and audience; the takeaway is what story, audience and creative risk can teach people who build.
-   Until you confirm, these lines stay off the page and the PDF.
+**DESIGN EDITS**
+- "From Trap to Triumph" is the largest type on the page, in Golden Leaf on Deep Midnight Blue. Done.
+- The locked colors (#000033 and #E6B904) are used, with Golden Leaf on dark backgrounds only. Done.
+- All four platform cards are kept together, and the PDF is 2 pages. Done.
+- Every link is clickable, and the DRAFT watermark and footer are removed from the published version. Done.
 
-2. **Response-time line (edit 8).** We will agree the number with June and Friday and confirm it to you before go-live. It stays off the page until then.
+**WEB PAGE ORDER**
+Built in your order: Hero (headline, supporting line, "Book Tel to Speak" and "Media Request") > Speaking Themes > Formats > Short and full bio (with copy buttons) > Operating Principles > Platforms > Press kit PDF download > Official destinations > Inquiry routes.
 
-3. **Brand colours.** We applied Deep Midnight Blue #000033 and Golden Leaf #E6B904 to this page and the PDF. The rest of the website still uses the earlier palette. Would you like the locked colours applied across the whole site?
+**GO-LIVE CHECKS**
+I have checked the links: all external links, including IMDb and the social profiles, open. The two inquiry-route links will work once the new site is live. Before go-live I will also send one test submission through each route, review the page on mobile, and confirm with Legal whether a separate sign-off is needed. If it is, I will hold go-live until we have it.
 
-I will also confirm with Legal whether a separate sign-off is needed, and complete the link checks, test submissions and mobile review before go-live.
+**NEXT STEP**
+The 2-page PDF is attached. I will send you the staging link as soon as the page is deployed to staging.
 
 Thank you,
 Ankit
