@@ -28,7 +28,7 @@ then re-enable the download button on the Media page (`BaselinePage.tsx`, MOD-ME
 ## Deliberately NOT included (need evidence first)
 
 - Awards and honours (39 listed on the legacy site: see `docs/LEGACY_AWARDS_INVENTORY.csv`)
-- Employee, revenue or client numbers; Kyyba founding year
+- Employee or client numbers; Kyyba founding year
 - Film credits, roles and rankings (for example "#1 on Starz")
 - "Three decades" of experience wording
 - Photographs and logos, until each asset is rights-cleared in the Asset Register

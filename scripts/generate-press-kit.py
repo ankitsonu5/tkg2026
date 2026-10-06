@@ -3,7 +3,7 @@ Builds the Tel K. Ganesan press kit PDF from APPROVED website wording only.
 
 Every sentence below is copied from a page that already carries approved Copy Deck text
 (see docs/pending-approval/PRESS_KIT_REVIEW.md for the source of each line). Deliberately left
-out until they are verified in the Claim Register: awards, workforce or revenue figures,
+out until they are verified in the Claim Register: awards, workforce figures,
 founding year, film credits and rankings, and any photograph whose rights are not cleared.
 
 Usage:
