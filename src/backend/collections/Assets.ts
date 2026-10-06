@@ -18,7 +18,8 @@ export const Assets: CollectionConfig = {
     focalPoint: true,
     imageSizes: [
       { name: 'thumbnail', width: 400, height: 300, position: 'centre' },
-      { name: 'card', width: 800, height: 600, position: 'centre' },
+      { name: 'card', width: 768, height: 480, position: 'centre' },
+      { name: 'featured', width: 768, height: 480, position: 'centre' },
       { name: 'hero', width: 1920, height: 1080, position: 'centre' },
       { name: 'social', width: 1200, height: 630, position: 'centre' },
     ],

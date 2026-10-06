@@ -172,13 +172,13 @@ export function resolveAssetImage(hero: unknown): FeaturedImage | null {
   if (!cleared && process.env.NODE_ENV === 'production') return null
 
   const src = toPath(asset.url)
-  const card = asset.sizes?.card?.url
+  const card = asset.sizes?.card?.url || asset.sizes?.featured?.url
   return {
     src,
     cardSrc: card ? toPath(card) : src,
     alt: asset.decorative ? '' : (asset.alt ?? ''),
-    width: asset.width && asset.width > 0 ? asset.width : 1200,
-    height: asset.height && asset.height > 0 ? asset.height : 750,
+    width: asset.width && asset.width > 0 ? asset.width : 768,
+    height: asset.height && asset.height > 0 ? asset.height : 480,
     cleared,
   }
 }

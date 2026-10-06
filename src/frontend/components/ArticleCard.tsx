@@ -30,20 +30,26 @@ export function ArticleCard({ doc, priority = false }: { doc: ArticleDoc; priori
   return (
     <article className={styles.card}>
       <div className={styles.cardMedia}>
-        <Visual doc={doc} topic={topic} sizes="(min-width: 960px) 30vw, (min-width: 640px) 45vw, 100vw" priority={priority} />
+        <Link href={`/ideas/${doc.slug}`} tabIndex={-1} aria-hidden="true" className={styles.mediaLink}>
+          <Visual doc={doc} topic={topic} sizes="(min-width: 960px) 30vw, (min-width: 640px) 45vw, 100vw" priority={priority} />
+        </Link>
       </div>
       <div className={styles.cardBody}>
-        {topic && <span className={styles.chip}>{topic}</span>}
+        <div className={styles.cardMetaRow}>
+          {date && <span className={styles.cardDate}>{date}</span>}
+          {topic && <span className={styles.cardCategory}>{topic}</span>}
+        </div>
         <h3 className={styles.cardTitle}>
-          <Link href={`/ideas/${doc.slug}`} className={styles.stretched}>
+          <Link href={`/ideas/${doc.slug}`} className={styles.titleLink}>
             {doc.title}
           </Link>
         </h3>
         {excerpt && <p className={styles.cardExcerpt}>{excerpt}</p>}
-        <div className={styles.meta}>
-          {date && <span>{date}</span>}
-          {date && <span aria-hidden="true">&bull;</span>}
-          <span>{minutes} min read</span>
+        <div className={styles.cardFooter}>
+          <Link href={`/ideas/${doc.slug}`} className={styles.exploreLink}>
+            Explore More <span className={styles.arrow} aria-hidden="true">&rarr;</span>
+          </Link>
+          {minutes > 0 && <span className={styles.readTime}>{minutes} min read</span>}
         </div>
       </div>
     </article>

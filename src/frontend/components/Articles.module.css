@@ -95,44 +95,114 @@
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--color-navy);
+  position: relative;
+}
+.mediaLink {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .cardBody {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
   padding: 1.5rem 1.6rem 1.7rem;
   flex: 1;
 }
+.cardMetaRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+.cardDate {
+  font-size: 0.82rem;
+  color: #5b6672;
+  font-weight: 500;
+}
+.cardCategory {
+  display: inline-block;
+  padding: 0.22rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(200, 164, 91, 0.12);
+  border: 1px solid rgba(200, 164, 91, 0.4);
+  color: #8a6420;
+  font-size: 0.72rem;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
 .cardTitle {
-  margin: 0;
+  margin: 0 0 0.85rem;
   font-family: var(--font-serif);
-  font-size: 1.4rem;
-  line-height: 1.25;
+  font-size: 1.35rem;
+  line-height: 1.28;
   letter-spacing: -0.01em;
   color: var(--color-navy);
 }
+.titleLink {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.titleLink:hover {
+  color: var(--color-gold);
+}
 .cardExcerpt {
-  margin: 0;
-  font-size: 0.97rem;
+  margin: 0 0 1.25rem;
+  font-size: 0.95rem;
   line-height: 1.65;
-  color: #3d4955;
+  color: #4a5568;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.card .meta {
+.cardFooter {
   margin-top: auto;
-  padding-top: 0.5rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(10, 26, 43, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.exploreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #8a6420;
+  text-decoration: none;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+.exploreLink:hover {
+  color: var(--color-navy);
+}
+.arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.card:hover .arrow {
+  transform: translateX(4px);
+}
+.readTime {
+  font-size: 0.8rem;
+  color: #718096;
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 28px 60px rgba(10, 26, 43, 0.14);
+    box-shadow: 0 24px 50px rgba(10, 26, 43, 0.12);
+    border-color: rgba(200, 164, 91, 0.35);
   }
   .card:hover .cardImage {
     transform: scale(1.05);
+  }
+  .card:hover .titleLink {
+    color: #8a6420;
   }
 }
 

@@ -114,6 +114,14 @@ async function main() {
       continue
     }
     if (raw.startsWith('#')) {
+      if (raw.includes('${')) {
+        rows.push({
+          ...occ,
+          classification: 'ANCHOR',
+          reason: 'dynamic heading anchor generated at runtime',
+        })
+        continue
+      }
       const id = raw.slice(1)
       const found = id.length > 0 && new RegExp(`id=(\\{?["'\`])${id}\\1|id="${id}"`).test(sourceText)
       rows.push({
@@ -130,7 +138,10 @@ async function main() {
     // in src/lib/inquiries/submit.ts rejects unknown routeIds server-side).
     if (raw.includes('${')) {
       const staticPrefix = raw.split('${')[0]
-      const looksInternal = staticPrefix.startsWith('/connect') || staticPrefix.startsWith('/ideas/') ||
+      const looksInternal =
+        staticPrefix.startsWith('/connect') ||
+        staticPrefix.startsWith('/ideas') ||
+        raw.includes('meta.basePath') ||
         templatePrefixes.some((prefix) => staticPrefix.startsWith(`${prefix}/`))
       rows.push({
         ...occ,
