@@ -2,7 +2,7 @@
 
 Hi Sir,
 
-Please find attached the draft press kit (3 pages) for the Media & Speaking page of the website. It uses only wording that is already approved and live on the site. A checklist showing the source of each line is attached as well.
+Please find attached the draft press kit (3 pages) for the Media & Speaking page of the website. It uses only wording that is already approved for the new website. A checklist showing the source of each line is attached as well.
 
 Not included yet, as they need supporting documents: awards, company figures, film credits and photographs.
 

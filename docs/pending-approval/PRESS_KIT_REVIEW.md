@@ -7,7 +7,7 @@ then re-enable the download button on the Media page (`BaselinePage.tsx`, MOD-ME
 
 ## What is in the PDF and where each line comes from
 
-| Section | Wording | Source on the live site |
+| Section | Wording | Source on the new website (not yet public) |
 |---|---|---|
 | Profile line | "Tel K. Ganesan builds enterprises, leaders, and platforms that turn possibility into lasting value." | Master statement (Copy Deck / baseline) |
 | Positioning | Executive Chairman, Enterprise Builder, Investor, Producer | Approved positioning line |
