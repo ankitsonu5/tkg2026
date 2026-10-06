@@ -9,6 +9,9 @@ import styles from './FilmCultureSection.module.css'
 
 export function FilmCultureSection() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [visible, setVisible] = useState(false)
+  const sectionRef = useRef<HTMLElement>(null)
+  const seenRef = useRef(false)
   const isHoveredRef = useRef(false)
   const touchStartXRef = useRef<number | null>(null)
 
@@ -20,15 +23,37 @@ export function FilmCultureSection() {
     setActiveIndex((prev) => (prev - 1 + films.length) % films.length)
   }, [])
 
-  // Auto-play interval: rotates every 6s unless hovered
+  // The carousel only moves while the section is actually on screen. Without this it kept
+  // rotating from page load, so a visitor scrolling down saw whichever film happened to be up
+  // by then. The first time it comes into view it always starts on the first film (Trap City).
   useEffect(() => {
+    const el = sectionRef.current
+    if (!el || typeof IntersectionObserver === 'undefined') return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !seenRef.current) {
+          seenRef.current = true
+          setActiveIndex(0)
+        }
+        setVisible(entry.isIntersecting)
+      },
+      { threshold: 0.35 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  // Auto-play: next film every 6s while visible and not hovered. Re-arming on every change of
+  // activeIndex gives each film a full 6s after a manual tab click or swipe. Auto-play is off for
+  // visitors who prefer reduced motion (WCAG 2.2.2).
+  useEffect(() => {
+    if (!visible) return
+    if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return
     const timer = setInterval(() => {
-      if (!isHoveredRef.current) {
-        nextFilm()
-      }
+      if (!isHoveredRef.current) nextFilm()
     }, 6000)
     return () => clearInterval(timer)
-  }, [nextFilm])
+  }, [visible, activeIndex, nextFilm])
 
   // Touch swipe support for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -52,6 +77,7 @@ export function FilmCultureSection() {
 
   return (
     <section
+      ref={sectionRef}
       className={styles.cultureSection}
       id="film-culture"
       aria-labelledby="culture-heading"
