@@ -53,8 +53,13 @@ export async function buildMetadata(args: BuildMetadataArgs): Promise<Metadata> 
   const resolvedTitle = baselinePage?.seoTitle ?? args.title
   const resolvedDescription = baselinePage?.seoDescription ?? args.description
 
+  // Baseline SEO titles are written as complete titles (most already end with the site name).
+  // The root layout adds " | Tel K. Ganesan" to plain titles, so a complete title must bypass that
+  // template or the name appears twice.
+  const alreadyBranded = Boolean(baselinePage?.seoTitle) || /\|\s*Tel K\. Ganesan\s*$/i.test(resolvedTitle)
+
   const metadata: Metadata = {
-    title: resolvedTitle,
+    title: alreadyBranded ? { absolute: resolvedTitle } : resolvedTitle,
     description: resolvedDescription,
     robots: shouldIndex
       ? { index: true, follow: true }
