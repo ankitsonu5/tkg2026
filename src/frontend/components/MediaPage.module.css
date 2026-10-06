@@ -1,0 +1,377 @@
+/* Media & Speaking page. Locked brand colours from Tel K. Ganesan's approval (6 Oct 2026):
+   Deep Midnight Blue #000033 and Golden Leaf #E6B904. Golden Leaf is used for TEXT on dark
+   backgrounds only (gold text on white fails contrast); on light backgrounds it appears only as
+   a decorative border or fill. */
+.hero {
+  --midnight: #000033;
+  --leaf: #e6b904;
+  background: var(--midnight);
+  color: #f4f1e8;
+  padding: clamp(1.25rem, 3vw, 2rem) 0 clamp(3rem, 7vw, 5.5rem);
+}
+.hero :global(.breadcrumbs) {
+  color: #b9bfd6;
+}
+.hero :global(.breadcrumbs a) {
+  color: #d7dbea;
+}
+.hero :global(.breadcrumbs li::after) {
+  color: #6c7399;
+}
+.eyebrow {
+  margin: clamp(1.25rem, 3vw, 2.5rem) 0 1rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #e6b904;
+}
+.headline {
+  margin: 0 0 1.25rem;
+  font-family: var(--font-serif);
+  font-size: clamp(3.1rem, 10.5vw, 7rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  color: #e6b904;
+  max-width: 14ch;
+}
+.supporting {
+  margin: 0 0 2rem;
+  max-width: 46ch;
+  font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+  line-height: 1.5;
+  color: #f4f1e8;
+}
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+.hero :global(.cta--primary) {
+  background: #e6b904;
+  color: #000033;
+  border-color: #e6b904;
+}
+.hero :global(.cta--secondary) {
+  background: transparent;
+  color: #e6b904;
+  border: 2px solid #e6b904;
+}
+.hero :global(.cta) {
+  min-height: 48px;
+}
+
+/* Sections */
+.section {
+  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+  background: #ffffff;
+  color: #1b2430;
+}
+.tint {
+  background: #f4f1e8;
+}
+.h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: #000033;
+}
+.lede {
+  margin: 0 0 1.75rem;
+  max-width: 60ch;
+  font-size: 1.1rem;
+  line-height: 1.65;
+  color: #3d4955;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 51, 0.12);
+  border-left: 4px solid #e6b904;
+  border-radius: 10px;
+  padding: 1.4rem 1.5rem;
+  break-inside: avoid;
+}
+.tint .card {
+  background: #ffffff;
+}
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  line-height: 1.25;
+  color: #000033;
+}
+.card p {
+  margin: 0 0 0.5rem;
+  line-height: 1.65;
+  color: #3d4955;
+}
+.index {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  color: #000033;
+}
+.meta {
+  font-size: 0.95rem;
+}
+.themeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.platformGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+/* Formats */
+.formats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.formats div {
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 51, 0.12);
+}
+.formats dt {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #000033;
+}
+.formats dd {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: #1b2430;
+}
+.formats dd::first-letter {
+  text-transform: uppercase;
+}
+
+/* Bios */
+.bioGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+.bioCard {
+  padding: 1.6rem 1.75rem;
+  background: #f4f1e8;
+  border-radius: 12px;
+}
+.bioCard h3 {
+  margin: 0 0 0.25rem;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: #000033;
+}
+.bioCard p {
+  margin: 0 0 0.9rem;
+  line-height: 1.7;
+  max-width: none;
+}
+.bioNote {
+  font-size: 0.9rem;
+  color: #4a5764;
+}
+.copy {
+  min-height: 44px;
+  padding: 0 1.25rem;
+  border: 2px solid #000033;
+  border-radius: 999px;
+  background: transparent;
+  color: #000033;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+.copy:hover {
+  background: #000033;
+  color: #e6b904;
+}
+.copy:focus-visible,
+.route:focus-visible,
+.links a:focus-visible,
+.downloadButton:focus-visible {
+  outline: 3px solid #e6b904;
+  outline-offset: 3px;
+}
+
+/* Principles */
+.principles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem 2rem;
+}
+.principles li {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid rgba(0, 0, 51, 0.15);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: #000033;
+}
+.principles span {
+  font-weight: 750;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: #000033;
+  min-width: 1.6rem;
+}
+
+/* Download */
+.download {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  border-radius: 14px;
+  background: #000033;
+  color: #f4f1e8;
+}
+.download .eyebrow {
+  margin: 0 0 0.5rem;
+}
+.download .eyebrow {
+  color: #e6b904;
+}
+.download h2 {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  color: #e6b904;
+}
+.download p {
+  margin: 0;
+  max-width: 52ch;
+  line-height: 1.6;
+  color: #d7dbea;
+}
+.downloadButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 52px;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  background: #e6b904;
+  color: #000033;
+  font-weight: 750;
+  text-decoration: none;
+}
+
+/* Official destinations */
+.links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+}
+.links a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-height: 44px;
+  padding: 0.9rem 1.1rem;
+  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 51, 0.12);
+  color: #000033;
+  text-decoration: none;
+}
+.links a:hover {
+  border-color: #000033;
+}
+.links a span {
+  font-size: 0.9rem;
+  color: #3d4955;
+  word-break: break-all;
+}
+
+/* Routes */
+.routeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+.route {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 1.5rem 3.25rem 1.5rem 1.5rem;
+  border-radius: 12px;
+  background: #000033;
+  color: #f4f1e8;
+  text-decoration: none;
+}
+.route strong {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: #e6b904;
+}
+.route span {
+  line-height: 1.5;
+  color: #d7dbea;
+}
+.route em {
+  position: absolute;
+  right: 1.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-style: normal;
+  font-size: 1.5rem;
+  color: #e6b904;
+}
+.responseTime {
+  margin: 1.25rem 0 0;
+  color: #3d4955;
+}
+
+@media (max-width: 960px) {
+  .themeGrid {
+    grid-template-columns: 1fr;
+  }
+  .bioGrid,
+  .principles,
+  .links {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  .platformGrid,
+  .formats,
+  .routeGrid {
+    grid-template-columns: 1fr;
+  }
+  .heroActions :global(.cta) {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -17,8 +17,7 @@ import {
  * before a choice is made.
  *
  * Consent lives in localStorage, which is an external store: `useSyncExternalStore` is the
- * correct primitive for it. It renders the server snapshot ('unset') during hydration and
- * then syncs, so there is no hydration mismatch and no setState-inside-effect.
+ * correct primitive for it.
  */
 function subscribe(onChange: () => void): () => void {
   if (typeof window === 'undefined') return () => {}
@@ -39,9 +38,19 @@ function useConsent(): ConsentState {
 }
 
 export function ConsentBanner() {
+  // False during server render and hydration, true afterwards, so the banner never flashes on
+  // screen for a visitor who already made a choice. (useSyncExternalStore avoids a setState-in-effect.)
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  )
   const state = useConsent()
 
-  if (state !== 'unset') {
+  // Never flash on screen during SSR hydration if consent was already recorded.
+  // Stays permanently visible on client when choice is genuinely unset until
+  // the visitor clicks Accept or Decline.
+  if (!mounted || state !== 'unset') {
     return null
   }
 

@@ -1,0 +1,65 @@
+{
+  "_note": "Single source for the Media & Speaking page AND the press kit PDF (scripts/generate-press-kit.py). Wording approved by Tel K. Ganesan on 6 Oct 2026 (see docs/pending-approval/PRESS_KIT_APPROVAL_RECORD.md). A line that is null is held back until it is signed off; nothing null is ever published.",
+  "headline": "From Trap to Triumph",
+  "supportingLine": "Tel K. Ganesan builds enterprises, leaders, and platforms that turn possibility into lasting value.",
+  "positioning": "Executive Chairman | Enterprise Builder | Investor | Producer",
+  "speakingIntro": "Practical ideas for leaders, founders, and teams navigating growth, reinvention, and the responsibility to turn vision into execution.",
+  "themes": [
+    {
+      "title": "Building possibility",
+      "text": "How leaders move from a compelling idea to a structure that can carry it.",
+      "audience": null,
+      "takeaway": null
+    },
+    {
+      "title": "Leadership under complexity",
+      "text": "Clarity, ownership, and decision-making when the path is uncertain.",
+      "audience": null,
+      "takeaway": null
+    },
+    {
+      "title": "Enterprise meets culture",
+      "text": "What builders can learn from story, audience, and creative risk.",
+      "audience": null,
+      "takeaway": null
+    }
+  ],
+  "formats": {
+    "speaking": "executive keynotes, summit fireside chats, leadership roundtables",
+    "media": "television, podcast and press interviews"
+  },
+  "shortBio": "Tel K. Ganesan is an Executive Chairman, enterprise builder, investor, and producer based in Metro Detroit. Kyyba is the cornerstone of his enterprise-building journey. He hosts Mind Trap, leads Kyyba Films, and focuses on enterprise value, leadership development, selective investment, and legacy.",
+  "fullBio": [
+    "Tel K. Ganesan is an Executive Chairman, enterprise builder, investor, and producer. Based in Metro Detroit, he has built and supported businesses, creative projects, and community initiatives across cultures and industries. Kyyba remains the cornerstone of his enterprise-building journey.",
+    "Today, Tel focuses his time where founder judgment matters most: enterprise value, consequential relationships, leadership development, selective investment, narrative, and legacy. His work is grounded in a simple belief: possibility becomes durable only when people, systems, and purpose grow together."
+  ],
+  "principles": [
+    "See potential before consensus forms.",
+    "Build the system, not dependence on the founder.",
+    "Connect worlds with respect.",
+    "Persist in the purpose; stay flexible about the vehicle.",
+    "Protect the capacity behind the contribution."
+  ],
+  "platformsIntro": "Headquartered in Metro Detroit with enterprise operations and film productions spanning North America and India.",
+  "platforms": [
+    { "title": "Kyyba", "text": "Uniting technology, talent and innovation to create real-world value." },
+    { "title": "Mind Trap", "text": "Explores the subconscious beliefs and operational friction that keep high-potential leaders from their next breakthrough. Hosted by Tel K. Ganesan." },
+    { "title": "Kyyba Films", "text": "Film, media and culture: stories that inspire, challenge perspectives and connect people across communities." },
+    { "title": "Community impact", "text": "Three focus areas: Youth and Education Empowerment; Urban Revitalization and Community Support; Enterprise and Founder Mentorship." }
+  ],
+  "destinations": [
+    { "label": "Website", "url": "https://telkganesan.com" },
+    { "label": "Mind Trap (framework and podcast)", "url": "https://mindtrappodcast.com/" },
+    { "label": "Kyyba Films", "url": "https://kyybafilms.com/" },
+    { "label": "LinkedIn", "url": "https://www.linkedin.com/in/telkganesan/" },
+    { "label": "X", "url": "https://twitter.com/TelKGanesan" },
+    { "label": "Instagram", "url": "https://www.instagram.com/telkganesan/" },
+    { "label": "YouTube", "url": "https://www.youtube.com/@TelKGanesan" },
+    { "label": "IMDb", "url": "https://www.imdb.com/name/nm10609355/" }
+  ],
+  "routes": {
+    "speaking": "https://telkganesan.com/connect?route=speaking",
+    "media": "https://telkganesan.com/connect?route=media"
+  },
+  "responseTime": null
+}

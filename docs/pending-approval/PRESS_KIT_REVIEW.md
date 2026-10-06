@@ -1,43 +1,28 @@
-# Press kit: approval checklist
+# Press kit: source checklist
 
-File for review: `tel-k-ganesan-press-kit.pdf` (3 pages, marked DRAFT).
-Regenerate with `python scripts/generate-press-kit.py`. After written approval, build the clean version with
-`python scripts/generate-press-kit.py --final`, which writes `public/downloads/tel-k-ganesan-press-kit.pdf`,
-then re-enable the download button on the Media page (`BaselinePage.tsx`, MOD-MEDIA-PRESS-KIT).
+The PDF (`public/downloads/tel-k-ganesan-press-kit.pdf`) and the Media & Speaking web page are both built
+from one file, `src/frontend/data/press-kit.json`. Approval and edits: see `PRESS_KIT_APPROVAL_RECORD.md`.
 
-## What is in the PDF and where each line comes from
+Regenerate the PDF with `python scripts/generate-press-kit.py` (add `--draft` for a watermarked copy).
 
-| Section | Wording | Source on the new website (not yet public) |
-|---|---|---|
-| Profile line | "Tel K. Ganesan builds enterprises, leaders, and platforms that turn possibility into lasting value." | Master statement (Copy Deck / baseline) |
-| Positioning | Executive Chairman, Enterprise Builder, Investor, Producer | Approved positioning line |
-| Short biography, paragraph 1 | "...Executive Chairman, enterprise builder, investor, and producer. From Detroit... Kyyba remains the flagship proof of his operating journey." | About page hero (ABOUT-01) |
-| Short biography, paragraph 2 | "Today, Tel focuses his time where founder judgment matters most..." | About page, "Operating point of view" |
-| Operating principles (5) | "See potential before consensus forms" ... "Protect the capacity behind the contribution" | About page principles (ABOUT-04) |
-| Speaking themes (3) | Building possibility; Leadership under complexity; Enterprise meets culture | Media & Speaking page topics |
-| Headquarters line | "Headquartered in Metro Detroit with enterprise operations and film productions spanning North America and India." | Website footer |
-| Kyyba | "Kyyba is the cornerstone of Tel's enterprise-building journey, uniting technology, talent and innovation to create real-world value." | Home page, Kyyba flagship section |
-| Mind Trap | "Mind Trap explores the subconscious beliefs and operational friction that keep high-potential leaders from their next breakthrough. Hosted by Tel K. Ganesan." | Ideas page and Home page |
-| Kyyba Films | "Film, media and culture: stories that inspire, challenge perspectives and connect people across communities." | Home page, Film & Culture section (no film titles or credits) |
-| Community impact | Three focus areas (Youth and Education; Urban Revitalization; Enterprise and Founder Mentorship) | Impact page and Home page |
-| Speaking formats | "television and podcast broadcasts, executive keynotes, summit fireside chats, and global leadership roundtables" | Media & Speaking page |
-| Official profiles | LinkedIn, X, Instagram, YouTube, IMDb | Links in the website footer (please confirm these are the official accounts) |
-| Official destinations | telkganesan.com, mindtrappodcast.com, kyybafilms.com | Links already used on the site |
-| Requests | `/connect?route=speaking` and `/connect?route=media` | Inquiry routes (Tel's direct email is never published) |
+## Where each line comes from
 
-## Deliberately NOT included (need evidence first)
+| Section | Source |
+|---|---|
+| Headline "From Trap to Triumph" and supporting line | Approved by Tel K. Ganesan, 6 Oct 2026 |
+| Short bio (about 50 words) | Written by Tel K. Ganesan in the 6 Oct 2026 approval |
+| Full bio, paragraph 1 | About page hero, with Tel's two edits ("Based in Metro Detroit", "cornerstone") |
+| Full bio, paragraph 2 | About page, "Operating point of view" |
+| Operating principles (5) | About page principles (ABOUT-04) |
+| Speaking themes (3) and intro | Media & Speaking page topics; intro reworded per Tel ("Practical ideas") |
+| Formats | Wording approved by Tel (Speaking and Media lines) |
+| Headquarters line | Website footer |
+| Platforms: Kyyba, Mind Trap, Kyyba Films, Community impact | Home, Ideas and Impact pages (Kyyba card shortened per Tel) |
+| Official destinations and profiles | Website footer and existing site links (to be confirmed in the go-live link check) |
+| Inquiry routes | `/connect?route=speaking` and `/connect?route=media` (Tel's direct email is never published) |
 
-- Awards and honours (39 listed on the legacy site: see `docs/LEGACY_AWARDS_INVENTORY.csv`)
-- Employee or client numbers; Kyyba founding year
-- Film credits, roles and rankings (for example "#1 on Starz")
-- "Three decades" of experience wording
-- Photographs and logos, until each asset is rights-cleared in the Asset Register
+## Held back until documented
 
-## Reviewer sign-off
-
-| Reviewer | Decision (approve / changes) | Date |
-|---|---|---|
-| Tel K. Ganesan | | |
-| Legal / Communications | | |
-
-Approved by (name): ______________________  Date: ____________
+- Audience and takeaway lines under each theme (awaiting Tel's sign-off)
+- Response-time line (number to be agreed with June and Friday)
+- Awards and honours (`docs/LEGACY_AWARDS_INVENTORY.csv`), company figures, film credits, headshots and a speaking clip
