@@ -1,4 +1,4 @@
-**Subject:** For your approval: Tel K. Ganesan media and speaking press kit (2 pages)
+**Subject:** For your approval: Tel K. Ganesan media and speaking press kit (3 pages)
 
 Hi Sir,
 

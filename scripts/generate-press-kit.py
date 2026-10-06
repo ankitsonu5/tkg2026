@@ -30,8 +30,8 @@ MUTED = colors.HexColor('#4A5764')
 W, H = letter
 M = 0.85 * inch
 
-eyebrow = ParagraphStyle('eyebrow', fontName='Helvetica-Bold', fontSize=8.5, leading=11, textColor=colors.HexColor('#8A6420'), spaceAfter=4)
-h2 = ParagraphStyle('h2', fontName='Times-Bold', fontSize=19, leading=23, textColor=NAVY, spaceAfter=8)
+eyebrow = ParagraphStyle('eyebrow', fontName='Helvetica-Bold', fontSize=8.5, leading=11, textColor=colors.HexColor('#8A6420'), spaceAfter=4, keepWithNext=1)
+h2 = ParagraphStyle('h2', fontName='Times-Bold', fontSize=19, leading=23, textColor=NAVY, spaceAfter=8, keepWithNext=1)
 body = ParagraphStyle('body', fontName='Helvetica', fontSize=10.5, leading=16, textColor=INK, spaceAfter=8)
 lede = ParagraphStyle('lede', fontName='Times-Italic', fontSize=14.5, leading=21, textColor=NAVY, spaceAfter=6)
 small = ParagraphStyle('small', fontName='Helvetica', fontSize=9, leading=13, textColor=MUTED)
@@ -123,8 +123,16 @@ for n, t in enumerate([
 ], 1):
     story.append(Paragraph(f'<font color="#8A6420"><b>{n:02d}</b></font>&nbsp;&nbsp;{t}', body))
 
-story += [PageBreak(), Paragraph('SPEAKING', eyebrow), Paragraph('Themes for consequential rooms', h2),
+story += [Spacer(1, 6), Paragraph('PLATFORMS AND WORK', eyebrow), Paragraph('Where the work happens', h2),
+          Paragraph('Headquartered in Metro Detroit with enterprise operations and film productions spanning North America and India.', body)]
+story.append(card('Kyyba', 'Kyyba is the cornerstone of Tel\u2019s enterprise-building journey, uniting technology, talent and innovation to create real-world value.'))
+story.append(card('Mind Trap', 'Mind Trap explores the subconscious beliefs and operational friction that keep high-potential leaders from their next breakthrough. Hosted by Tel K. Ganesan.'))
+story.append(card('Kyyba Films', 'Film, media and culture: stories that inspire, challenge perspectives and connect people across communities.'))
+story.append(card('Community impact', 'Three focus areas: Youth and Education Empowerment; Urban Revitalization and Community Support; Enterprise and Founder Mentorship.'))
+
+story += [Spacer(1, 6), Paragraph('SPEAKING', eyebrow), Paragraph('Themes for consequential rooms', h2),
           Paragraph('Useful ideas for leaders, founders, and teams navigating growth, reinvention, and the responsibility to turn vision into execution.', body)]
+story.append(Paragraph('<b>Formats:</b> television and podcast broadcasts, executive keynotes, summit fireside chats, and global leadership roundtables.', body))
 story.append(card('Building possibility', 'How leaders move from a compelling idea to a structure that can carry it.'))
 story.append(card('Leadership under complexity', 'Clarity, ownership, and decision-making when the path is uncertain.'))
 story.append(card('Enterprise meets culture', 'What builders can learn from story, audience, and creative risk.'))
@@ -136,6 +144,11 @@ story += [
     Paragraph('<b>Website:</b> telkganesan.com', body),
     Paragraph('<b>Mind Trap (framework and podcast):</b> mindtrappodcast.com', body),
     Paragraph('<b>Kyyba Films:</b> kyybafilms.com', body),
+    Paragraph('<b>LinkedIn:</b> linkedin.com/in/telkganesan', body),
+    Paragraph('<b>X:</b> x.com/TelKGanesan', body),
+    Paragraph('<b>Instagram:</b> instagram.com/telkganesan', body),
+    Paragraph('<b>YouTube:</b> youtube.com/@TelKGanesan', body),
+    Paragraph('<b>IMDb:</b> imdb.com/name/nm10609355', body),
     Spacer(1, 8),
     Paragraph('REQUESTS', eyebrow),
     Paragraph('Speaking and media inquiries', h2),
