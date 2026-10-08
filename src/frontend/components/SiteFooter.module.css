@@ -120,12 +120,14 @@
 
 .newsletterRowInline {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
   gap: 0.6rem;
 }
 
 .newsletterInputInline {
-  min-width: 15rem;
+  flex: 1 1 12rem;
+  min-width: 0;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(226, 222, 213, 0.22);
   border-radius: 4px;

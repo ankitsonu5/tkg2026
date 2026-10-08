@@ -71,7 +71,7 @@ export default async function ConnectRoute({
                 its owner needs to respond accountably, and states the response window before you submit.
               </p>
               <a href="#inquiry-selector" className="cta cta--secondary">
-                Submit a Qualified Inquiry <span aria-hidden="true">&darr;</span>
+                Submit Qualified Inquiry <span aria-hidden="true">&darr;</span>
               </a>
             </div>
           </div>

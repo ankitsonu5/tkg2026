@@ -2,6 +2,8 @@
   --color-navy: #0a1a2b;
   --color-black: #111820;
   --color-gold: #c8a45b;
+  /* Gold for TEXT on light backgrounds (the brand gold above is only ~2:1 on white). 6:1+ on white and ivory. */
+  --color-gold-text: #7a5a10;
   --color-blue: #4e7898;
   --color-slate: #5e6b78;
   --color-ivory: #f7f4ec;

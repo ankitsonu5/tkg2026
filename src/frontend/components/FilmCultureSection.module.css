@@ -59,7 +59,7 @@
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.16em;
-  color: #b87e28;
+  color: #7a5a10;
   text-transform: uppercase;
 }
 
@@ -172,7 +172,7 @@
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #b87e28;
+  color: #7a5a10;
   text-transform: uppercase;
 }
 
@@ -429,17 +429,29 @@
 }
 
 .dot {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: #d4ccbd;
-  border: none;
-  padding: 0;
-  cursor: pointer;
+  transform: translate(-50%, -50%);
   transition: all 260ms ease;
 }
 
-.dotActive {
+.dotActive::before {
   width: 20px;
   border-radius: 999px;
   background: #b87e28;
@@ -460,7 +472,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.14em;
-  color: #8c8275;
+  color: #4a5764;
 }
 
 .cultureFooterSep {

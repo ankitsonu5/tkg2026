@@ -147,7 +147,7 @@ export function FilmCultureSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={styles.cultureSecondaryCta}
-                  aria-label={`View ${currentFilm.title} on IMDb`}
+                  aria-label={`IMDb Profile for ${currentFilm.title} (opens in a new tab)`}
                 >
                   IMDb Profile <span aria-hidden="true">{'↗'}</span>
                 </a>

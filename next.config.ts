@@ -7,6 +7,8 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
 const nextConfig: NextConfig = {
+  // Lets an unknown URL show the site's own 404 (with navigation) instead of Next's bare default.
+  experimental: { globalNotFound: true },
   compress: true,
   poweredByHeader: false,
   images: {

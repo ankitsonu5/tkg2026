@@ -258,7 +258,7 @@ export function PremiumHomePage() {
                 pageId="HOME"
                 moduleId="MOD-HOME-FINAL-CTA"
                 ctaId="CTA-HOME-INQUIRY"
-                label="Submit a Qualified Inquiry"
+                label="Submit Qualified Inquiry"
                 destination="general"
                 destinationType="inquiry"
               />

@@ -252,7 +252,7 @@ export function InquiryForm({ route }: { route: BaselineInquiryRoute }) {
           )}
 
           <button type="submit" className="cta cta--primary" disabled={submitting}>
-            {submitting ? 'Submitting…' : 'Submit qualified inquiry'}
+            {submitting ? 'Submitting…' : 'Submit Qualified Inquiry'}
           </button>
         </form>
       }

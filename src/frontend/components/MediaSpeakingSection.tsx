@@ -132,7 +132,6 @@ export function MediaSpeakingSection() {
               <Link
                 href="/connect?route=speaking"
                 className={styles.floatingReelBadge}
-                aria-label="Request Speaker Reel and Inquire"
               >
                 <div className={styles.playIconCircle} aria-hidden="true">&#9654;</div>
                 <div className={styles.reelText}>

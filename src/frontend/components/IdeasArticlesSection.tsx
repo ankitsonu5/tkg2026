@@ -112,6 +112,7 @@ export async function IdeasArticlesSection({ page = 1, tag, topic }: { page?: nu
   return (
     <section className={styles.section} id="published-articles" aria-label="Latest articles">
       <div className="container">
+        <h2 className="visually-hidden">Latest articles</h2>
         {topicsInUse.length > 1 && (
           <nav className={styles.topicBar} aria-label="Filter by topic">
             <Link href="/ideas" className={styles.topicPill} aria-current={activeTopic ? undefined : 'true'}>

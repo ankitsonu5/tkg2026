@@ -70,7 +70,7 @@ export async function SiteHeader() {
           </Link>
 
           <Link href="/connect?route=general" className="cta site-header__cta">
-            Submit a Qualified Inquiry <Arrow />
+            Submit Qualified Inquiry <Arrow />
           </Link>
 
           <MobileNav items={items} />
