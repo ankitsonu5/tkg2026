@@ -12,18 +12,47 @@ Env variable list: see `.env.example` and `docs/PRODUCTION_LAUNCH_RUNBOOK.md`.
 
 ## B. Server setup (once)
 - [ ] Ubuntu with Node 20+, nginx, certbot, git, pm2 (`npm i -g pm2`), 2 GB RAM or swap.
-- [ ] Firewall: allow 80/443 (and SSH) only. Port 3000 stays closed (app binds 127.0.0.1).
+- [ ] Firewall: allow 80/443 (and SSH) only. The app port stays closed (it binds 127.0.0.1).
 - [ ] Clone repo, create `.env` (production values, `NEXT_PUBLIC_SERVER_URL=https://...`).
       Staging first: staging URL and **no** `ALLOW_INDEXING`.
 - [ ] Copy nginx config, issue certificate, `nginx -t && systemctl reload nginx`.
 - [ ] `bash deploy/deploy.sh`, then `pm2 startup` (run the command it prints) and `pm2 save`.
 - [ ] Backup: daily copy of the `media/` folder (uploads live there) and Atlas backups on.
 
+### B1. This server already hosts other sites — check before deploying
+This box is shared, so the new app must not take a port or a server_name something else is using.
+
+- [ ] **Find a free port.** List what is listening:
+      `sudo ss -tlnp | sort -t: -k2 -n`
+      Pick a port nothing holds (e.g. 3015), then set `APP_PORT=3015` in `.env` **and** the
+      `upstream tkg_app` block in `deploy/nginx-telkganesan.conf`. Both must match.
+      `deploy/deploy.sh` refuses to start if the port is taken by a foreign process.
+- [ ] **Check the domain is not already claimed** by another vhost:
+      `grep -rn "server_name" /etc/nginx/sites-enabled/ | grep -i telkganesan`
+      If the old WordPress site is served from this same nginx, its config must be disabled
+      or edited at cutover — two enabled blocks with the same `server_name` means nginx
+      silently uses the first and ignores the other.
+- [ ] **Do not add `default_server`** in this config. The blocks are name-based and only
+      answer for telkganesan.com; the other sites keep working untouched.
+- [ ] **Always validate before reloading:** `sudo nginx -t && sudo systemctl reload nginx`.
+      A reload (not restart) keeps the other sites serving. If `nginx -t` fails, nothing is
+      applied, so fix it before reloading.
+- [ ] **Certificate covers only this domain:** `sudo certbot --nginx -d telkganesan.com -d www.telkganesan.com`
+      does not touch the other sites' certificates.
+- [ ] **PM2 already runs other apps?** `pm2 list` first. `pm2 startOrReload ecosystem.config.cjs`
+      only touches the app named `tkg`. But `pm2 save` snapshots **all** processes, so make sure
+      the others are in the state you want before saving.
+- [ ] **RAM:** `max_memory_restart` is 900M for this app alone. With several Node apps on one
+      box, check `free -m` and total PM2 memory (`pm2 list`) so the build (which can use up to
+      8 GB via `--max-old-space-size`) does not OOM the other sites. If RAM is tight, build
+      elsewhere or lower that limit in `package.json`.
+
 ## C. Staging checks (no indexing)
 - [ ] Every page loads over https, no mixed-content or console errors.
 - [ ] Submit one real inquiry: owner and backup mailboxes both receive it.
 - [ ] Newsletter signup: confirm link points to the https domain.
 - [ ] Upload an image in admin, confirm it shows on the site and survives `pm2 restart tkg`.
+- [ ] Confirm the other sites on this server still load after the nginx reload.
 - [ ] GA4 Real-time shows the visit only after accepting analytics.
 
 ## D. Content sign-off (Tel)
