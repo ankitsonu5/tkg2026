@@ -2,8 +2,9 @@
 //
 // Port: this server hosts several sites, so the port must not collide. PM2 passes `-p`
 // before Next.js loads .env, so the value is read from .env here instead of relying on
-// Next.js picking up PORT at runtime. Set APP_PORT in .env and keep nginx's proxy_pass in
-// deploy/nginx-telkganesan.conf pointing at the same port.
+// Next.js picking up PORT at runtime. Set APP_PORT in .env and keep the nginx
+// `upstream` block pointing at the same port (deploy/nginx-new-staging.conf for staging,
+// deploy/nginx-telkganesan.conf at cutover).
 const fs = require('fs')
 const path = require('path')
 
@@ -16,7 +17,9 @@ function appPort() {
   } catch {
     // No .env yet (first checkout) — fall through to the default.
   }
-  return '3000'
+  // 3000 is already taken on this server by another next-server, so the project's
+  // chosen port is 3015. .env should still set APP_PORT explicitly.
+  return '3015'
 }
 
 const PORT = appPort()
