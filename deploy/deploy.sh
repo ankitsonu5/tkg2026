@@ -4,11 +4,23 @@ set -euo pipefail
 test -f .env || { echo ".env missing"; exit 1; }
 grep -q '^NEXT_PUBLIC_SERVER_URL=https://' .env || { echo "NEXT_PUBLIC_SERVER_URL must be https://... in .env"; exit 1; }
 
-# This server hosts several sites, so the app's port comes from .env (default 3000).
-# nginx proxy_pass must point at the same port.
-APP_PORT="$(sed -nE 's/^[[:space:]]*APP_PORT[[:space:]]*=[[:space:]]*([0-9]+)[[:space:]]*$/\1/p' .env | tail -1)"
-APP_PORT="${APP_PORT:-3000}"
+# This server hosts several sites, so the port must not collide. Ask ecosystem.config.cjs
+# rather than re-parsing .env here: PM2 uses that file to start the app, so deriving the
+# port from the same place is the only way the health check cannot drift from the
+# process's actual port.
+APP_PORT="$(node -p "require('./ecosystem.config.cjs').apps[0].args.match(/-p (\d+)/)[1]")"
 echo "using APP_PORT=$APP_PORT"
+
+# Warn loudly when .env does not pin the port, instead of silently taking the default.
+if ! grep -qE '^[[:space:]]*APP_PORT[[:space:]]*=' .env; then
+  echo "WARNING: .env has no APP_PORT line; falling back to the built-in default ${APP_PORT}."
+  echo "         Add 'APP_PORT=${APP_PORT}' to .env so nginx and PM2 cannot drift apart."
+fi
+
+# nginx must proxy to this same port.
+if ! grep -qE "127\.0\.0\.1:${APP_PORT}\b" deploy/nginx-new-staging.conf deploy/nginx-telkganesan.conf; then
+  echo "WARNING: no nginx config in deploy/ points at 127.0.0.1:${APP_PORT}."
+fi
 
 # Refuse to start if something else already holds the port and it is not our own app.
 if command -v ss >/dev/null 2>&1; then

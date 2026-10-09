@@ -12,7 +12,8 @@ function appPort() {
   if (process.env.APP_PORT) return process.env.APP_PORT
   try {
     const envFile = fs.readFileSync(path.join(__dirname, '.env'), 'utf8')
-    const match = envFile.match(/^\s*APP_PORT\s*=\s*(\d+)\s*$/m)
+    // Tolerates `export APP_PORT=3015`, trailing spaces and a trailing `# comment`.
+    const match = envFile.match(/^\s*(?:export\s+)?APP_PORT\s*=\s*"?(\d+)"?\s*(?:#.*)?$/m)
     if (match) return match[1]
   } catch {
     // No .env yet (first checkout) — fall through to the default.
