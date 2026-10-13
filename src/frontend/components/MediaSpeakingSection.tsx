@@ -140,10 +140,6 @@ export function MediaSpeakingSection() {
                 </div>
               </Link>
 
-              {/* Credibility Badge */}
-              <div className={styles.stageCredBadge} aria-hidden="true">
-                ⚡ 24h Response SLA
-              </div>
             </div>
           </div>
         </div>
@@ -153,8 +149,6 @@ export function MediaSpeakingSection() {
           <span className={styles.footerStat}><strong>Global</strong> Keynotes</span>
           <span className={styles.footerSep} aria-hidden="true">|</span>
           <span className={styles.footerStat}><strong>Fireside</strong> Dialogues</span>
-          <span className={styles.footerSep} aria-hidden="true">|</span>
-          <span className={styles.footerStat}><strong>24h</strong> Response SLA</span>
           <span className={styles.footerSep} aria-hidden="true">|</span>
           <span className={styles.footerStat}><strong>Verified</strong> Press Assets</span>
         </div>
