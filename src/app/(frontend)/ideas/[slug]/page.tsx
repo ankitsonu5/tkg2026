@@ -24,7 +24,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // The editor's SEO fields drive the page's search and social metadata.
   const title = String(doc?.seo?.title?.trim() || doc?.title || slug)
-  const description = String(doc?.seo?.description?.trim() || doc?.excerpt || '') || undefined
+  // Search results cut snippets at about 155 characters, so a long excerpt fallback is trimmed at a word boundary.
+  const excerpt = String(doc?.excerpt || '').replace(/\s+/g, ' ').trim()
+  const shortExcerpt = excerpt.length > 155 ? `${excerpt.slice(0, 154).replace(/\s+\S*$/, '')}…` : excerpt
+  const description = String(doc?.seo?.description?.trim() || shortExcerpt || '') || undefined
 
   // Social image: the dedicated SEO image, else the featured image. Only rights-cleared
   // assets are ever used, because the media route will not serve anything else publicly.
