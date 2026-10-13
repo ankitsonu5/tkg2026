@@ -16,11 +16,11 @@ import { getBaselinePage } from '@/baseline/pages'
  */
 
 const SOCIAL_PROFILES = [
-  'https://www.linkedin.com/in/telkganesan/',
-  'https://twitter.com/TelKGanesan',
+  'https://www.linkedin.com/in/telkganesan',
+  'https://x.com/Telkganesan',
   'https://www.instagram.com/telkganesan/',
   'https://www.youtube.com/@TelKGanesan',
-  'https://www.imdb.com/name/nm10609355/',
+  'https://www.facebook.com/telkganesan',
 ]
 
 function getCleanOrigin(origin?: string): string {
@@ -62,6 +62,7 @@ export function buildSitewideSchema(customOrigin?: string): Record<string, unkno
     '@id': `${origin}/#org-kyyba`,
     name: 'Kyyba',
     url: 'https://www.kyyba.com',
+    logo: `${origin}/images/kyyba-logo.png`,
     description: 'Global technology and engineering solutions company founded by Tel K. Ganesan.',
     founder: {
       '@type': 'Person',
