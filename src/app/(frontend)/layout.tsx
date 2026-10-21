@@ -38,6 +38,18 @@ export async function generateMetadata(): Promise<Metadata> {
       default: 'Tel K. Ganesan | Executive Chairman and Enterprise Builder',
     },
     description: 'Tel K. Ganesan builds enterprises, leaders, and platforms that turn possibility into lasting value.',
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/icon.svg', type: 'image/svg+xml' },
+        { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+        { url: '/icon-512.png', type: 'image/png', sizes: '512x512' },
+      ],
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+    },
+    manifest: '/site.webmanifest',
   }
 }
 

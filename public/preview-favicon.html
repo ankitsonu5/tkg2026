@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TKG Brand Favicon & Search Logo Preview</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <style>
+    :root {
+      --bg: #0b1118;
+      --card-bg: #131c26;
+      --card-border: rgba(200, 164, 91, 0.2);
+      --gold: #c8a45b;
+      --gold-light: #f5dfa8;
+      --navy: #0a1a2b;
+      --text: #e2e8f0;
+      --text-muted: #8896a6;
+      --google-blue: #1a0dab;
+      --google-green: #006621;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      padding: 2.5rem 1.5rem;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(200, 164, 91, 0.15);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Comparison Section */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200, 164, 91, 0.5);
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+      color: #fff;
+    }
+
+    .card .desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .preview-box {
+      background: #060c12;
+      border-radius: 14px;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      min-height: 240px;
+    }
+
+    .preview-box img {
+      width: 160px;
+      height: 160px;
+      border-radius: 36px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+    }
+
+    .size-chips {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      align-items: flex-end;
+      padding-top: 0.5rem;
+    }
+
+    .size-chip {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .size-chip img {
+      display: block;
+      margin: 0 auto 0.4rem;
+      border-radius: 20%;
+    }
+
+    /* Context Mockups */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .mockup-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Browser Tab Mockup */
+    .browser-frame {
+      background: #1e222b;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #333a46;
+    }
+
+    .tab-bar {
+      display: flex;
+      align-items: center;
+      background: #151921;
+      padding: 0.5rem 0.75rem;
+      gap: 0.5rem;
+    }
+
+    .tab-dots {
+      display: flex;
+      gap: 6px;
+      margin-right: 0.75rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #eab308; }
+    .dot-green { background: #22c55e; }
+
+    .tab {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #1e222b;
+      padding: 0.45rem 1rem;
+      border-radius: 8px 8px 0 0;
+      color: #e2e8f0;
+      font-size: 0.82rem;
+      max-width: 320px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tab img {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+    }
+
+    .browser-body {
+      padding: 1.25rem 1.5rem;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      background: #10141d;
+    }
+
+    /* Google Search Result Mockup */
+    .google-serp {
+      background: #fff;
+      color: #202124;
+      border-radius: 12px;
+      padding: 1.5rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .serp-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .serp-favicon-box {
+      width: 28px;
+      height: 28px;
+      background: #f1f3f4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    }
+
+    .serp-favicon-box img {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+    }
+
+    .serp-source {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.85rem;
+      line-height: 1.25;
+    }
+
+    .serp-name {
+      color: #202124;
+      font-weight: 500;
+    }
+
+    .serp-url {
+      color: #4d5156;
+      font-size: 0.75rem;
+    }
+
+    .serp-title {
+      color: #1a0dab;
+      font-size: 1.25rem;
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 0.35rem;
+      cursor: pointer;
+    }
+
+    .serp-title:hover {
+      text-decoration: underline;
+    }
+
+    .serp-desc {
+      color: #4d5156;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    /* Action Footer */
+    .action-box {
+      text-align: center;
+      padding: 2rem;
+      background: rgba(200, 164, 91, 0.08);
+      border: 1px dashed var(--gold);
+      border-radius: 14px;
+      margin-top: 2rem;
+    }
+
+    .action-box h3 {
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="badge">Brand Assets & SERP Preview</span>
+      <h1>Tel K. Ganesan — Favicon & Logo Preview</h1>
+      <p class="subtitle">Google Search results, Browser Tabs aur Device Icons ka live visual preview</p>
+    </header>
+
+    <!-- Side-by-side Options -->
+    <div class="grid">
+      <!-- Option 1: Classic Monogram -->
+      <div class="card">
+        <span class="badge" style="margin-bottom: 0.5rem;">Option 1 (Current Active)</span>
+        <h2>Classic Executive Monogram</h2>
+        <p class="desc">High-contrast geometric serif "TKG" with gold accent rim</p>
+        
+        <div class="preview-box">
+          <img src="/icon-512.png" alt="Option 1 Favicon">
+        </div>
+
+        <div class="size-chips">
+          <div class="size-chip">
+            <img src="/icon-512.png" width="48" height="48" alt="48px">
+            <span>48×48 (Google)</span>
+          </div>
+          <div class="size-chip">
+            <img src="/icon-512.png" width="32" height="32" alt="32px">
+            <span>32×32 (Tab)</span>
+          </div>
+          <div class="size-chip">
+            <img src="/icon-512.png" width="16" height="16" alt="16px">
+            <span>16×16 (Small)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Option 2: Luxury Interlocking Crest -->
+      <div class="card">
+        <span class="badge" style="margin-bottom: 0.5rem; background: rgba(245, 223, 168, 0.2);">Option 2 (Luxury Crest)</span>
+        <h2>Interlocking 3D Gold Crest</h2>
+        <p class="desc">Brushed metallic gold "TKG" emblem with beveled 3D depth</p>
+        
+        <div class="preview-box">
+          <img src="/icon-option2-512.png" alt="Option 2 Favicon">
+        </div>
+
+        <div class="size-chips">
+          <div class="size-chip">
+            <img src="/icon-option2-512.png" width="48" height="48" alt="48px">
+            <span>48×48 (Google)</span>
+          </div>
+          <div class="size-chip">
+            <img src="/icon-option2-512.png" width="32" height="32" alt="32px">
+            <span>32×32 (Tab)</span>
+          </div>
+          <div class="size-chip">
+            <img src="/icon-option2-512.png" width="16" height="16" alt="16px">
+            <span>16×16 (Small)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Context 1: Browser Tab Simulation -->
+    <h2 class="section-title">🖥️ 1. Browser Tab me kaisa dikhega</h2>
+    <div class="mockup-card">
+      <div class="browser-frame">
+        <div class="tab-bar">
+          <div class="tab-dots">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <div class="tab">
+            <img src="/icon-512.png" alt="Favicon">
+            <span>Tel K. Ganesan | Executive Chairman and Enterprise Builder</span>
+          </div>
+        </div>
+        <div class="browser-body">
+          https://telkganesan.com — (Browser Tab Active State)
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Context 2: Google Search Results Simulation -->
+    <h2 class="section-title">🔍 2. Google Search Result me kaisa dikhega (SERP Favicon)</h2>
+    <div class="mockup-card">
+      <div class="google-serp">
+        <div class="serp-header">
+          <div class="serp-favicon-box">
+            <img src="/icon-512.png" alt="Google Search Logo">
+          </div>
+          <div class="serp-source">
+            <span class="serp-name">Tel K. Ganesan</span>
+            <span class="serp-url">https://telkganesan.com</span>
+          </div>
+        </div>
+        <h3 class="serp-title">Tel K. Ganesan | Executive Chairman and Enterprise Builder</h3>
+        <p class="serp-desc">
+          Tel K. Ganesan builds enterprises, leaders, and platforms that turn possibility into lasting value. Detroit-based business leader connecting enterprise building, investment...
+        </p>
+      </div>
+    </div>
+
+    <div class="action-box">
+      <h3>Dono me se kaunsa icon aapko zyada pasand hai?</h3>
+      <p style="color: #cbd5e1; font-size: 0.95rem;">
+        <strong>Option 1</strong> (Clean Typographic Serif Monogram) ya <strong>Option 2</strong> (3D Brushed Gold Interlocking Crest)? Bataiye, hum aapki pasand ka icon website ka official favicon set kar denge!
+      </p>
+    </div>
+  </div>
+</body>
+</html>

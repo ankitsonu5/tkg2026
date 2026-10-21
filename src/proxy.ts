@@ -66,6 +66,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!(?:api|admin|_next|images|downloads|about|enterprise-investments|ideas|film-culture|impact|media-speaking|connect|privacy|terms|accessibility|search|newsletter|robots\.txt|sitemap\.xml|favicon\.ico)(?:/|$)).+)',
+    '/((?!(?:api|admin|_next|images|downloads|about|enterprise-investments|ideas|film-culture|impact|media-speaking|connect|privacy|terms|accessibility|search|newsletter|robots\.txt|sitemap\.xml|favicon\.ico|icon\.svg|icon-192\.png|icon-512\.png|icon-option2-512\.png|apple-touch-icon\.png|site\.webmanifest|preview-favicon\.html)(?:/|$)).+)',
   ],
 }
