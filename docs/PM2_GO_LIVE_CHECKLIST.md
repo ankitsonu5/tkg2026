@@ -1,5 +1,12 @@
 # PM2 go-live checklist (telkganesan.com)
 
+> **Architecture change (22 Oct 2026):** Payload CMS was removed. The project is now two
+> folders: `frontend/` (Next.js website) and `backend/` (Node.js + Express + MongoDB API),
+> each with its own `.env` (see `frontend/.env.example`, `backend/.env.example`). There is no
+> `/admin` panel yet, and `PAYLOAD_SECRET` became `APP_SECRET` (reuse the old value). PM2 runs two
+> processes (`tkg`, `tkg-api`). Where this document mentions Payload, the admin or the root
+> `.env`, read it against the new layout in [README.md](../README.md).
+
 Files: `ecosystem.config.cjs`, `deploy/nginx-telkganesan.conf`, `deploy/deploy.sh`.
 Env variable list: see `.env.example` and `docs/PRODUCTION_LAUNCH_RUNBOOK.md`.
 

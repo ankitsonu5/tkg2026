@@ -20,75 +20,87 @@ enforced by the application at write time, not by editorial convention.
 - Consent-aware analytics and attribution that record refusal honestly rather than inventing
   a source
 
+## Structure
+
+```
+tkg2026/
+├── frontend/   Next.js 16 website (pages, components, styles, SEO, server actions)
+├── backend/    Node.js + Express + MongoDB (Mongoose) API, email delivery, jobs, scripts
+├── docs/       Requirements, status, runbooks
+└── deploy/     nginx configs and deploy script
+```
+
+The website never talks to MongoDB directly. Its server components and server actions call
+the backend over HTTP (`BACKEND_URL`, authenticated with `INTERNAL_API_KEY`). The backend
+also serves media (`/api/assets/file/*`), `/api/health` and `/api/cron/deliver`; the website
+proxies those paths so their public URLs did not change.
+
+Until October 2026 the backend was Payload CMS embedded in the Next.js app. The MongoDB data
+was kept as it was: the backend reads and writes the same collections.
+
+### Admin panel
+
+`/admin` is a WordPress-style panel (frontend `src/admin/` + `src/app/(admin)/`, backend
+`src/routes/admin.ts`). Staff log in with their existing Payload accounts (same password
+hashes); sessions are a signed httpOnly cookie. Role rules live in
+`backend/src/admin/permissions.ts`; the evidence gate and route-acceptance rules are enforced
+in the data layer for every writer. Article bodies use a Lexical editor whose nodes read and
+write the exact JSON Payload stored, so existing content round-trips unchanged.
+
 ## Stack
 
-Next.js 16.3.0 · React 19.2.6 · Payload CMS 3.88.0 · MongoDB · TypeScript 5.7
-
-Versions were resolved from the registry at build time and pinned; the combination matches
-the official Payload 3.88.0 template rather than independently combining "latest" packages.
-See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
-
-## Requirements
-
-- Node.js `^18.20.2 || >=20.9.0` (developed on 26.0.0)
-- MongoDB reachable locally
-- No Docker required
+| | |
+|---|---|
+| Website | Next.js 16.3 · React 19.2 · TypeScript 5.9 |
+| API | Node.js ≥ 20.9 · Express 5 · Mongoose 8 · Nodemailer · TypeScript 5.9 |
+| Database | MongoDB |
 
 ## Setup
 
 ```bash
-# A local `mongod` creates the database automatically on first write — nothing to pre-create.
+npm install                 # root: only the dev runner (concurrently)
+npm run install:all         # backend + frontend dependencies
 
-cp .env.example .env
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"   # -> PAYLOAD_SECRET
+cp backend/.env.example backend/.env     # DATABASE_URI, SMTP, INTERNAL_API_KEY, APP_SECRET ...
+cp frontend/.env.example frontend/.env   # BACKEND_URL, the same INTERNAL_API_KEY ...
 
-npm install
-npm run db:migrate
-npm run seed:dev
-npm run bootstrap:admin -- you@example.com "Your Name"
+npm --prefix backend run seed:dev        # development seed (dev only)
 ```
-
-`bootstrap:admin` generates a random password and prints it **once**. It is never written to
-a file or committed, and the script refuses to run with `NODE_ENV=production`. `seed:dev`
-refuses to run unless `NODE_ENV=development`.
 
 ## Running
 
-Three terminals:
-
 ```bash
-npm run mail:dev          # local SMTP capture on :1025 -> .mail/*.eml, never forwarded
-npm run dev               # http://localhost:3000
-npm run worker:delivery   # durable delivery, SLA sweep, evidence re-check
+npm run dev                              # API on :4000 and website on :3000 together
+npm --prefix backend run mail:dev        # local SMTP capture on :1025 -> .mail/*.eml
+npm --prefix backend run worker:delivery # durable delivery, SLA sweep, evidence re-check
 ```
 
 | URL | Purpose |
 |---|---|
 | `http://localhost:3000` | Public site |
-| `http://localhost:3000/admin` | Payload admin |
-| `.mail/` | Captured emails as `.eml` |
+| `http://127.0.0.1:4000/api/health` | API health |
+| `backend/.mail/` | Captured emails as `.eml` |
 
 ## Commands
 
 | Command | Purpose |
 |---|---|
-| `npm run dev` / `build` / `start` | Next.js lifecycle |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run lint` | ESLint |
-| `npm run test:int` | 53 integration/UI tests against isolated MongoDB + jsdom |
-| `npm run db:migrate` / `:create` / `:status` | Migrations |
-| `npm run seed:dev` | Development seed (dev only) |
-| `npm run bootstrap:admin` | First administrator (non-production only) |
-| `npm run worker:delivery` | Delivery + SLA worker (`-- --once` for a single pass) |
-| `npm run mail:dev` | Local SMTP capture |
-| `npm run test:forms:e2e` | Traceable seven-route + newsletter delivery proof (requires `mail:dev`) |
-| `node scripts/check-contrast.mjs` | WCAG contrast check; non-zero exit on regression |
-| `npx tsx scripts/smoke-inquiry.ts` | Traceable end-to-end test across all seven routes |
+| `npm run dev` / `build` / `typecheck` / `test` | Both apps |
+| `npm --prefix frontend run dev` / `build` / `start` / `lint` | Website only |
+| `npm --prefix backend run dev` / `build` / `start` | API only |
+| `npm --prefix backend test` | Inquiry + newsletter integration tests (local MongoDB test database) |
+| `npm --prefix frontend test` | Form UI tests (jsdom) |
+| `npm --prefix backend run seed:dev` / `seed:production` | Seeds |
+| `npm --prefix backend run worker:delivery` | Delivery + SLA worker (`-- --once` for a single pass) |
+| `npm --prefix backend run import:redirects` | Legacy redirect import (dry run; `-- --apply` to write) |
+| `npm --prefix backend run set:inquiry-recipient` | Route recipients / acceptance |
+| `node frontend/scripts/check-contrast.mjs` | WCAG contrast check; non-zero exit on regression |
 
 ## Tests
 
 ```bash
-DATABASE_URI=mongodb://127.0.0.1:27017/tel_ganesan_test npm run test:int
+npm --prefix backend test      # uses mongodb://127.0.0.1:27017/tel_ganesan_test (TEST_DATABASE_URI overrides)
+npm --prefix frontend test
 ```
 
 Integration tests run against a dedicated database and never touch development data.
@@ -97,6 +109,7 @@ Integration tests run against a dedicated database and never touch development d
 
 | Document | Contents |
 |---|---|
+| [`RUN_PROJECT.md`](RUN_PROJECT.md) | Quick run guide |
 | [`docs/STATUS.md`](docs/STATUS.md) | Current state, how to run it, what is next |
 | [`docs/SOURCE_REGISTER.md`](docs/SOURCE_REGISTER.md) | Source hashes, approval status, what is and is not supplied |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Stack, pinned versions, decisions and reasons |
@@ -108,10 +121,13 @@ Integration tests run against a dedicated database and never touch development d
 
 ## Safety properties worth knowing
 
-- **Nothing can email a real person from development.** The capture writes to disk and never
-  forwards.
-- **Drafts are not publicly reachable**, including via `?draft=true`.
-- **An administrator cannot publish unverified material** by ordinary editing.
+- **Nothing can email a real person from development** when SMTP points at the local capture,
+  which writes to disk and never forwards.
+- **Drafts are not publicly reachable**: every public read filters on `_status: published`.
+- **Publishing is gated**: the backend data layer rejects `_status: published` for content
+  that fails the evidence gate, whoever is writing.
 - **Indexing is off by default** and `robots.txt` is `Disallow: /` until a production origin
   is configured and indexing is explicitly enabled.
 - **A form never reports success unless an owner delivery actually succeeded.**
+- **The internal API is not public**: it listens on loopback, is not proxied by the website,
+  and requires `INTERNAL_API_KEY`.
