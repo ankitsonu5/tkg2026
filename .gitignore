@@ -50,7 +50,10 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-media/
+# Uploaded files only. Do not use a bare `media/`: it also hides the admin Media page source
+# at frontend/src/app/(admin)/admin/(panel)/media/.
+/backend/media/
+/deploy/last-deploy.log
 
 # local mail capture
 .mail/
