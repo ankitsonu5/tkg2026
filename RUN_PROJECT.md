@@ -1,49 +1,79 @@
 # 🚀 Project Run Guide — Tel K. Ganesan Platform
 
-Yeh project **Next.js 16 + Payload CMS 3 (Full-Stack Unified Architecture)** par bana hai.
+Project ab **do alag folders** mein hai:
 
-Isme frontend aur backend ko alag-alag 2 terminal me chalane ki jarurat nahi hoti (`cd backend` / `cd frontend` ki jarurat nahi hai). Ek hi command se Frontend aur Backend dono run hote hain.
+- **`frontend/`** — Next.js 16 website (saare pages, components, CSS)
+- **`backend/`** — Node.js + Express + MongoDB (Mongoose) API
+
+Website ka data (articles, settings, navigation, footer) backend API se aata hai. Form
+submissions (Connect, Newsletter) bhi backend mein jaate hain, aur wahi emails bhejta hai.
 
 ---
 
-## ⚡ Project Run Kaise Karein (Sirf 1 Step)
+## ⚙️ Pehli baar setup
 
-Apne project ke root folder (`E:\git\tkg2026`) me terminal kholein aur yeh command run karein:
+```bash
+npm install            # root: sirf dono apps ek saath chalane wala tool
+npm run install:all    # backend + frontend dependencies
+```
+
+Phir dono `.env` files banayein:
+
+- `backend/.env` — `backend/.env.example` copy karein (MongoDB URI, SMTP, `INTERNAL_API_KEY`, `APP_SECRET`)
+- `frontend/.env` — `frontend/.env.example` copy karein (`BACKEND_URL`, wahi `INTERNAL_API_KEY`)
+
+> `INTERNAL_API_KEY` dono files mein **same** hona chahiye.
+
+---
+
+## ⚡ Project Run Kaise Karein
+
+Root folder (`E:\git\tkg2026`) mein:
 
 ```bash
 npm run dev
 ```
 
-Command run hote hi dono cheezein start ho jayengi:
+Yeh dono ek saath start karta hai:
 
-- 🌐 **Frontend Website**: [http://localhost:3000](http://localhost:3000)
-- ⚙️ **Backend CMS Admin**: [http://localhost:3000/admin](http://localhost:3000/admin)
-- 🔌 **Backend REST/GraphQL APIs**: [http://localhost:3000/api](http://localhost:3000/api)
+- 🌐 **Website (frontend)**: [http://localhost:3000](http://localhost:3000)
+- ⚙️ **API (backend)**: [http://127.0.0.1:4000/api/health](http://127.0.0.1:4000/api/health)
+
+Alag-alag chalana ho to do terminal mein:
+
+```bash
+npm run dev:backend
+npm run dev:frontend
+```
 
 ---
 
-## 📁 Folder Structure (Frontend vs Backend Kahan Hai?)
+## 📁 Folder Structure
 
 ```
 tkg2026/
-├── public/                 <-- Frontend Images, Icons & Media
+├── frontend/                     <-- WEBSITE (Next.js)
+│   ├── public/                   <-- Images, icons
+│   ├── src/app/(frontend)/       <-- Pages, layout, routing, form server actions
+│   ├── src/frontend/components/  <-- React UI components + CSS modules
+│   ├── src/lib/api.ts            <-- Backend API client (data yahin se aata hai)
+│   ├── src/lib/forms.ts          <-- Form submissions -> backend
+│   └── .env
 │
-├── src/
-│   │
-│   ├── [FRONTEND]
-│   ├── app/(frontend)/     <-- Frontend Pages, Layout & Routing
-│   ├── components/         <-- Frontend React UI Components & CSS Modules
-│   │
-│   ├── [BACKEND]
-│   ├── app/(payload)/      <-- Backend CMS Admin Portal & API Handlers
-│   ├── collections/        <-- Database Collections (Users, Pages, Media, etc.)
-│   ├── access/             <-- Backend Access Control & Permissions
-│   ├── jobs/               <-- Backend Background Jobs & Nodemailer Delivery
-│   ├── payload.config.ts   <-- Backend Core CMS & Database Configuration
-│   └── payload-types.ts    <-- Auto-generated TypeScript Database Types
+├── backend/                      <-- API (Node.js + Express + MongoDB)
+│   ├── src/server.ts             <-- Server start
+│   ├── src/app.ts                <-- Express app + routes list
+│   ├── src/routes/               <-- API routes (content, forms, assets, health, cron)
+│   ├── src/models/               <-- Mongoose models (MongoDB collections)
+│   ├── src/data/                 <-- Query engine (where/sort/limit), populate, write rules
+│   ├── src/lib/                  <-- Inquiry, newsletter, email, evidence-gate logic
+│   ├── src/jobs/                 <-- Email delivery + SLA reminder jobs
+│   ├── scripts/                  <-- Seed, worker, redirects import, smoke tests
+│   ├── media/                    <-- Uploaded images (local)
+│   └── .env
 │
-├── .env                    <-- Environment Variables (MongoDB, Payload Secret)
-└── package.json            <-- Project Dependencies & NPM Scripts
+├── docs/                         <-- Documentation
+└── deploy/                       <-- nginx + deploy script
 ```
 
 ---
@@ -52,6 +82,33 @@ tkg2026/
 
 | Command | Kaam |
 |---|---|
-| `npm run dev` | Frontend + Backend CMS dono ko Dev mode me chalata hai |
-| `npm run build` | Production build banata hai (TypeScript + Bundler check) |
-| `npm run lint` | Code quality aur ESLint check karta hai |
+| `npm run dev` | Frontend + Backend dono dev mode mein |
+| `npm run build` | Dono ka production build |
+| `npm run typecheck` | Dono ka TypeScript check |
+| `npm run test` | Backend integration tests + frontend form tests |
+| `npm --prefix frontend run lint` | Website ka ESLint check |
+| `npm --prefix backend run worker:delivery` | Email delivery / SLA worker |
+
+---
+
+## 🔐 Admin Panel (WordPress jaisa)
+
+URL: [http://localhost:3000/admin](http://localhost:3000/admin)
+
+Purane Payload accounts usi email + password se login karte hain (password format same rakha gaya hai).
+
+| Menu | Kaam |
+|---|---|
+| Dashboard | At a Glance, recent inquiries, overdue / failed email alerts |
+| Posts | Articles likhna (rich text editor, featured image, tags, SEO score), draft / publish |
+| Media | Images / PDF upload (drag & drop), alt text, rights status |
+| Pages, Enterprises, Film & Culture, Impact, Downloads | Baaki content |
+| Inquiries, Subscribers | Leads ka status, notes; newsletter subscribers |
+| Claims, Evidence sources | Evidence register |
+| Users, Profile | Staff accounts + roles, apna password |
+| Settings | General, Menus, Footer, Inquiry routes, Redirects |
+| Tools | Activity log, Email delivery log |
+
+Roles: Administrator, Editor (sirf draft), Publisher (publish), Evidence Reviewer, Route Owner
+(sirf apne routes ki inquiries), QA (read-only). Publish karne se pehle evidence gate check hota hai —
+unverified claim / unresolved authorship wala content publish nahi hota, admin ke liye bhi.

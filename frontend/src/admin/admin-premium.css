@@ -1,0 +1,906 @@
+/* ======================================================================
+   Premium theme layer — brand navy/gold on top of the WordPress layout in
+   admin.css. Loaded after it, so these rules refine the base without
+   rewriting it.
+   ====================================================================== */
+.wpa {
+  --wp-bg: #f4f5f7;
+  --wp-menu: #0b1622;
+  --wp-menu-sub: #121f2e;
+  --wp-accent: #1f5f99;
+  --wp-accent-dark: #164a78;
+  --wp-text: #172231;
+  --wp-muted: #667085;
+  --wp-border: #d9dde3;
+  --wp-border-light: #e7e9ee;
+  --wp-gold: #c8a45b;
+  --wp-radius: 10px;
+  --wp-shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 1px 3px rgba(16, 24, 40, 0.06);
+  --wp-shadow-lg: 0 12px 32px rgba(10, 26, 43, 0.12);
+  font-family: var(--font-admin), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.003em;
+}
+.wpa h1 {
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- chrome ---------- */
+.wpa-bar {
+  background: linear-gradient(90deg, #0a1520, #0f1d2c);
+  border-bottom: 1px solid rgba(200, 164, 91, 0.35);
+}
+.wpa-bar__logo {
+  background: linear-gradient(135deg, #e3c27d, #b8913f);
+  box-shadow: 0 0 0 2px rgba(200, 164, 91, 0.25);
+}
+.wpa-menu {
+  background: linear-gradient(180deg, #0b1622 0%, #0d1a28 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+}
+.wpa-menu__item > a {
+  margin: 1px 8px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13.5px;
+}
+.wpa-menu__item > a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+.wpa-menu__item.is-active > a {
+  background: linear-gradient(90deg, rgba(200, 164, 91, 0.22), rgba(200, 164, 91, 0.06));
+  color: #fff;
+  box-shadow: inset 3px 0 0 var(--wp-gold);
+}
+.wpa-menu__item.is-active > a svg {
+  color: var(--wp-gold);
+}
+.wpa-menu__item.is-active > a::after {
+  display: none;
+}
+.wpa-menu__sub {
+  background: transparent;
+  margin: 2px 0 6px;
+}
+.wpa-menu__sub a {
+  padding-left: 44px;
+  border-radius: 6px;
+  margin: 0 8px;
+}
+.wpa-menu__sub a.is-current {
+  color: var(--wp-gold);
+}
+.wpa-menu__sep {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin: 6px 14px 8px;
+}
+.wpa-content {
+  padding-top: 40px;
+}
+
+/* ---------- buttons ---------- */
+.wpa-btn {
+  border-radius: 8px;
+  min-height: 34px;
+  padding: 0 14px;
+  font-weight: 500;
+  border-color: var(--wp-border);
+  background: #fff;
+  color: var(--wp-text) !important;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+.wpa-btn:hover {
+  background: #f9fafb;
+  border-color: #c4c9d1;
+  color: var(--wp-text) !important;
+}
+.wpa-btn--primary {
+  background: linear-gradient(180deg, #13263a, #0a1a2b);
+  border-color: #0a1a2b;
+  color: #fff !important;
+}
+.wpa-btn--primary:hover {
+  background: linear-gradient(180deg, #1b3550, #0f2236);
+  border-color: #0f2236;
+  color: var(--wp-gold) !important;
+}
+.wpa-btn--danger {
+  color: var(--wp-red) !important;
+  border-color: #f2c4c5;
+}
+.wpa-btn--large {
+  min-height: 38px;
+  padding: 0 16px;
+}
+
+/* ---------- surfaces ---------- */
+.wpa-postbox,
+.wpa-table,
+.wpa-notice,
+.wpa-editor,
+.wpa-dropzone {
+  border-radius: var(--wp-radius);
+  border-color: var(--wp-border-light);
+  box-shadow: var(--wp-shadow);
+}
+.wpa-postbox {
+  overflow: hidden;
+}
+.wpa-postbox__head {
+  border-bottom-color: var(--wp-border-light);
+  padding: 12px 16px;
+}
+.wpa-postbox__head h2 {
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #3c4656;
+}
+.wpa-postbox__body {
+  padding: 16px;
+}
+.wpa-postbox__foot {
+  background: #fafbfc;
+  border-top-color: var(--wp-border-light);
+}
+.wpa-table {
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.wpa-table thead th {
+  background: #f8f9fb;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475467;
+  padding: 11px 12px;
+}
+.wpa-table thead th button {
+  color: #475467;
+  font-weight: 600;
+}
+.wpa-table tbody tr:nth-child(odd) {
+  background: #fff;
+}
+.wpa-table tbody tr:hover {
+  background: #f7f9fc;
+}
+.wpa-table tbody td {
+  border-top: 1px solid #f0f1f4;
+  padding: 12px;
+}
+.wpa input[type='text'],
+.wpa input[type='email'],
+.wpa input[type='url'],
+.wpa input[type='number'],
+.wpa input[type='password'],
+.wpa input[type='search'],
+.wpa input[type='date'],
+.wpa input[type='datetime-local'],
+.wpa select,
+.wpa textarea {
+  border-color: #d0d5dd;
+  border-radius: 8px;
+  min-height: 36px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+.wpa input:focus,
+.wpa select:focus,
+.wpa textarea:focus {
+  border-color: var(--wp-gold);
+  box-shadow: 0 0 0 3px rgba(200, 164, 91, 0.22);
+}
+.wpa-title-input {
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.wpa-badge {
+  border-radius: 999px;
+  font-weight: 500;
+}
+.wpa-welcome {
+  border-radius: 14px;
+  background: radial-gradient(120% 140% at 100% 0%, #1d3350 0%, #0a1a2b 55%, #08121d 100%);
+  box-shadow: var(--wp-shadow-lg);
+}
+.wpa-welcome h2 {
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.wpa-editor__toolbar {
+  border-radius: var(--wp-radius) var(--wp-radius) 0 0;
+  background: #fafbfc;
+}
+
+/* ---------- page heading ---------- */
+.wpa-page-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 6px 0 20px;
+}
+.wpa-page-sub {
+  margin: 4px 0 0;
+  color: var(--wp-muted);
+  font-size: 14px;
+}
+
+/* ---------- KPI cards ---------- */
+.wpa-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+.wpa-kpi {
+  text-align: left;
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--wp-border-light);
+  border-radius: 12px;
+  box-shadow: var(--wp-shadow);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.15s;
+  font: inherit;
+  color: inherit;
+}
+.wpa-kpi::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--wp-gold);
+}
+.wpa-kpi:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--wp-shadow-lg);
+}
+.wpa-kpi:disabled {
+  cursor: default;
+}
+.wpa-kpi__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #475467;
+}
+.wpa-kpi__value {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #0a1a2b;
+  line-height: 1.1;
+}
+.wpa-kpi__hint {
+  font-size: 12px;
+  color: var(--wp-muted);
+}
+.wpa-kpi--warn::before {
+  background: #dba617;
+}
+.wpa-kpi--bad::before {
+  background: var(--wp-red);
+}
+.wpa-kpi--bad .wpa-kpi__value {
+  color: var(--wp-red);
+}
+
+/* ---------- card, tabs, filters ---------- */
+.wpa-card {
+  background: #fff;
+  border: 1px solid var(--wp-border-light);
+  border-radius: 14px;
+  box-shadow: var(--wp-shadow);
+  overflow: hidden;
+}
+.wpa-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 10px 14px 0;
+  border-bottom: 1px solid var(--wp-border-light);
+  background: #fbfbfc;
+}
+.wpa-tabs button {
+  border: 0;
+  background: none;
+  padding: 10px 14px 12px;
+  font-weight: 600;
+  color: var(--wp-muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+}
+.wpa-tabs button:hover {
+  color: var(--wp-text);
+}
+.wpa-tabs button.is-active {
+  color: #0a1a2b;
+  border-bottom-color: var(--wp-gold);
+}
+.wpa-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: 14px;
+  border-bottom: 1px solid var(--wp-border-light);
+}
+.wpa-filters input[type='search'] {
+  flex: 1 1 240px;
+  width: auto;
+}
+.wpa-filters select {
+  width: auto;
+  min-width: 160px;
+}
+.wpa-filters__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--wp-muted);
+  font-size: 12px;
+}
+.wpa-filters__date input {
+  width: auto !important;
+}
+.wpa-link-plain {
+  background: none;
+  border: 0;
+  color: var(--wp-accent);
+  cursor: pointer;
+  padding: 0 4px;
+}
+.wpa-leads-meta {
+  padding: 10px 16px;
+  color: var(--wp-muted);
+  font-size: 12px;
+  border-bottom: 1px solid #f0f1f4;
+}
+
+/* ---------- leads table ---------- */
+.wpa-table-scroll {
+  overflow-x: auto;
+}
+.wpa-ltable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.wpa-ltable th {
+  text-align: left;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #667085;
+  font-weight: 600;
+  padding: 10px 16px;
+  background: #fafbfc;
+  border-bottom: 1px solid var(--wp-border-light);
+  white-space: nowrap;
+}
+.wpa-ltable td {
+  padding: 13px 16px;
+  border-bottom: 1px solid #f0f1f4;
+  vertical-align: middle;
+}
+.wpa-ltable tbody tr {
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.wpa-ltable tbody tr:hover,
+.wpa-ltable tbody tr:focus {
+  background: #f8fafc;
+  outline: none;
+}
+.wpa-ltable__go {
+  color: #98a2b3;
+  font-size: 20px;
+  text-align: right;
+}
+.wpa-ltable__empty {
+  text-align: center;
+  padding: 56px 16px !important;
+  cursor: default;
+}
+.wpa-ltable__empty strong,
+.wpa-ltable__empty span {
+  display: block;
+}
+.wpa-ltable__empty span {
+  color: var(--wp-muted);
+  margin-top: 4px;
+}
+.wpa-empty-art {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+  background: #f7f1e3;
+  color: #9a7a35;
+}
+.wpa-lead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.wpa-lead strong {
+  display: block;
+  color: #101828;
+}
+.wpa-lead__email {
+  display: block;
+  color: var(--wp-muted);
+  font-size: 12.5px;
+}
+.wpa-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  flex: none;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.15);
+}
+.wpa-avatar--lg {
+  width: 52px;
+  height: 52px;
+  font-size: 18px;
+}
+.wpa-source {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #eef4fb;
+  color: #1f5f99;
+  white-space: nowrap;
+}
+.wpa-source--newsletter {
+  background: #ecfaf1;
+  color: #067647;
+}
+.wpa-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  background: #f2f4f7;
+  color: #344054;
+  white-space: nowrap;
+}
+.wpa-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.wpa-pill--new,
+.wpa-pill--pending-confirmation {
+  background: #fff6e0;
+  color: #9a6700;
+}
+.wpa-pill--acknowledged {
+  background: #eaf2ff;
+  color: #1f5f99;
+}
+.wpa-pill--responded,
+.wpa-pill--subscribed {
+  background: #e7f8ee;
+  color: #067647;
+}
+.wpa-pill--closed {
+  background: #f2f4f7;
+  color: #475467;
+}
+.wpa-pill--reclassified {
+  background: #f4ecff;
+  color: #6b3fb5;
+}
+.wpa-pill--unsubscribed {
+  background: #fdecec;
+  color: #b42318;
+}
+.wpa-overdue {
+  color: var(--wp-red);
+  font-weight: 600;
+}
+.wpa-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  color: var(--wp-muted);
+}
+
+/* ---------- export menu ---------- */
+.wpa-export {
+  position: relative;
+}
+.wpa-export__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  width: 330px;
+  background: #fff;
+  border: 1px solid var(--wp-border-light);
+  border-radius: 12px;
+  box-shadow: var(--wp-shadow-lg);
+  padding: 6px;
+  z-index: 30;
+}
+.wpa-export__menu a {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--wp-text) !important;
+}
+.wpa-export__menu a:hover {
+  background: #f7f1e3;
+}
+.wpa-export__menu span {
+  color: var(--wp-muted);
+  font-size: 12px;
+}
+
+/* ---------- drawer ---------- */
+.wpa-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 18, 29, 0.45);
+  backdrop-filter: blur(2px);
+  z-index: 150;
+  display: flex;
+  justify-content: flex-end;
+}
+.wpa-drawer {
+  width: min(520px, 100%);
+  height: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -20px 0 50px rgba(0, 0, 0, 0.2);
+  animation: wpa-slide 0.22s ease-out;
+}
+@keyframes wpa-slide {
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+}
+.wpa-drawer__head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 24px;
+  background: linear-gradient(135deg, #0a1a2b, #13263a);
+  color: #fff;
+}
+.wpa-drawer__head h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.wpa-drawer__head a {
+  color: #e3c27d;
+}
+.wpa-drawer__close {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.1);
+  border: 0;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.wpa-drawer__body {
+  flex: 1;
+  overflow: auto;
+  padding: 20px 24px;
+}
+.wpa-drawer__body h3 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #9a7a35;
+  margin: 22px 0 10px;
+}
+.wpa-drawer__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.wpa-chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #f2f4f7;
+  font-size: 12px;
+  color: #344054;
+}
+.wpa-facts {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 8px 12px;
+  margin: 0;
+}
+.wpa-facts dt {
+  color: var(--wp-muted);
+}
+.wpa-facts dd {
+  margin: 0;
+  word-break: break-word;
+}
+.wpa-answers {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+.wpa-answers > div {
+  border: 1px solid #eef0f3;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #fbfbfc;
+}
+.wpa-answers dt {
+  font-size: 12px;
+  color: var(--wp-muted);
+  margin-bottom: 3px;
+}
+.wpa-answers dd {
+  margin: 0;
+  white-space: pre-wrap;
+  color: #101828;
+}
+.wpa-note {
+  background: #fff8e6;
+  border-radius: 10px;
+  padding: 10px 12px;
+  white-space: pre-wrap;
+  margin: 0;
+}
+.wpa-drawer__foot {
+  display: flex;
+  gap: 8px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--wp-border-light);
+  background: #fafbfc;
+}
+
+@media (max-width: 600px) {
+  .wpa-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+  .wpa-ltable th:nth-child(4),
+  .wpa-ltable td:nth-child(4),
+  .wpa-ltable th:nth-child(5),
+  .wpa-ltable td:nth-child(5) {
+    display: none;
+  }
+  .wpa-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wpa-section-title {
+  font-size: 12.5px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #475467;
+  margin: 4px 0 12px !important;
+}
+a.wpa-kpi {
+  text-decoration: none;
+}
+a.wpa-kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--wp-shadow-lg);
+}
+
+/* Login stays classic WordPress (requested): grey page, white box, blue button. */
+.wpa-login {
+  background: #f0f0f1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+.wpa-login form {
+  border-radius: 0;
+}
+.wpa-login input[type="email"],
+.wpa-login input[type="password"],
+.wpa-login input[type="text"] {
+  border-radius: 4px;
+  border-color: #8c8f94;
+  box-shadow: none;
+}
+.wpa-login input:focus {
+  border-color: #2271b1;
+  box-shadow: 0 0 0 1px #2271b1;
+}
+.wpa-login .wpa-btn--primary {
+  background: #2271b1;
+  border-color: #2271b1;
+  border-radius: 3px;
+  color: #fff !important;
+  box-shadow: none;
+}
+.wpa-login .wpa-btn--primary:hover {
+  background: #135e96;
+  border-color: #135e96;
+  color: #fff !important;
+}
+.wpa-login .wpa-pass button {
+  color: #2271b1;
+}
+
+.wpa-login__timer {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 15px;
+  color: #b32d2e;
+}
+
+.wpa-post-state--live {
+  color: #067647;
+}
+.wpa-notice--info {
+  border-left-color: var(--wp-accent);
+}
+
+.wpa-login .wpa-otp {
+  font-family: Consolas, Monaco, monospace;
+  letter-spacing: 0.5em;
+  text-align: center;
+}
+.wpa-login__nav a + br + a {
+  display: inline-block;
+  margin-top: 6px;
+}
+
+/* Wider sidebar on desktop so labels like "Film & Culture" stay on one line. */
+@media (min-width: 961px) {
+  .wpa-menu {
+    width: 200px;
+  }
+  .wpa-content {
+    margin-left: 200px;
+  }
+}
+.wpa-menu {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+.wpa-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.wpa-menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 3px;
+}
+
+/* ---------- lead reply composer ---------- */
+.wpa-reply {
+  border-top: 1px solid var(--wp-border-light);
+  padding: 16px 24px;
+  display: grid;
+  gap: 10px;
+  background: #fff;
+  box-shadow: 0 -8px 20px rgba(10, 26, 43, 0.06);
+}
+.wpa-reply__to {
+  font-size: 13px;
+  color: var(--wp-muted);
+}
+.wpa-reply textarea {
+  min-height: 180px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.wpa-reply__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.wpa-reply__actions .wpa-link-plain {
+  margin-right: auto;
+  font-size: 12px;
+}
+.wpa-reply__error {
+  margin: 0;
+  color: var(--wp-red);
+}
+
+/* ---------- SweetAlert2 (brand) ---------- */
+.tkg-swal {
+  font-family: var(--font-admin), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  border-radius: 16px !important;
+  padding: 28px 24px 22px !important;
+  box-shadow: 0 24px 60px rgba(8, 18, 29, 0.28) !important;
+}
+.tkg-swal__title {
+  color: #0a1a2b !important;
+  font-size: 21px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+}
+.tkg-swal__text {
+  color: #475467 !important;
+  font-size: 14.5px !important;
+  line-height: 1.6 !important;
+}
+.tkg-swal__actions {
+  gap: 10px;
+  margin-top: 22px !important;
+}
+.tkg-swal__danger {
+  background: linear-gradient(180deg, #e04444, #c42b2b) !important;
+  border-color: #c42b2b !important;
+  color: #fff !important;
+}
+.tkg-swal__danger:hover {
+  background: linear-gradient(180deg, #d13535, #a82222) !important;
+  color: #fff !important;
+}
+.swal2-container.swal2-backdrop-show {
+  background: rgba(8, 18, 29, 0.5) !important;
+  backdrop-filter: blur(2px);
+}
+.swal2-icon.swal2-warning {
+  border-color: #c8a45b !important;
+  color: #c8a45b !important;
+}
+.swal2-icon.swal2-question,
+.swal2-icon.swal2-info {
+  border-color: #1f5f99 !important;
+  color: #1f5f99 !important;
+}
+.tkg-toast {
+  font-family: var(--font-admin), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(10, 26, 43, 0.18) !important;
+  border-left: 4px solid #c8a45b !important;
+  margin-top: 40px !important;
+}
+.tkg-toast .swal2-title {
+  font-size: 14px !important;
+  color: #0a1a2b !important;
+}
+.tkg-toast .swal2-timer-progress-bar {
+  background: #c8a45b !important;
+}
+/* Static tick for success toasts (see alerts.ts). */
+.tkg-toast .swal2-icon.tkg-toast__check {
+  border-color: #00a32a !important;
+  color: #00a32a !important;
+  animation: none !important;
+}
+.tkg-toast .swal2-icon.tkg-toast__check .swal2-icon-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
